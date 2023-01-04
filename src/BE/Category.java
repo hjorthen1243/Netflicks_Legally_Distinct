@@ -1,2 +1,4 @@
-package BE;public class Category {
+package BE;
+public class Category {
+private String name;
 }
