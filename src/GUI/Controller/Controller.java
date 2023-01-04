@@ -1,4 +1,4 @@
-package Controller;
+package GUI.Controller;
 
 public class Controller {
 }
