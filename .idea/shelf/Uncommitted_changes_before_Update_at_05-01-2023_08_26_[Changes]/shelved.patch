@@ -1,0 +1,32 @@
+Index: src/Controller/Controller.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Controller/Controller.java b/src/GUI/Controller/Controller.java
+rename from src/Controller/Controller.java
+rename to src/GUI/Controller/Controller.java
+--- a/src/Controller/Controller.java	
++++ b/src/GUI/Controller/Controller.java	
+@@ -1,4 +1,4 @@
+-package Controller;
++package GUI.Controller;
+ 
+ public class Controller {
+ }
+Index: src/Model/Model.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Model/Model.java b/src/GUI/Model/Model.java
+rename from src/Model/Model.java
+rename to src/GUI/Model/Model.java
+--- a/src/Model/Model.java	
++++ b/src/GUI/Model/Model.java	
+@@ -1,4 +1,4 @@
+-package Model;
++package GUI.Model;
+ 
+ public class Model {
+ }
