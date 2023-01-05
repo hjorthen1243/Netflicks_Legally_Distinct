@@ -11,11 +11,8 @@ public class Main extends Application {
         launch(args);
     }
 
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/View/PlayMovie.fxml")));
         //Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/View/DeleteMovie.fxml")));
         Scene scene = new Scene(root); primaryStage.setResizable(false);
