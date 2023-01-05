@@ -13,12 +13,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/View/PlayMovie.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/View/MainView.fxml")));
+        //Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/View/PlayMovie.fxml")));
         //Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/GUI/View/DeleteMovie.fxml")));
         Scene scene = new Scene(root); primaryStage.setResizable(false);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Netflicks System");
         //primaryStage.setTitle("Delete Movie");
-        primaryStage.setTitle("Play Movie");
+        //primaryStage.setTitle("Play Movie");
         primaryStage.show();
     }
 }

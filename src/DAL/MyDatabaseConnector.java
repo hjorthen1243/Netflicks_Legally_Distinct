@@ -11,7 +11,7 @@ public class MyDatabaseConnector {
     public MyDatabaseConnector() {
         dataSource = new SQLServerDataSource();
         dataSource.setServerName("10.176.111.31");
-        dataSource.setDatabaseName("MyTunesGRP32022");
+        dataSource.setDatabaseName("Netflicks");
         dataSource.setUser("CSe22A_27");
         dataSource.setPassword("CSe22A_27");
         dataSource.setTrustServerCertificate(true);
