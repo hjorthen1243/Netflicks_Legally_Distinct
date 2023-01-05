@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f76655df-98f5-4eac-a846-b3fe7130acac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/GUI/Controller/PlayMovieController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/View/PlayMovie.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DAL/DB/DBConnector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/View/AddMovie.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +37,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/aneho/OneDrive - Erhvervsakademi Sydvest/Github/MyTunes&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Bruger/OneDrive/Dokumenter/GitHub/Netflicks_Legally_Distinct/src/GUI/View/AddMovie.fxml&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
 }</component>
@@ -60,6 +58,7 @@
       <workItem from="1672739308945" duration="18000" />
       <workItem from="1672739472007" duration="574000" />
       <workItem from="1672816204661" duration="1652000" />
+      <workItem from="1672904134962" duration="1755000" />
     </task>
     <servers />
   </component>

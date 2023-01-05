@@ -1,0 +1,80 @@
+Index: src/DAL/DB/DBConnector.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/DAL/DB/DBConnector.java b/src/DAL/DB/DBConnector.java
+new file mode 100644
+--- /dev/null	
++++ b/src/DAL/DB/DBConnector.java	
+@@ -0,0 +1,42 @@
++package DAL.DB;
++
++import java.sql.Connection;
++import java.sql.SQLException;
++
++public class DBConnector {private SQLServerDataSource dataSource;
++
++
++    //Defining server and database
++    public DBConnector() {
++        dataSource = new SQLServerDataSource();
++        dataSource.setServerName("10.176.111.31");
++        dataSource.setDatabaseName("");
++        dataSource.setUser(""); // Type your given username
++        dataSource.setPassword(""); // Type your given password
++        dataSource.setTrustServerCertificate(true);
++        dataSource.setPortNumber(1433); // From school
++
++
++    }
++    //Creating connection to server and database
++    public Connection getConnection() throws SQLServerException {
++        return dataSource.getConnection();
++    }
++
++    //Only to see if we have connection or not
++    public static void main(String[] args) throws SQLServerException {
++        DBConnector dbConnector = new DBConnector();
++        try(Connection connection =dbConnector.getConnection())
++        {
++            if(!connection.isClosed())
++            {
++                System.out.println("Is it opened..?\n" + !connection.isClosed());
++            }
++        } catch (SQLException e) {
++            throw new RuntimeException(e);
++        }
++    }
++
++}
++
++}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -2,7 +2,10 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="f76655df-98f5-4eac-a846-b3fe7130acac" name="Changes" comment="">
++      <change afterPath="$PROJECT_DIR$/src/DAL/DB/DBConnector.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/Controller.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/Model.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -52,7 +55,7 @@
+       <workItem from="1672738439060" duration="846000" />
+       <workItem from="1672739308945" duration="18000" />
+       <workItem from="1672739472007" duration="574000" />
+-      <workItem from="1672816204661" duration="1652000" />
++      <workItem from="1672816204661" duration="3216000" />
+     </task>
+     <servers />
+   </component>
