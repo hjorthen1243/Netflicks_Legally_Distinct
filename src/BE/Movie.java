@@ -25,6 +25,14 @@ public class Movie {
         this.lastViewDate = lastViewDate;
         this.pathToFile = pathToFile;
     }
+    public Movie(int id, String title, int year, double imdbRating, String lastViewString, String pathToFile){
+        this.id = id;
+        this.title = title;
+        this.year =  year;
+        this.imdbRating = imdbRating;
+        this.lastViewString = lastViewString;
+        this.pathToFile = pathToFile;
+    }
 
     public int getId() {
         return id;
@@ -65,13 +73,10 @@ public class Movie {
     public int getYear() {
         return year;
     }
-    public String getYearString(){return String.valueOf(year);}
-
     public void setYear(int year) {
         this.year = year;
     }
-
-
+    public String getYearString() {return String.valueOf(year);}
 
     public Date getLastViewDate() {
         return lastViewDate;
@@ -80,5 +85,10 @@ public class Movie {
 
     public void setLastViewDate(Date lastViewDate) {
         this.lastViewDate = lastViewDate;
+    }
+    public String getLastViewString(){return lastViewDate.toString();}
+
+    public void setLastViewString(){
+        this.lastViewString = lastViewString;
     }
 }

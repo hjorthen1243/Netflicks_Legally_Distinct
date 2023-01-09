@@ -15,7 +15,7 @@ public class CategoryModel {
 
     public void setSelectedCategory(Category selectedCategory){this.selectedCategory = selectedCategory;}
 
-    public CategoryModel(){
+    public CategoryModel() throws Exception {
         categoryManager = new CategoryManager();
         categoriesToBeViewed = FXCollections.observableArrayList();
         categoriesToBeViewed.addAll(categoryManager.getAllCategories());
@@ -23,19 +23,19 @@ public class CategoryModel {
 
     public ObservableList<Category> getObservableCategories(){return categoriesToBeViewed;}
 
-    public void deleteCategory(Category deletedCategory){
+    public void deleteCategory(Category deletedCategory) throws Exception {
         categoryManager.deletedCategory(deletedCategory);
         categoriesToBeViewed.remove(deletedCategory);
     }
 
-    public void updatedCategory(Category updatedCategory){
+    public void updatedCategory(Category updatedCategory) throws Exception {
         categoryManager.updatedCategory(updatedCategory);
 
         categoriesToBeViewed.clear();
-        categoriesToBeViewed.addAll(categoryManager.getCategory());
+        categoriesToBeViewed.addAll(categoryManager.getAllCategories());
     }
 
-    public void createNewCategory(String genre){
+    public void createNewCategory(String genre) throws Exception {
         Category category = categoryManager.createNewCategory(genre);
         categoriesToBeViewed.add(category);
     }

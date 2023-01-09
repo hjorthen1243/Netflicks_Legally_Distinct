@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f76655df-98f5-4eac-a846-b3fe7130acac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/BE/CategoryList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DAL/CategoryListDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_09_55__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_09_55__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06-01-2023_11_26__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06-01-2023_11_26__Changes_.xml" afterDir="false" />
+    <list default="true" id="68a72468-6a3b-487c-be15-178e24a2e3ff" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/BLL/MovieSearch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BE/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BE/Category.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BE/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BE/Movie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BLL/CategoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/CategoryManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BLL/MovieManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/MovieManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/ICategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/ICategoryListDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/IMovieDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/IMovieDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAL/IMovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/IMovieDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAL/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MovieDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Model/PMCModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/PMCModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
