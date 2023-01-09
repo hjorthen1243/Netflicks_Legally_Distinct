@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f76655df-98f5-4eac-a846-b3fe7130acac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/BLL/CategoryManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/BLL/MovieManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/Model/PMCModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BLL/BLL.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Model/Model.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +70,7 @@
       <workItem from="1672739472007" duration="574000" />
       <workItem from="1672816204661" duration="1652000" />
       <workItem from="1672904134962" duration="1755000" />
+      <workItem from="1673254282139" duration="17000" />
     </task>
     <servers />
   </component>
