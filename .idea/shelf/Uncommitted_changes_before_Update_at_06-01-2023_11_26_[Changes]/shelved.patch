@@ -1,0 +1,163 @@
+Index: src/GUI/Controller/DeleteMovieController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package GUI.Controller;\r\n\r\nimport GUI.Model.Model;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXML;\r\nimport javafx.scene.control.Button;\r\nimport javafx.stage.Stage;\r\n\r\npublic class DeleteMovieController {\r\n    @FXML\r\n    private Button btnYes;\r\n    @FXML\r\n    private Button btnNo;\r\n\r\n    public void ClickedYes(ActionEvent event) {\r\n    }\r\n\r\n\r\n    public void ClickedNo(ActionEvent event) {\r\n        Stage stage = (Stage) btnNo.getScene().getWindow();\r\n        stage.close();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/GUI/Controller/DeleteMovieController.java b/src/GUI/Controller/DeleteMovieController.java
+--- a/src/GUI/Controller/DeleteMovieController.java	(revision a77568c0b4dd0500c87fcc5d23be4011947223e9)
++++ b/src/GUI/Controller/DeleteMovieController.java	(date 1672990347446)
+@@ -1,6 +1,5 @@
+ package GUI.Controller;
+ 
+-import GUI.Model.Model;
+ import javafx.event.ActionEvent;
+ import javafx.fxml.FXML;
+ import javafx.scene.control.Button;
+Index: src/GUI/Model/Model.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/GUI/Model/Model.java b/src/GUI/Model/PMCModel.java
+rename from src/GUI/Model/Model.java
+rename to src/GUI/Model/PMCModel.java
+--- a/src/GUI/Model/Model.java	(revision a77568c0b4dd0500c87fcc5d23be4011947223e9)
++++ b/src/GUI/Model/PMCModel.java	(date 1672991533811)
+@@ -1,4 +1,19 @@
+ package GUI.Model;
+ 
+-public class Model {
++public class PMCModel {
++    private MovieModel movieModel;
++    private CategoryModel categoryModel;
++
++    public PMCModel() {
++        movieModel = new MovieModel();
++        categoryModel = new CategoryModel();
++    }
++
++    public MovieModel getMovieModel() {return movieModel;}
++
++    public void setMovieModel(){this.movieModel = movieModel;}
++
++    public CategoryModel getCategoryModel() {return categoryModel;}
++
++    public void setCategoryModel() {this.categoryModel = categoryModel;}
+ }
+Index: src/GUI/Model/CategoryModel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/GUI/Model/CategoryModel.java b/src/GUI/Model/CategoryModel.java
+new file mode 100644
+--- /dev/null	(date 1672990496726)
++++ b/src/GUI/Model/CategoryModel.java	(date 1672990496726)
+@@ -0,0 +1,4 @@
++package GUI.Model;
++
++public class CategoryModel {
++}
+Index: src/BLL/BLL.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/BLL/BLL.java b/src/BLL/MovieManager.java
+rename from src/BLL/BLL.java
+rename to src/BLL/MovieManager.java
+--- a/src/BLL/BLL.java	(revision a77568c0b4dd0500c87fcc5d23be4011947223e9)
++++ b/src/BLL/MovieManager.java	(date 1672992383969)
+@@ -1,4 +1,4 @@
+ package BLL;
+ 
+-public class BLL {
++public class MovieManager {
+ }
+Index: src/GUI/Model/MovieModel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/GUI/Model/MovieModel.java b/src/GUI/Model/MovieModel.java
+new file mode 100644
+--- /dev/null	(date 1672992814686)
++++ b/src/GUI/Model/MovieModel.java	(date 1672992814686)
+@@ -0,0 +1,24 @@
++package GUI.Model;
++
++import BE.Movie;
++import BLL.MovieManager;
++import javafx.collections.FXCollections;
++import javafx.collections.ObservableList;
++
++public class MovieModel {
++
++    private ObservableList<Movie> moviesToBeViewed;
++
++    private MovieManager movieManager;
++
++    private Movie selectedMovie;
++
++    public MovieModel(){
++        movieManager = new MovieManager();
++        moviesToBeViewed = FXCollections.observableArrayList();
++        moviesToBeViewed.addAll(movieManager.getAllMovies());
++    }
++
++
++
++}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"f76655df-98f5-4eac-a846-b3fe7130acac\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/GUI/Controller/MainViewController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_1.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_1.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/DAL/DB/DBConnector.java\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/GUI/Controller/Controller.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GUI/Controller/Controller.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Main.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"FxmlFile\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2JoJJwnYomPOm3EaETHroK5AE2J\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/Bruger/OneDrive/Dokumenter/GitHub/Netflicks_Legally_Distinct/src/GUI/View/AddMovie.fxml&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\r\n      <recent name=\"GUI\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"f76655df-98f5-4eac-a846-b3fe7130acac\" name=\"Changes\" comment=\"\" />\r\n      <created>1672738436512</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1672738436512</updated>\r\n      <workItem from=\"1672738439060\" duration=\"846000\" />\r\n      <workItem from=\"1672739308945\" duration=\"18000\" />\r\n      <workItem from=\"1672739472007\" duration=\"574000\" />\r\n      <workItem from=\"1672816204661\" duration=\"1652000\" />\r\n      <workItem from=\"1672904134962\" duration=\"1755000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision a77568c0b4dd0500c87fcc5d23be4011947223e9)
++++ b/.idea/workspace.xml	(date 1672992553184)
+@@ -2,14 +2,12 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="f76655df-98f5-4eac-a846-b3fe7130acac" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_1.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/DAL/DB/DBConnector.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/Controller.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/BLL/BLL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/MovieManager.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/GUI/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/PMCModel.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -49,6 +47,20 @@
+     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+       <recent name="GUI" />
+     </key>
++  </component>
++  <component name="RunManager">
++    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="Main" />
++      <module name="Netflicks_Legally_Distinct" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <recent_temporary>
++      <list>
++        <item itemvalue="Application.Main" />
++      </list>
++    </recent_temporary>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
