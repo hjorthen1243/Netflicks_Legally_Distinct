@@ -36,5 +36,4 @@ public class MovieManager {
         movieDAO.editUpdateMovie(updatedMovie);
     }
 
-
 }

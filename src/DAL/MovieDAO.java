@@ -9,7 +9,9 @@ import java.util.List;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-public class MovieDAO implements IMovieDAO, ICategoryDAO {
+
+public class MovieDAO implements IMovieDAO {
+
     MyDatabaseConnector myDatabaseConnector;
 
     public MovieDAO (){
@@ -103,7 +105,7 @@ public class MovieDAO implements IMovieDAO, ICategoryDAO {
             stmt.setString(1, movie.getTitle());
             stmt.setString(2, String.valueOf(movie.getImdbRating()));
             stmt.setString(3, movie.getPathToFile());
-            stmt.setInt(4, Integer.parseInt(String.valueOf(movie.getLastView())));
+            stmt.setInt(4, Integer.parseInt(String.valueOf(movie.getLastViewDate())));
             stmt.setInt(5, movie.getId());
 
             //Execute the update into the DB
@@ -194,21 +196,6 @@ public class MovieDAO implements IMovieDAO, ICategoryDAO {
             ex.printStackTrace();
         }
         return new Category(id, name);
-    }
-
-    @Override
-    public List<Category> getAllCategorys() throws Exception {
-        return null;
-    }
-
-    @Override
-    public Category createNewCategory(String newCategoryName) throws Exception {
-        return null;
-    }
-
-    @Override
-    public Category editUpdateCategory(String oldCategoryName, Category newCategoryName) throws Exception {
-        return null;
     }
 
     @Override

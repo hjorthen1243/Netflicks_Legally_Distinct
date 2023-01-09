@@ -5,7 +5,7 @@ import BE.Movie;
 
 import java.util.List;
 
-public interface IMovieDao{
+public interface IMovieDAO {
 
     List<Movie> getAllMovies() throws Exception;
 

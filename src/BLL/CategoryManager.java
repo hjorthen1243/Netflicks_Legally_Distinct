@@ -1,22 +1,23 @@
 package BLL;
 
 import BE.Category;
+import DAL.CategoryListDAO;
 import DAL.ICategoryDAO;
 
 public class CategoryManager {
     ICategoryDAO categoryDAO;
 
-    public categoryManager(){categoryDAO = new CategoryDAO;}
+    public void categoryManager(){categoryDAO = new CategoryListDAO;}
 
     public Category createCategory(){
 
+        return null;
     }
 
     public void deleteCategory(){
 
     }
 
-    public void updateCategory(){
-
+    public void updateCategory() {
     }
 }
