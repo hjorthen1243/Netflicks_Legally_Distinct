@@ -11,6 +11,11 @@ public class DeleteMovieController extends BaseController{
     @FXML
     private Button btnNo;
 
+    @Override
+    public void setup() {
+
+    }
+
     public void ClickedYes(ActionEvent event) {
     }
 
@@ -19,4 +24,6 @@ public class DeleteMovieController extends BaseController{
         Stage stage = (Stage) btnNo.getScene().getWindow();
         stage.close();
     }
+
+
 }

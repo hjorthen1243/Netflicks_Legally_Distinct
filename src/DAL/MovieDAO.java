@@ -24,7 +24,7 @@ public class MovieDAO implements IMovieDao, ICategoryDAO {
     public List<Movie> getAllMovies() throws Exception {
 
         //Makes a list of movies
-        ArrayList<Movie> allmovies = new ArrayList<>();
+        ArrayList<Movie> allMovies = new ArrayList<>();
 
         //Try with resources on the databaseConnector
         try (Connection conn = myDatabaseConnector.getConnection()) {
@@ -46,9 +46,9 @@ public class MovieDAO implements IMovieDao, ICategoryDAO {
 
                 //Add Movie to list allmovies
                 Movie movie = new Movie(id, imdbRating, name ,pathToFile, lastView);
-                allmovies.add(movie);
+                allMovies.add(movie);
             }
-            return allmovies;
+            return allMovies;
 
         } catch (SQLException ex) {
             ex.printStackTrace();

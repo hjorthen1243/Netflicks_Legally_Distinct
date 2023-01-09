@@ -12,6 +12,10 @@ public class AddMovieController extends BaseController {
     public Button btnInsertFile;
     public TextField txtFiledMovieFile;
 
+    @Override
+    public void setup() {
+
+    }
     public void handleInsertFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select movie");
@@ -26,4 +30,6 @@ public class AddMovieController extends BaseController {
 
     public void handleAddMovie(ActionEvent actionEvent) {
     }
+
+
 }
