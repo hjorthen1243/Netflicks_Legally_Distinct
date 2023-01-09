@@ -13,9 +13,11 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class MovieDAO implements IMovieDao, ICategoryDAO {
     MyDatabaseConnector myDatabaseConnector;
+    MyOMDBConnector myOMDBConnector;
 
     public MovieDAO (){
         myDatabaseConnector = new MyDatabaseConnector();
+        myOMDBConnector = new MyOMDBConnector();
     }
 
     @Override

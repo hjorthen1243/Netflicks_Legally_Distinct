@@ -2,16 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f76655df-98f5-4eac-a846-b3fe7130acac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/BLL/CategoryManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/BLL/MovieManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/Model/PMCModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/googlecode_json_simple.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DAL/MyOMDBConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_09_55__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_09_55__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06-01-2023_11_26__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06-01-2023_11_26__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BLL/BLL.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Model/Model.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Netflicks_Legally_Distinct.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Netflicks_Legally_Distinct.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAL/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MovieDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,15 +37,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Bruger/OneDrive/Dokumenter/GitHub/Netflicks_Legally_Distinct/src/GUI/View/AddMovie.fxml&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "liberica-19",
+    "last_opened_file_path": "C:/Users/Bruger/OneDrive/Dokumenter/GitHub/Netflicks_Legally_Distinct/src/GUI/View/AddMovie.fxml",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="GUI" />
