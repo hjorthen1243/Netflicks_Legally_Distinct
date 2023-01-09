@@ -5,7 +5,7 @@ import BE.Category;
 import java.util.List;
 
 public interface ICategoryDAO {
-    List<Category> getAllCategorys() throws Exception;
+    List<Category> getAllCategories() throws Exception;
 
     Category createNewCategory(String newCategoryName) throws Exception;
 

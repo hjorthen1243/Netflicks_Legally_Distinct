@@ -69,11 +69,11 @@ public class Movie {
     public int getYear() {
         return year;
     }
+    public String getYearString(){return String.valueOf(year);}
 
     public void setYear(int year) {
         this.year = year;
     }
-
     public Date getLastView() {
         return lastView;
     }

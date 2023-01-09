@@ -3,15 +3,13 @@ package DAL;
 import BE.Category;
 import BE.Movie;
 
-import javax.naming.Name;
 import java.sql.*;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-public class MovieDAO implements IMovieDao, ICategoryDAO {
+public class MovieDAO implements IMovieDAO, ICategoryDAO {
     MyDatabaseConnector myDatabaseConnector;
 
     public MovieDAO (){
