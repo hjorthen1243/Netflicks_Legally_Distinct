@@ -1,6 +1,5 @@
 package GUI.Controller;
 
-import GUI.Model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

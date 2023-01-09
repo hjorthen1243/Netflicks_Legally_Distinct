@@ -1,0 +1,80 @@
+Index: src/DAL/DB/DBConnector.java
+===================================================================
+diff --git a/src/DAL/DB/DBConnector.java b/src/DAL/DB/DBConnector.java
+deleted file mode 100644
+--- a/src/DAL/DB/DBConnector.java	(revision 6630a6d739478c5f9425fc06285af79999ad0d2a)
++++ /dev/null	(revision 6630a6d739478c5f9425fc06285af79999ad0d2a)
+@@ -1,42 +0,0 @@
+-package DAL.DB;
+-
+-import java.sql.Connection;
+-import java.sql.SQLException;
+-
+-public class DBConnector {private SQLServerDataSource dataSource;
+-
+-
+-    //Defining server and database
+-    public DBConnector() {
+-        dataSource = new SQLServerDataSource();
+-        dataSource.setServerName("10.176.111.31");
+-        dataSource.setDatabaseName("");
+-        dataSource.setUser(""); // Type your given username
+-        dataSource.setPassword(""); // Type your given password
+-        dataSource.setTrustServerCertificate(true);
+-        dataSource.setPortNumber(1433); // From school
+-
+-
+-    }
+-    //Creating connection to server and database
+-    public Connection getConnection() throws SQLServerException {
+-        return dataSource.getConnection();
+-    }
+-
+-    //Only to see if we have connection or not
+-    public static void main(String[] args) throws SQLServerException {
+-        DBConnector dbConnector = new DBConnector();
+-        try(Connection connection =dbConnector.getConnection())
+-        {
+-            if(!connection.isClosed())
+-            {
+-                System.out.println("Is it opened..?\n" + !connection.isClosed());
+-            }
+-        } catch (SQLException e) {
+-            throw new RuntimeException(e);
+-        }
+-    }
+-
+-}
+-
+-}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"f76655df-98f5-4eac-a846-b3fe7130acac\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/DAL/DB/DBConnector.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/GUI/View/AddMovie.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"FxmlFile\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2JoJJwnYomPOm3EaETHroK5AE2J\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/Bruger/OneDrive/Dokumenter/GitHub/Netflicks_Legally_Distinct/src/GUI/View/AddMovie.fxml&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\r\n      <recent name=\"GUI\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"f76655df-98f5-4eac-a846-b3fe7130acac\" name=\"Changes\" comment=\"\" />\r\n      <created>1672738436512</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1672738436512</updated>\r\n      <workItem from=\"1672738439060\" duration=\"846000\" />\r\n      <workItem from=\"1672739308945\" duration=\"18000\" />\r\n      <workItem from=\"1672739472007\" duration=\"574000\" />\r\n      <workItem from=\"1672816204661\" duration=\"1652000\" />\r\n      <workItem from=\"1672904134962\" duration=\"1755000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 6630a6d739478c5f9425fc06285af79999ad0d2a)
++++ b/.idea/workspace.xml	(date 1672908930364)
+@@ -2,10 +2,8 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="f76655df-98f5-4eac-a846-b3fe7130acac" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/src/DAL/DB/DBConnector.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/GUI/View/AddMovie.fxml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/DAL/DB/DBConnector.java" beforeDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -58,7 +56,7 @@
+       <workItem from="1672739308945" duration="18000" />
+       <workItem from="1672739472007" duration="574000" />
+       <workItem from="1672816204661" duration="1652000" />
+-      <workItem from="1672904134962" duration="1755000" />
++      <workItem from="1672904134962" duration="4158000" />
+     </task>
+     <servers />
+   </component>
