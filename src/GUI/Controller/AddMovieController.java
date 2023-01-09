@@ -14,7 +14,7 @@ public class AddMovieController extends BaseController {
 
     public void handleInsertFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select song");
+        fileChooser.setTitle("Select movie");
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Files", "*.mp4"));
         Stage stage = (Stage) btnInsertFile.getScene().getWindow();
