@@ -112,7 +112,7 @@ public class CategoryDAO implements ICategoryDAO {
 
         }
         //Return the updated playlist to be fed into the observable list
-        return new Category(id, newCategory.getName());
+        return new Category(id, newCategory.getCategory());
     }
 
     @Override
