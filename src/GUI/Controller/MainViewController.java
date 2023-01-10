@@ -1,23 +1,65 @@
 package GUI.Controller;
 
+import BE.Movie;
+import GUI.Model.MovieModel;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.net.URL;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
-public class MainViewController {
+public class MainViewController extends BaseController implements Initializable {
 
+    @FXML
+    private TableView<Movie> movieTable;
+    @FXML
+    private TableColumn<?, ?> titleColumn;
+    @FXML
+    private TableColumn<?, ?> yearColumn;
+    @FXML
+    private TableColumn<?, ?> lengthColumn;
+    @FXML
+    private TableColumn<?, ?> ratingColumn;
+    @FXML
+    private TableColumn<?, ?> pRatingColumn;
+    @FXML
+    private TableColumn<?, ?> categoryColumn;
+    @FXML
+    private TableColumn<?, ?> lastViewColumn;
+
+
+    private MovieModel movieModel;
     AddMovieController addController;
     DeleteMovieController delController;
     private Label label;
+
+    @Override
+    public void setup() {
+        try {
+            updateMovieList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 
     public void addMovieHandle(ActionEvent event) {
         addController = new AddMovieController();
@@ -66,4 +108,18 @@ public class MainViewController {
 
     public void searchHandle(ActionEvent event) {
     }
+
+    private void updateMovieList() throws Exception {
+        movieModel = getModel().getMovieModel();
+
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        ratingColumn.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
+        lastViewColumn.setCellValueFactory(new PropertyValueFactory<>("lastViewed"));
+
+
+        movieTable.getColumns().addAll();
+        movieTable.setItems(movieModel.getObservableMovies());
+    }
+
+
 }

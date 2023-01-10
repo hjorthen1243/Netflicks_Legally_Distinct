@@ -7,6 +7,7 @@ import DAL.MovieDAO;
 import java.util.List;
 
 public class MovieManager {
+
     private IMovieDAO movieDAO;
     private MovieSearcher movieSearcher = new MovieSearcher();
 
@@ -32,6 +33,7 @@ public class MovieManager {
     public void deleteMovie(Movie movie) throws Exception {
         movieDAO.deleteMovie(movie);
     }
+
 
     public void updateMovie(Movie updatedMovie) throws Exception {
         movieDAO.editUpdateMovie(updatedMovie);

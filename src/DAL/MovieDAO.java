@@ -13,16 +13,18 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 public class MovieDAO implements IMovieDAO {
 
     MyDatabaseConnector myDatabaseConnector;
+    MyOMDBConnector myOMDBConnector;
 
     public MovieDAO (){
         myDatabaseConnector = new MyDatabaseConnector();
+        myOMDBConnector = new MyOMDBConnector();
     }
 
     @Override
     public List<Movie> getAllMovies() throws Exception {
 
         //Makes a list of movies
-        ArrayList<Movie> allmovies = new ArrayList<>();
+        ArrayList<Movie> allMovies = new ArrayList<>();
 
         //Try with resources on the databaseConnector
         try (Connection conn = myDatabaseConnector.getConnection()) {
@@ -37,17 +39,21 @@ public class MovieDAO implements IMovieDAO {
             while (rs.next()) {
                 //Map DB row to Movie Object
                 int id = rs.getInt("Id");
-                String name = rs.getString("Name");
+                String title = rs.getString("Title");
                 int year = rs.getInt("Year");
-                double imdbRating= rs.getDouble("IMDBrating");
+                double imdbRating = rs.getDouble("IMDB Rating");
+                double pRating = rs.getDouble("Personal Rating");
+                Date lastView = rs.getDate("LastView");
+
                 String pathToFile = rs.getString("PathToFile");
-                String lastView = rs.getString("LastView");
+
 
                 //Add Movie to list allmovies
-                Movie movie = new Movie(id, name, year, imdbRating, lastView, pathToFile);
-                allmovies.add(movie);
+                Movie movie = new Movie(id, title, year, imdbRating, pRating , lastView, pathToFile);
+                allMovies.add(movie);
+
             }
-            return allmovies;
+            return allMovies;
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -88,6 +94,7 @@ public class MovieDAO implements IMovieDAO {
         String lastViewedString = lastViewed + "";
         //Generating and returning the new movie to be fed into the observable list
         return new Movie(id, name, imdbRating, pathToFile, lastViewedString);
+
     }
 
     @Override

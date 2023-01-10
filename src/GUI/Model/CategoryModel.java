@@ -18,10 +18,12 @@ public class CategoryModel {
     public CategoryModel() throws Exception {
         categoryManager = new CategoryManager();
         categoriesToBeViewed = FXCollections.observableArrayList();
-        categoriesToBeViewed.addAll(categoryManager.getAllCategories());
+        //categoriesToBeViewed.addAll(categoryManager.getAllCategories());
     }
 
-    public ObservableList<Category> getObservableCategories(){return categoriesToBeViewed;}
+    public ObservableList<Category> getObservableCategories(){
+        return categoriesToBeViewed;
+    }
 
     public void deleteCategory(Category deletedCategory) throws Exception {
         categoryManager.deletedCategory(deletedCategory);
