@@ -4,7 +4,7 @@ public class PMCModel {
     private MovieModel movieModel;
     private CategoryModel categoryModel;
 
-    public PMCModel() {
+    public PMCModel() throws Exception {
         movieModel = new MovieModel();
         categoryModel = new CategoryModel();
     }
