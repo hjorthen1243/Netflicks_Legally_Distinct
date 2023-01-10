@@ -86,7 +86,8 @@ public class MovieDAO implements IMovieDAO {
 
         String lastViewedString = lastViewed + "";
         //Generating and returning the new movie to be fed into the observable list
-        return new Movie(id, imdbRating, name, pathToFile, lastViewedString);
+        //return new Movie(id, imdbRating, name, pathToFile, lastViewedString);
+        return null;
     }
 
     @Override
