@@ -1,6 +1,8 @@
 package GUI.Controller;
 
+import BE.Category;
 import BE.Movie;
+import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,27 +10,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.awt.Label;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainViewController extends BaseController implements Initializable {
 
+    public ComboBox genreDropDown;
     @FXML
     private TableView movieTable;
     @FXML
     private TableColumn titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, categoryColumn, lastViewColumn;
     private MovieModel movieModel;
+    private CategoryModel categoryModel;
     AddMovieController addController;
     DeleteMovieController delController;
     private Label label;
@@ -36,7 +39,9 @@ public class MainViewController extends BaseController implements Initializable 
     @Override
     public void setup() {
             updateMovieList();
+            addAllCategoriesToComboBox();
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -90,6 +95,15 @@ public class MainViewController extends BaseController implements Initializable 
     public void searchHandle(ActionEvent event) {
     }
 
+    private void addAllCategoriesToComboBox() {
+        categoryModel = getModel().getCategoryModel();
+        ArrayList<Category> allCategories;
+        allCategories = categoryModel.getAllCategories();
+        for (Category category: allCategories) {
+            genreDropDown.getItems().add(category.getCategory());
+        }
+    }
+
     private void updateMovieList() {
         movieModel = getModel().getMovieModel();
 
@@ -105,5 +119,29 @@ public class MainViewController extends BaseController implements Initializable 
 
     }
 
+    public void CategorySelected(ActionEvent event) {
+        System.out.println("something new is selected");
+        movieModel = getModel().getMovieModel();
+        Object selectedItem = genreDropDown.getSelectionModel().getSelectedItem();
+        String categoryChoosen = selectedItem.toString();
+        System.out.println("the choosen category is: " + categoryChoosen);
 
+        ArrayList<Category> allCategories;
+        allCategories = categoryModel.getAllCategories();
+        for (Category category: allCategories) {
+            if(category.getCategory().equals(categoryChoosen)){
+                System.out.println("this is entering the loop");
+                //ToDo continue with getting all the movies displayed on the list
+                try {
+                    System.out.println("this is working");
+                    movieTable.getItems().clear();
+                    movieTable.setItems(movieModel.getObservableMoviesCategory(category));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+    }
 }

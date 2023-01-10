@@ -1,5 +1,6 @@
 package GUI.Model;
 
+import BE.Category;
 import BE.Movie;
 import BLL.MovieManager;
 import javafx.collections.FXCollections;
@@ -24,6 +25,10 @@ public class MovieModel {
         movie.addAll(movieManager.getAllMovies());
     }
 
+    public ObservableList<Movie> getObservableMoviesCategory(Category category) throws Exception {
+        moviesToBeViewed.addAll(movieManager.getAllMoviesCategory(category));
+        return moviesToBeViewed;
+    }
     public ObservableList<Movie> getObservableMovies() {
         return moviesToBeViewed;
     }

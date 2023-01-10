@@ -27,6 +27,12 @@ public class CategoryDAO implements ICategoryDAO {
         return allCategoryList; //Return the full set of categories
     }
 
+    public ArrayList<Category> getAllCategoriesArray() throws Exception {
+        ArrayList<Category> allCategoryList = new ArrayList<>();
+        getCategories(allCategoryList);
+        return allCategoryList; //Return the full set of categories
+    }
+
     public void getCategories(List<Category> categoryLists) throws Exception {
         try (Connection conn = databaseConnector.getConnection()) {
             //SQL String which gets all Categories
@@ -39,7 +45,7 @@ public class CategoryDAO implements ICategoryDAO {
             while (rs.next()) {
                 //Map DB row to Song Object
                 int id = rs.getInt("id");
-                String catName = rs.getString("categoryName");
+                String catName = rs.getString("Category");
 
                 //Create and add Categories to list
                 Category category = new Category(id, catName);

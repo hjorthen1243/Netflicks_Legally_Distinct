@@ -1,5 +1,6 @@
 package BLL;
 
+import BE.Category;
 import BE.Movie;
 import DAL.IMovieDAO;
 import DAL.MovieDAO;
@@ -10,6 +11,7 @@ import java.util.List;
 public class MovieManager {
 
     private final IMovieDAO movieDAO;
+    private MovieDAO movieDAOnew;
     private MovieSearcher movieSearcher = new MovieSearcher();
 
     public MovieManager() {
@@ -17,7 +19,10 @@ public class MovieManager {
     }
 
 
-
+    public List<Movie> getAllMoviesCategory(Category category) throws Exception {
+        movieDAOnew = new MovieDAO();
+        return movieDAOnew.getMoviesWithCategory(category);
+    }
 
     public List<Movie> getAllMovies() throws Exception {
         return movieDAO.getAllMovies();

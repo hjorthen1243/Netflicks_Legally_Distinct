@@ -5,9 +5,12 @@ import BLL.CategoryManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
+
 public class CategoryModel {
 
     private CategoryManager categoryManager;
+    private ArrayList<Category> allCategories;
     private ObservableList<Category> categoriesToBeViewed;
     private Category selectedCategory;
 
@@ -23,6 +26,16 @@ public class CategoryModel {
 
     public ObservableList<Category> getObservableCategories(){
         return categoriesToBeViewed;
+    }
+    public ArrayList<Category> getAllCategories(){
+        allCategories = new ArrayList<>();
+        try {
+            allCategories = categoryManager.getAllCategoriesArray();
+            return allCategories;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void deleteCategory(Category deletedCategory) throws Exception {
