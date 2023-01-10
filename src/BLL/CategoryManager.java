@@ -7,24 +7,24 @@ import DAL.ICategoryDAO;
 import java.util.List;
 
 public class CategoryManager {
-    ICategoryDAO categoryListDAO;
-    public CategoryManager(){categoryListDAO = new CategoryDAO();
+    ICategoryDAO categoryDAO;
+    public CategoryManager(){categoryDAO = new CategoryDAO();
     }
     public List<Category> getAllCategories() throws Exception {
-        return categoryListDAO.getAllCategories();
+        return categoryDAO.getAllCategories();
     }
 
     public void deletedCategory(Category deletedCategory) throws Exception {
-        categoryListDAO.deleteCategory(deletedCategory);
+        categoryDAO.deleteCategory(deletedCategory);
     }
 
-    public void updatedCategory(Category updatedCategory) {
-        categoryListDAO.editUpdateCategory(updatedCategory);
+    /*public void updatedCategory(String oldCategoryName Category newCategoryName) {
+        categoryDAO.editUpdateCategory(oldCategoryName, newCategoryName);
 
-    }
+    }*/
 
     public Category createNewCategory(String genre) throws Exception {
-        return categoryListDAO.createNewCategory(genre);
+        return categoryDAO.createNewCategory(genre);
     }
 
 }

@@ -26,8 +26,8 @@ public class MovieManager {
         return searchResult;
     }
 
-    public Movie createNewMovie(String name, double imdbRating, String pathToFile, int lastView) throws Exception {
-        return movieDAO.addMovie(name, imdbRating, pathToFile, lastView);
+    public Movie createNewMovie(String title, double imdbRating, String pathToFile, int lastView) throws Exception {
+        return movieDAO.addMovie(title, imdbRating, pathToFile, lastView);
     }
 
     public void deleteMovie(Movie movie) throws Exception {

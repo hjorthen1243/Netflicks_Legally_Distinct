@@ -31,7 +31,7 @@ public class CategoryModel {
     }
 
     public void updatedCategory(Category updatedCategory) throws Exception {
-        categoryManager.updatedCategory(updatedCategory);
+        //categoryManager.updatedCategory(updatedCategory);
 
         categoriesToBeViewed.clear();
         categoriesToBeViewed.addAll(categoryManager.getAllCategories());
