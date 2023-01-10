@@ -1,33 +1,29 @@
 package BE;
 
 
-import java.io.File;
 import java.util.Date;
 
 public class Movie {
-    private String lastViewed;
+
     private int id;
+    private String title;
+    private int year;
     private double imdbRating;
     private double personalRating;
-    private String title;
+    private Date lastViewDate;
+    private String lastViewString;
     private String pathToFile;
-    private int year;
-    private Date lastView;
 
-    public Movie(int id, double imdbRating, double personalRating, String title, String pathToFile, int year){
+
+
+    public Movie(int id, String title, int year, double imdbRating, double personalRating, Date lastViewDate, String pathToFile){
         this.id = id;
+        this.title = title;
+        this.year = year;
         this.imdbRating = imdbRating;
         this.personalRating = personalRating;
-        this.title = title;
+        this.lastViewDate = lastViewDate;
         this.pathToFile = pathToFile;
-        this.year = year;
-    }
-    public Movie(int id, double imdbRating, String title, String pathToFile, String lastViewed){
-        this.id = id;
-        this.imdbRating = imdbRating;
-        this.title = title;
-        this.pathToFile = pathToFile;
-        this.lastViewed = lastViewed;
     }
 
     public int getId() {
@@ -74,11 +70,11 @@ public class Movie {
         this.year = year;
     }
 
-    public Date getLastView() {
-        return lastView;
+    public Date getLastViewDate() {
+        return lastViewDate;
     }
 
-    public void setLastView(Date lastView) {
-        this.lastView = lastView;
+    public void setLastViewDate(Date lastViewDate) {
+        this.lastViewDate = lastViewDate;
     }
 }
