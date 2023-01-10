@@ -252,12 +252,30 @@ public class MovieDAO implements IMovieDAO {
     }
 
     @Override
-    public void addCategoryToMovie(int movieId, int categoryId) {
+    public void addMovieToCategory(int movieId, int categoryId) {
+        //Try with resources on the databaseConnector
+        try (Connection conn = myDatabaseConnector.getConnection()) {
+            //SQL String which inserts the two id's into SongPlaylistLink
+            String sql = "INSERT INTO CatMovie(CategoryID, MovieID) VALUES("+categoryId+","+movieId+");";
 
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql); //Execute insert into DB
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void removeCategoryFromMovie(int movieId, int categoryId) {
+        //Try with resources on the databaseConnector
+        try (Connection conn = myDatabaseConnector.getConnection()) {
+            //SQL String which deletes the specific row in SongPlaylistLink where the two id's match
+            String sql = "DELETE FROM CatMovie WHERE CategoryID = " + categoryId + " AND MovieID = "+movieId+";";
 
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql); //Execute the deletion from the DB
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }

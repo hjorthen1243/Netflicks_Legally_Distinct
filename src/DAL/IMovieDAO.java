@@ -24,7 +24,7 @@ public interface IMovieDAO {
 
     List<Movie> getMoviesWithCategory(Category category) throws Exception;
 
-    void addCategoryToMovie(int movieId, int categoryId);
+    void addMovieToCategory(int movieId, int categoryId);
 
     void removeCategoryFromMovie(int movieId, int categoryId);
 }
