@@ -41,8 +41,8 @@ public class MovieDAO implements IMovieDAO {
                 String lastView = rs.getString("LastView");
 
                 //Add Movie to list allmovies
-                Movie movie = new Movie(id, imdbRating, name ,pathToFile, lastView);
-                allmovies.add(movie);
+                //Movie movie = new Movie(id, imdbRating, name ,pathToFile, lastView);
+                //allmovies.add(movie);
             }
             return allmovies;
 
@@ -84,7 +84,8 @@ public class MovieDAO implements IMovieDAO {
 
         String lastViewedString = lastViewed + "";
         //Generating and returning the new movie to be fed into the observable list
-        return new Movie(id, imdbRating, name, pathToFile, lastViewedString);
+        //return new Movie(id, imdbRating, name, pathToFile, lastViewedString);
+        return null;
     }
 
     @Override
