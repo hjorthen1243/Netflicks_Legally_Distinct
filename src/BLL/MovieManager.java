@@ -4,17 +4,20 @@ import BE.Movie;
 import DAL.IMovieDAO;
 import DAL.MovieDAO;
 
+import java.sql.Date;
 import java.util.List;
 
 public class MovieManager {
 
-    private IMovieDAO movieDAO;
+    private final IMovieDAO movieDAO;
     private MovieSearcher movieSearcher = new MovieSearcher();
 
-
-    public void movieManager() {
+    public MovieManager() {
         movieDAO = new MovieDAO();
     }
+
+
+
 
     public List<Movie> getAllMovies() throws Exception {
         return movieDAO.getAllMovies();
@@ -26,8 +29,8 @@ public class MovieManager {
         return searchResult;
     }
 
-    public Movie createNewMovie(String title, double imdbRating, String pathToFile, int lastView) throws Exception {
-        return movieDAO.addMovie(title, imdbRating, pathToFile, lastView);
+    public Movie createNewMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastView, String pathToFile) throws Exception {
+        return movieDAO.addMovie(title, year, length, imdbRating, personalRating, lastView, pathToFile);
     }
 
     public void deleteMovie(Movie movie) throws Exception {

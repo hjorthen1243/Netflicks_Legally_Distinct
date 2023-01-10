@@ -98,7 +98,6 @@ public class MovieDAO implements IMovieDAO {
         }
 
         //Generating and returning the new movie to be fed into the observable list
-
         return new Movie(id, title, year, length, imdbRating, personalRating, lastViewed, pathToFile);
     }
 

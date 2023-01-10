@@ -4,9 +4,8 @@ import BE.Movie;
 import BLL.MovieManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import java.util.List;
+
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MovieModel {
 

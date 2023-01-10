@@ -2,7 +2,7 @@ package DAL;
 
 import BE.Category;
 import BE.Movie;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public interface IMovieDAO {
@@ -11,7 +11,6 @@ public interface IMovieDAO {
 
 
     Movie addMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastViewed, String pathToFile) throws Exception;
-
 
     void editUpdateMovie(Movie movie) throws Exception;
 
