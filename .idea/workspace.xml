@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f76655df-98f5-4eac-a846-b3fe7130acac" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAL/IMovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/IMovieDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAL/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MovieDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,8 +46,8 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="GUI.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GUI.Main" />
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Netflicks_Legally_Distinct" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -53,7 +55,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GUI.Main" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>

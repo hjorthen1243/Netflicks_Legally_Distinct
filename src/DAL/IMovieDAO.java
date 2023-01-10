@@ -22,7 +22,7 @@ public interface IMovieDAO {
 
     void deleteCategory(Category category) throws Exception;
 
-    List<Movie> getMoviesWithCategoryID(int id) throws Exception;
+    List<Movie> getMoviesWithCategory(Category category) throws Exception;
 
     void addCategoryToMovie(int movieId, int categoryId);
 
