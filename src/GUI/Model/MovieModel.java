@@ -5,10 +5,12 @@ import BLL.MovieManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.List;
-
+import java.util.ArrayList;
+import java.util.Date;
 
 public class MovieModel {
 
+    private ArrayList<Movie> movie;
     private ObservableList<Movie> moviesToBeViewed;
 
     private MovieManager movieManager;
@@ -17,22 +19,25 @@ public class MovieModel {
 
     public MovieModel() throws Exception {
         movieManager = new MovieManager();
-        showList();
+        moviesToBeViewed = FXCollections.observableArrayList();
+        moviesToBeViewed.addAll(movieManager.getAllMovies());
+        movie = new ArrayList<>();
+        movie.addAll(movieManager.getAllMovies());
     }
 
-    public ObservableList<Movie> getObservableMovies() throws Exception {
-        showList();
+    public ObservableList<Movie> getObservableMovies() {
         return moviesToBeViewed;
     }
 
 
     public void searchMovie(String query) throws Exception {
-        List<Movie> searchResults = movieManager.searchMovies(query);
+        //List<Movie> searchResults = movieManager.searchMovies(query);
+
     }
 
         public void createNewMovie (String title, double imdbRating, String pathToFile,int lastView) throws Exception{
-        Movie movie = movieManager.createNewMovie(title, imdbRating, pathToFile, lastView);
-            moviesToBeViewed.add(movie);
+        //Movie movie = movieManager.createNewMovie(title, imdbRating, pathToFile, lastView);
+            //moviesToBeViewed.add(movie);
         }
 
         public void deleteMovie (Movie movie) throws Exception {
@@ -41,6 +46,7 @@ public class MovieModel {
 
             moviesToBeViewed.remove(movie);
         }
+
 
         public Movie getSelectedMovie () {
             return selectedMovie;
@@ -51,19 +57,8 @@ public class MovieModel {
         }
 
         public void updateMovie (Movie updatedMovie) throws Exception {
-            movieManager.updateMovie(updatedMovie);
+            //movieManager.updateMovie(updatedMovie);
 
-            showList();
         }
 
-
-
-
-
-
-        public void showList () throws Exception {
-            moviesToBeViewed = FXCollections.observableArrayList();
-            moviesToBeViewed.clear();
-            moviesToBeViewed.addAll(movieManager.getAllMovies());
-        }
 }

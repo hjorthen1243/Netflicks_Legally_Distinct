@@ -8,38 +8,23 @@ public class Movie {
     private int id;
     private String title;
     private int year;
+    private String length;
     private double imdbRating;
-    private double personalRating;
+    private int personalRating;
     private Date lastViewDate;
-    private String lastViewString;
     private String pathToFile;
 
 
 
-    public Movie(int id, String title, int year, double imdbRating, double personalRating, Date lastViewDate, String pathToFile){
+    public Movie(int id, String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile){
         this.id = id;
         this.title = title;
         this.year = year;
+        this.length = length;
         this.imdbRating = imdbRating;
         this.personalRating = personalRating;
         this.lastViewDate = lastViewDate;
         this.pathToFile = pathToFile;
-    }
-    public Movie(int id, String title, int year, double imdbRating, String lastViewString, String pathToFile){
-        this.id = id;
-        this.title = title;
-        this.year =  year;
-        this.imdbRating = imdbRating;
-        this.lastViewString = lastViewString;
-        this.pathToFile = pathToFile;
-    }
-
-    public Movie(int id, String name, double imdbRating, String pathToFile, String lastViewedString) {
-        this.id = id;
-        this.title = name;
-        this.imdbRating = imdbRating;
-        this.pathToFile = pathToFile;
-        this.lastViewString = lastViewedString;
     }
 
     public int getId() {
@@ -54,11 +39,11 @@ public class Movie {
         this.imdbRating = imdbRating;
     }
 
-    public double getPersonalRating() {
+    public int getPersonalRating() {
         return personalRating;
     }
 
-    public void setPersonalRating(double personalRating) {
+    public void setPersonalRating(int personalRating) {
         this.personalRating = personalRating;
     }
 
@@ -94,9 +79,13 @@ public class Movie {
     public void setLastViewDate(Date lastViewDate) {
         this.lastViewDate = lastViewDate;
     }
-    public String getLastViewString(){return lastViewDate.toString();}
 
-    public void setLastViewString(){
-        this.lastViewString = lastViewString;
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+
     }
 }

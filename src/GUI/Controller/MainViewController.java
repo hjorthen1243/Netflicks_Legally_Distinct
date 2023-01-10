@@ -25,23 +25,9 @@ import java.util.ResourceBundle;
 public class MainViewController extends BaseController implements Initializable {
 
     @FXML
-    private TableView<Movie> movieTable;
+    private TableView movieTable;
     @FXML
-    private TableColumn<?, ?> titleColumn;
-    @FXML
-    private TableColumn<?, ?> yearColumn;
-    @FXML
-    private TableColumn<?, ?> lengthColumn;
-    @FXML
-    private TableColumn<?, ?> ratingColumn;
-    @FXML
-    private TableColumn<?, ?> pRatingColumn;
-    @FXML
-    private TableColumn<?, ?> categoryColumn;
-    @FXML
-    private TableColumn<?, ?> lastViewColumn;
-
-
+    private TableColumn titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, categoryColumn, lastViewColumn;
     private MovieModel movieModel;
     AddMovieController addController;
     DeleteMovieController delController;
@@ -49,12 +35,7 @@ public class MainViewController extends BaseController implements Initializable 
 
     @Override
     public void setup() {
-        try {
             updateMovieList();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -109,16 +90,19 @@ public class MainViewController extends BaseController implements Initializable 
     public void searchHandle(ActionEvent event) {
     }
 
-    private void updateMovieList() throws Exception {
+    private void updateMovieList() {
         movieModel = getModel().getMovieModel();
 
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        ratingColumn.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
-        lastViewColumn.setCellValueFactory(new PropertyValueFactory<>("lastViewed"));
-
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        yearColumn.setCellValueFactory(new PropertyValueFactory<>("Year"));
+        lengthColumn.setCellValueFactory(new PropertyValueFactory<>("Length"));
+        ratingColumn.setCellValueFactory(new PropertyValueFactory<>("ImdbRating"));
+        pRatingColumn.setCellValueFactory(new PropertyValueFactory<>("PersonalRating"));
+        lastViewColumn.setCellValueFactory(new PropertyValueFactory<>("LastViewDate"));
 
         movieTable.getColumns().addAll();
         movieTable.setItems(movieModel.getObservableMovies());
+
     }
 
 

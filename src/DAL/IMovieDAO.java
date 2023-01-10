@@ -2,7 +2,6 @@ package DAL;
 
 import BE.Category;
 import BE.Movie;
-
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +10,8 @@ public interface IMovieDAO {
     List<Movie> getAllMovies() throws Exception;
 
 
-    Movie addMovie(String name, double imdbRating, String pathToFile, int lastViewed) throws Exception;
+    Movie addMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastViewed, String pathToFile) throws Exception;
+
 
     void editUpdateMovie(Movie movie) throws Exception;
 
@@ -23,7 +23,7 @@ public interface IMovieDAO {
 
     void deleteCategory(Category category) throws Exception;
 
-    List<Movie> getMoviesWithCategoryID(int id) throws Exception;
+    List<Movie> getMoviesWithCategory(Category category) throws Exception;
 
     void addCategoryToMovie(int movieId, int categoryId);
 
