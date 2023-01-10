@@ -218,8 +218,37 @@ public class MovieDAO implements IMovieDAO {
     }
 
     @Override
-    public List<Movie> getMoviesWithCategoryID(int id) throws Exception {
-        return null;
+    public List<Movie> getMoviesWithCategory(Category category) throws Exception {
+        //Make a list to return
+        ArrayList<Movie> allMoviesWithCategory = new ArrayList<>();
+
+        //Try with resources on the databaseConnector
+        try (Connection conn = myDatabaseConnector.getConnection()) {
+
+            //SQL String which gets all categories form the DB
+            String sql = "SELECT DISTINCT * FROM CatMovie WHERE CategoryID =" + category.getId() + ";";
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            //ArrayList<Integer> movieIDs = new ArrayList<>();
+            //Loop through rows from the database result set
+            while (rs.next()) {
+                //Map DB row to Category Object
+                int id = rs.getInt("MovieID");
+
+                List<Movie> allMovies = getAllMovies();
+                for(Movie movie: allMovies){
+                    if(movie.getId() == id){
+                        allMoviesWithCategory.add(movie);
+                    }
+                }
+            }
+            return allMoviesWithCategory;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Exception("Could not get it from database");
+        }
     }
 
     @Override
