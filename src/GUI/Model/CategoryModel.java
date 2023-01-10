@@ -18,7 +18,7 @@ public class CategoryModel {
     public CategoryModel(){
         categoryManager = new CategoryManager();
         categoriesToBeViewed = FXCollections.observableArrayList();
-        //categoriesToBeViewed.addAll(categoryManager.getAllCategories());
+        categoriesToBeViewed.addAll(categoryManager.getAllCategories());
     }
 
     public ObservableList<Category> getObservableCategories(){return categoriesToBeViewed;}
