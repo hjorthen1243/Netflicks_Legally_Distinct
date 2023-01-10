@@ -4,6 +4,7 @@ import BE.Category;
 import BE.Movie;
 
 import java.sql.*;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,14 +40,16 @@ public class MovieDAO implements IMovieDAO {
                 int id = rs.getInt("Id");
                 String title = rs.getString("Title");
                 int year = rs.getInt("Year");
+                Duration time = Duration.ofSeconds(rs.getInt("Length"));
+                String length = time.toMinutesPart() + ":" + time.toSecondsPart();
                 double imdbRating = rs.getDouble("IMDB Rating");
                 double pRating = rs.getDouble("Personal Rating");
                 Date lastView = rs.getDate("LastView");
                 String pathToFile = rs.getString("PathToFile");
 
 
-                //Add Movie to list allmovies
-                Movie movie = new Movie(id, title, year, imdbRating, pRating , lastView, pathToFile);
+                //Add Movie to list allMovies
+                Movie movie = new Movie(id, title, year, length, imdbRating, pRating , lastView, pathToFile);
                 allMovies.add(movie);
             }
             return allMovies;
