@@ -5,10 +5,12 @@ import BLL.MovieManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MovieModel {
 
+    private ArrayList<Movie> movie;
     private ObservableList<Movie> moviesToBeViewed;
 
     private MovieManager movieManager;
@@ -17,11 +19,13 @@ public class MovieModel {
 
     public MovieModel() throws Exception {
         movieManager = new MovieManager();
-        showList();
+        moviesToBeViewed = FXCollections.observableArrayList();
+        moviesToBeViewed.addAll(movieManager.getAllMovies());
+        movie = new ArrayList<>();
+        movie.addAll(movieManager.getAllMovies());
     }
 
-    public ObservableList<Movie> getObservableMovies() throws Exception {
-        showList();
+    public ObservableList<Movie> getObservableMovies() {
         return moviesToBeViewed;
     }
 
@@ -48,8 +52,4 @@ public class MovieModel {
         //movieManager.updatedMovie(updatedMovie);
     }
 
-    public void showList() throws Exception {
-    moviesToBeViewed = FXCollections.observableArrayList();
-    moviesToBeViewed.addAll(movieManager.getAllMovies());
-    }
 }

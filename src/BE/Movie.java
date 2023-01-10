@@ -8,18 +8,19 @@ public class Movie {
     private int id;
     private String title;
     private int year;
+    private String length;
     private double imdbRating;
     private int personalRating;
     private Date lastViewDate;
-    private String lastViewString;
     private String pathToFile;
 
 
 
-    public Movie(int id, String title, int year, double imdbRating, int personalRating, Date lastViewDate, String pathToFile){
+    public Movie(int id, String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile){
         this.id = id;
         this.title = title;
         this.year = year;
+        this.length = length;
         this.imdbRating = imdbRating;
         this.personalRating = personalRating;
         this.lastViewDate = lastViewDate;
@@ -76,5 +77,13 @@ public class Movie {
 
     public void setLastViewDate(Date lastViewDate) {
         this.lastViewDate = lastViewDate;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
     }
 }
