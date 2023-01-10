@@ -10,7 +10,9 @@ import java.util.List;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+
 public class MovieDAO implements IMovieDAO {
+
     MyDatabaseConnector myDatabaseConnector;
     MyOMDBConnector myOMDBConnector;
 
@@ -45,12 +47,14 @@ public class MovieDAO implements IMovieDAO {
                 double imdbRating = rs.getDouble("IMDB Rating");
                 int pRating = rs.getInt("Personal Rating");
                 Date lastView = rs.getDate("LastView");
+
                 String pathToFile = rs.getString("PathToFile");
 
 
                 //Add Movie to list allMovies
                 Movie movie = new Movie(id, title, year, length, imdbRating, pRating , lastView, pathToFile);
                 allMovies.add(movie);
+
             }
             return allMovies;
 
@@ -256,30 +260,12 @@ public class MovieDAO implements IMovieDAO {
     }
 
     @Override
-    public void addMovieToCategory(int movieId, int categoryId) {
-        //Try with resources on the databaseConnector
-        try (Connection conn = myDatabaseConnector.getConnection()) {
-            //SQL String which inserts the two id's into SongPlaylistLink
-            String sql = "INSERT INTO CatMovie(CategoryID, MovieID) VALUES("+categoryId+","+movieId+");";
+    public void addCategoryToMovie(int movieId, int categoryId) {
 
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sql); //Execute insert into DB
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
     }
 
     @Override
     public void removeCategoryFromMovie(int movieId, int categoryId) {
-        //Try with resources on the databaseConnector
-        try (Connection conn = myDatabaseConnector.getConnection()) {
-            //SQL String which deletes the specific row in SongPlaylistLink where the two id's match
-            String sql = "DELETE FROM CatMovie WHERE CategoryID = " + categoryId + " AND MovieID = "+movieId+";";
 
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sql); //Execute the deletion from the DB
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
     }
 }

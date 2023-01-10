@@ -1,7 +1,6 @@
 package GUI.Controller;
 
 import BE.Movie;
-import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,21 +8,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.awt.Label;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainViewController extends BaseController implements Initializable {
 
-    public ComboBox genreDropDown;
     @FXML
     private TableView movieTable;
     @FXML
@@ -36,7 +36,6 @@ public class MainViewController extends BaseController implements Initializable 
     @Override
     public void setup() {
             updateMovieList();
-            putInallCatrgoriesInComboBox();
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -91,11 +90,6 @@ public class MainViewController extends BaseController implements Initializable 
     public void searchHandle(ActionEvent event) {
     }
 
-    private void putInallCatrgoriesInComboBox(){
-        CategoryModel categoryModel = new CategoryModel();
-        categoryModel.getObservableCategories();
-        genreDropDown.getItems().add("Choice 1");
-    }
     private void updateMovieList() {
         movieModel = getModel().getMovieModel();
 
@@ -110,4 +104,6 @@ public class MainViewController extends BaseController implements Initializable 
         movieTable.setItems(movieModel.getObservableMovies());
 
     }
+
+
 }

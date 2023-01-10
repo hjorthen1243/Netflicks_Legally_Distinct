@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MovieModel {
 
@@ -29,27 +28,36 @@ public class MovieModel {
         return moviesToBeViewed;
     }
 
-    public void searchMovie(String query){
+
+    public void searchMovie(String query) throws Exception {
         //List<Movie> searchResults = movieManager.searchMovies(query);
-        moviesToBeViewed.clear();
-        //moviesToBeViewed.addAll(searchResults);
-    }
-    public void createNewMovie(String title, double imdbRating, double personalRating, Date lastView, String pathToFile){
-        //Movie movie =movieManager.createNewMovie(title, imdbRating, personalRating, lastView, pathToFile);
-        //moviesToBeViewed.add(movie);
+
     }
 
-    public void deleteMovie(Movie movie){
-        //movieManager.deleteMovie(movie);
-        moviesToBeViewed.remove(movie);
-    }
+        public void createNewMovie (String title, double imdbRating, String pathToFile,int lastView) throws Exception{
+        //Movie movie = movieManager.createNewMovie(title, imdbRating, pathToFile, lastView);
+            //moviesToBeViewed.add(movie);
+        }
 
-    public Movie getSelectedMovie(){return selectedMovie;}
+        public void deleteMovie (Movie movie) throws Exception {
+            movieManager.deleteMovie(movie);
 
-    public void setSelectedMovie(Movie selectedMovie){this.selectedMovie = selectedMovie;}
 
-    public void updateMovie(Movie updatedMovie){
-        //movieManager.updatedMovie(updatedMovie);
-    }
+            moviesToBeViewed.remove(movie);
+        }
+
+
+        public Movie getSelectedMovie () {
+            return selectedMovie;
+        }
+
+        public void setSelectedMovie (Movie selectedMovie){
+            this.selectedMovie = selectedMovie;
+        }
+
+        public void updateMovie (Movie updatedMovie) throws Exception {
+            //movieManager.updateMovie(updatedMovie);
+
+        }
 
 }

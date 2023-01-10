@@ -4,30 +4,42 @@ import BE.Movie;
 import DAL.IMovieDAO;
 import DAL.MovieDAO;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class MovieManager {
+
     private final IMovieDAO movieDAO;
+    private MovieSearcher movieSearcher = new MovieSearcher();
 
     public MovieManager() {
         movieDAO = new MovieDAO();
     }
+
+
+
+
     public List<Movie> getAllMovies() throws Exception {
         return movieDAO.getAllMovies();
     }
-    public void updatedMovie(Movie updatedMovie) {
+
+    public List<Movie> searchMovies(String query) throws Exception {
+        List<Movie> allMovies = getAllMovies();
+        List<Movie> searchResult = movieSearcher.search(allMovies, query);
+        return searchResult;
     }
 
-    public void deleteMovie(Movie movie) {
+    public Movie createNewMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastView, String pathToFile) throws Exception {
+        return movieDAO.addMovie(title, year, length, imdbRating, personalRating, lastView, pathToFile);
     }
 
-    public Movie createNewMovie(String title, double imdbRating, double personalRating, Date lastView, String pathToFile) {
-        return null;
+    public void deleteMovie(Movie movie) throws Exception {
+        movieDAO.deleteMovie(movie);
     }
 
-    public List<Movie> searchMovies(String query) {
-        return null;
+
+    public void updateMovie(Movie updatedMovie) throws Exception {
+        movieDAO.editUpdateMovie(updatedMovie);
     }
 
 }

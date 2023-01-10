@@ -15,28 +15,30 @@ public class CategoryModel {
 
     public void setSelectedCategory(Category selectedCategory){this.selectedCategory = selectedCategory;}
 
-    public CategoryModel(){
+    public CategoryModel() throws Exception {
         categoryManager = new CategoryManager();
         categoriesToBeViewed = FXCollections.observableArrayList();
-        categoriesToBeViewed.addAll(categoryManager.getAllCategories());
+        //categoriesToBeViewed.addAll(categoryManager.getAllCategories());
     }
 
-    public ObservableList<Category> getObservableCategories(){return categoriesToBeViewed;}
+    public ObservableList<Category> getObservableCategories(){
+        return categoriesToBeViewed;
+    }
 
-    public void deleteCategory(Category deletedCategory){
-        //categoryManager.deletedCategory(deletedCategory);
+    public void deleteCategory(Category deletedCategory) throws Exception {
+        categoryManager.deletedCategory(deletedCategory);
         categoriesToBeViewed.remove(deletedCategory);
     }
 
-    public void updatedCategory(Category updatedCategory){
-        //categoryManager.updatedCategory(updatedCategory);
+    public void updatedCategory(String oldCategoryName, Category newCategoryName) throws Exception {
+        categoryManager.editUpdateCategory(oldCategoryName, newCategoryName);
 
         categoriesToBeViewed.clear();
-        //categoriesToBeViewed.addAll(categoryManager.getCategory());
+        categoriesToBeViewed.addAll(categoryManager.getAllCategories());
     }
 
-    public void createNewCategory(String genre){
-        //Category category = categoryManager.createNewCategory(genre);
-        //categoriesToBeViewed.add(category);
+    public void createNewCategory(String genre) throws Exception {
+        Category category = categoryManager.createNewCategory(genre);
+        categoriesToBeViewed.add(category);
     }
 }

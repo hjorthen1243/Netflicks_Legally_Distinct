@@ -66,13 +66,14 @@ public class Movie {
     public int getYear() {
         return year;
     }
-
     public void setYear(int year) {
         this.year = year;
     }
+    public String getYearString() {return String.valueOf(year);}
 
     public Date getLastViewDate() {
         return lastViewDate;
+
     }
 
     public void setLastViewDate(Date lastViewDate) {
@@ -85,5 +86,6 @@ public class Movie {
 
     public void setLength(String length) {
         this.length = length;
+
     }
 }
