@@ -9,14 +9,14 @@ public class Movie {
     private String title;
     private int year;
     private double imdbRating;
-    private double personalRating;
+    private int personalRating;
     private Date lastViewDate;
     private String lastViewString;
     private String pathToFile;
 
 
 
-    public Movie(int id, String title, int year, double imdbRating, double personalRating, Date lastViewDate, String pathToFile){
+    public Movie(int id, String title, int year, double imdbRating, int personalRating, Date lastViewDate, String pathToFile){
         this.id = id;
         this.title = title;
         this.year = year;
@@ -38,11 +38,11 @@ public class Movie {
         this.imdbRating = imdbRating;
     }
 
-    public double getPersonalRating() {
+    public int getPersonalRating() {
         return personalRating;
     }
 
-    public void setPersonalRating(double personalRating) {
+    public void setPersonalRating(int personalRating) {
         this.personalRating = personalRating;
     }
 

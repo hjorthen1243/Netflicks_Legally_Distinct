@@ -40,7 +40,7 @@ public class MovieDAO implements IMovieDAO {
                 String title = rs.getString("Title");
                 int year = rs.getInt("Year");
                 double imdbRating = rs.getDouble("IMDB Rating");
-                double pRating = rs.getDouble("Personal Rating");
+                int pRating = rs.getInt("Personal Rating");
                 Date lastView = rs.getDate("LastView");
                 String pathToFile = rs.getString("PathToFile");
 
@@ -58,20 +58,22 @@ public class MovieDAO implements IMovieDAO {
     }
 
     @Override
-    public Movie addMovie(String name, double imdbRating, String pathToFile, int lastViewed) throws Exception {
+    public Movie addMovie(String title, int year, double imdbRating, int personalRating, Date lastViewed, String pathToFile) throws Exception {
 
         //SQL Statement and initializing id variable.
-        String sql = "INSERT INTO Movie (Name, IMDBrating, PathToFile, LastView) VALUES (?,?,?,?);";
+        String sql = "INSERT INTO Movie (Title, Year, IMDB Rating, Personal Rating, LastView, PathToFile) VALUES (?,?,?,?,?,?);";
         int id = 0;
         //Try with resources on the databaseConnector
         try (Connection conn = myDatabaseConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, RETURN_GENERATED_KEYS)) {
 
             //Bind parameters to the SQL statement.
-            stmt.setString(1, name);
-            stmt.setString(2, String.valueOf(imdbRating));
-            stmt.setString(3, pathToFile);
-            stmt.setInt(4, Integer.parseInt(String.valueOf(lastViewed)));
+            stmt.setString(1, title);
+            stmt.setInt(2, year);
+            stmt.setDouble(3, imdbRating);
+            stmt.setInt(4, personalRating);
+            stmt.setDate(5, lastViewed);
+            stmt.setString(6, pathToFile);
 
             //Execute the update into the DB
             stmt.executeUpdate();
@@ -87,10 +89,8 @@ public class MovieDAO implements IMovieDAO {
             throw new Exception("Could not add movie" + ex);
         }
 
-        String lastViewedString = lastViewed + "";
         //Generating and returning the new movie to be fed into the observable list
-        //return new Movie(id, imdbRating, name, pathToFile, lastViewedString);
-        return null;
+        return new Movie(id, title, year, imdbRating, personalRating, lastViewed, pathToFile);
     }
 
     @Override
@@ -100,17 +100,19 @@ public class MovieDAO implements IMovieDAO {
         try (Connection conn = myDatabaseConnector.getConnection()){
 
             //SQL Statement and initializing id variable.
-            String sql = "UPDATE Movie SET Name=?, IMDBRating=?, PathToFile=?, LastView=?" +
+            String sql = "UPDATE Movie SET Title=?, Year=?, IMDBRating=?, personalRating=?, LastView=?, PathToFile=?" +
                     "WHERE Id = ?;";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             //Bind parameters to the SQL statement.
             stmt.setString(1, movie.getTitle());
-            stmt.setString(2, String.valueOf(movie.getImdbRating()));
-            stmt.setString(3, movie.getPathToFile());
-            stmt.setInt(4, Integer.parseInt(String.valueOf(movie.getLastViewDate())));
-            stmt.setInt(5, movie.getId());
+            stmt.setInt(2, movie.getYear());
+            stmt.setDouble(3, movie.getImdbRating());
+            stmt.setInt(4, movie.getPersonalRating());
+            stmt.setDate(5, (Date) movie.getLastViewDate());
+            stmt.setString(6, movie.getPathToFile());
+            stmt.setInt(7, movie.getId());
 
             //Execute the update into the DB
             stmt.executeUpdate();

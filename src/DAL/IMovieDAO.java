@@ -3,13 +3,15 @@ package DAL;
 import BE.Category;
 import BE.Movie;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface IMovieDAO {
 
     List<Movie> getAllMovies() throws Exception;
 
-    Movie addMovie(String name, double imdbRating, String pathToFile, int lastViewed) throws Exception;
+    Movie addMovie(String title, int year, double imdbRating, int personalRating, Date lastViewed, String pathToFile) throws Exception;
+
     void editUpdateMovie(Movie movie) throws Exception;
 
     void deleteMovie(Movie movie) throws Exception;
