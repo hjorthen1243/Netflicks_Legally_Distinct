@@ -34,6 +34,14 @@ public class Movie {
         this.pathToFile = pathToFile;
     }
 
+    public Movie(int id, String name, double imdbRating, String pathToFile, String lastViewedString) {
+        this.id = id;
+        this.title = name;
+        this.imdbRating = imdbRating;
+        this.pathToFile = pathToFile;
+        this.lastViewString = lastViewedString;
+    }
+
     public int getId() {
         return id;
     }

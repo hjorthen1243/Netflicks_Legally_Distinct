@@ -1,30 +1,30 @@
 package BLL;
 
 import BE.Category;
-import DAL.CategoryListDAO;
-import DAL.ICategoryListDAO;
+import DAL.CategoryDAO;
+import DAL.ICategoryDAO;
 
 import java.util.List;
 
 public class CategoryManager {
-    ICategoryListDAO categoryListDAO;
-    public CategoryManager(){categoryListDAO = new CategoryListDAO();
+    ICategoryDAO categoryListDAO;
+    public CategoryManager(){categoryListDAO = new CategoryDAO();
     }
     public List<Category> getAllCategories() throws Exception {
-        return categoryListDAO.getAllCategoryLists();
+        return categoryListDAO.getAllCategories();
     }
 
     public void deletedCategory(Category deletedCategory) throws Exception {
-        categoryListDAO.deleteCategoryList(deletedCategory);
+        categoryListDAO.deleteCategory(deletedCategory);
     }
 
     public void updatedCategory(Category updatedCategory) {
-        categoryListDAO.editUpdateCategoryList(updatedCategory);
+        categoryListDAO.editUpdateCategory(updatedCategory);
 
     }
 
     public Category createNewCategory(String genre) throws Exception {
-        return categoryListDAO.createNewCategoryList(genre);
+        return categoryListDAO.createNewCategory(genre);
     }
 
 }
