@@ -26,9 +26,9 @@
       <Button fx:id="btnAddMovie" layoutX="397.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleAddMovie" text="Add movie" />
       <TableView fx:id="tableViewSearchMovie" layoutX="67.0" layoutY="51.0" prefHeight="100.0" prefWidth="388.0">
         <columns>
-          <TableColumn fx:id="TitleColumn" prefWidth="128.0" text="Title" />
-            <TableColumn fx:id="YearColumn" prefWidth="138.0" text="Year" />
-            <TableColumn fx:id="IMDbRateColumn" prefWidth="121.0" text="IMDb rating" />
+          <TableColumn fx:id="TitleColumn" prefWidth="247.0" text="Title" />
+            <TableColumn fx:id="YearColumn" prefWidth="65.0" text="Year" />
+            <TableColumn fx:id="IMDbRateColumn" prefWidth="75.0" text="IMDb rating" />
         </columns>
       </TableView>
    </children>

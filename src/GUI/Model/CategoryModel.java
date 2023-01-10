@@ -30,8 +30,8 @@ public class CategoryModel {
         categoriesToBeViewed.remove(deletedCategory);
     }
 
-    public void updatedCategory(Category updatedCategory) throws Exception {
-        //categoryManager.updatedCategory(updatedCategory);
+    public void updatedCategory(String oldCategoryName, Category newCategoryName) throws Exception {
+        categoryManager.editUpdateCategory(oldCategoryName, newCategoryName);
 
         categoriesToBeViewed.clear();
         categoriesToBeViewed.addAll(categoryManager.getAllCategories());

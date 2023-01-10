@@ -18,10 +18,9 @@ public class CategoryManager {
         categoryDAO.deleteCategory(deletedCategory);
     }
 
-    /*public void updatedCategory(String oldCategoryName Category newCategoryName) {
+    public void editUpdateCategory(String oldCategoryName, Category newCategoryName) throws Exception {
         categoryDAO.editUpdateCategory(oldCategoryName, newCategoryName);
-
-    }*/
+    }
 
     public Category createNewCategory(String genre) throws Exception {
         return categoryDAO.createNewCategory(genre);

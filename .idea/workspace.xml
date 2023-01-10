@@ -4,7 +4,6 @@
     <list default="true" id="68a72468-6a3b-487c-be15-178e24a2e3ff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BLL/CategoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/CategoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BLL/MovieManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/MovieManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/View/AddMovie.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/AddMovie.fxml" afterDir="false" />
     </list>
