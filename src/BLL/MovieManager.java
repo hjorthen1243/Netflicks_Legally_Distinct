@@ -4,6 +4,7 @@ import BE.Movie;
 import DAL.IMovieDAO;
 import DAL.MovieDAO;
 
+import java.util.Date;
 import java.util.List;
 
 public class MovieManager {

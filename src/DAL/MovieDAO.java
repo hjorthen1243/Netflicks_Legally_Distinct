@@ -37,13 +37,16 @@ public class MovieDAO implements IMovieDAO {
             while (rs.next()) {
                 //Map DB row to Movie Object
                 int id = rs.getInt("Id");
-                String name = rs.getString("Name");
-                double imdbRating= rs.getDouble("IMDBrating");
+                String title = rs.getString("Title");
+                int year = rs.getInt("Year");
+                double imdbRating = rs.getDouble("IMDB Rating");
+                double pRating = rs.getDouble("Personal Rating");
+                Date lastView = rs.getDate("LastView");
                 String pathToFile = rs.getString("PathToFile");
-                String lastView = rs.getString("LastView");
+
 
                 //Add Movie to list allmovies
-                Movie movie = new Movie(id, imdbRating, name ,pathToFile, lastView);
+                Movie movie = new Movie(id, title, year, imdbRating, pRating , lastView, pathToFile);
                 allMovies.add(movie);
             }
             return allMovies;
