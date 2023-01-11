@@ -18,7 +18,6 @@ public class MyDatabaseConnector {
     }
 
     public Connection getConnection() throws SQLServerException {
-        System.out.println("Connection to DB is successful");
         return dataSource.getConnection();
     }
 }

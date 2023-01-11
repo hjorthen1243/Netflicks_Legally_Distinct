@@ -2,16 +2,24 @@ package BLL;
 
 import BE.Category;
 import DAL.CategoryDAO;
+
 import DAL.ICategoryDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryManager {
     ICategoryDAO categoryDAO;
+    CategoryDAO categoryDAONew;
     public CategoryManager(){categoryDAO = new CategoryDAO();
     }
     public List<Category> getAllCategories() throws Exception {
         return categoryDAO.getAllCategories();
+    }
+
+    public ArrayList<Category> getAllCategoriesArray() throws Exception {
+        categoryDAONew = new CategoryDAO();
+        return categoryDAONew.getAllCategoriesArray();
     }
 
     public void deletedCategory(Category deletedCategory) throws Exception {

@@ -173,7 +173,7 @@ public class MovieDAO implements IMovieDAO {
             while (rs.next()) {
                 //Map DB row to Category Object
                 int id = rs.getInt("id");
-                String name = rs.getString("categoryName");
+                String name = rs.getString("Category");
 
                 Category category = new Category(id, name);
                 allCategories.add(category);
@@ -189,7 +189,7 @@ public class MovieDAO implements IMovieDAO {
     @Override
     public Category createCategory(String name) throws Exception {
 
-        String sql = "INSERT INTO CatMovie (categoryName) VALUES (?);";
+        String sql = "INSERT INTO CatMovie (Category) VALUES (?);";
         int id = 0;
 
         //Try with resources on the databaseConnector
