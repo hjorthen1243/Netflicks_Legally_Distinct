@@ -27,4 +27,6 @@ public interface IMovieDAO {
     void addCategoryToMovie(int movieId, int categoryId);
 
     void removeCategoryFromMovie(int movieId, int categoryId);
+
+    List<Movie> searchAddMovie(String text);
 }

@@ -268,4 +268,9 @@ public class MovieDAO implements IMovieDAO {
     public void removeCategoryFromMovie(int movieId, int categoryId) {
 
     }
+
+    @Override
+    public List<Movie> searchAddMovie(String text) {
+        return myOMDBConnector.searchQuery(text);
+    }
 }

@@ -47,4 +47,7 @@ public class MovieManager {
         movieDAO.editUpdateMovie(updatedMovie);
     }
 
+    public List<Movie> searchAddMovie(String text) {
+        return movieDAO.searchAddMovie(text);
+    }
 }

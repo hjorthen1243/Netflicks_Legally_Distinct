@@ -27,6 +27,13 @@ public class Movie {
         this.pathToFile = pathToFile;
     }
 
+    public Movie(int id, String title, int year){
+        this.id = id;
+        this.title = title;
+        this.year = year;
+    }
+
+
     public int getId() {
         return id;
     }
