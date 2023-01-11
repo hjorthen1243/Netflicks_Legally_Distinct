@@ -29,4 +29,8 @@ public interface IMovieDAO {
     void removeCategoryFromMovie(int movieId, int categoryId);
 
     List<Movie> searchAddMovie(String text);
+
+    Movie searchSelectedMovie(String imdbID);
+
+    String getMovieCategories();
 }

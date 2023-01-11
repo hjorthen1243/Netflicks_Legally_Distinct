@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import BE.Movie;
 import GUI.Model.MovieModel;
 import GUI.Model.PMCModel;
 import javafx.event.ActionEvent;
@@ -18,8 +19,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddMovieController extends BaseController implements Initializable {
-    public TableView tableViewSearchMovie;
-    public TableColumn titleColumn, yearColumn;
+
+    private Movie selectedMovie;
+    @FXML
+    private TableView tableViewSearchMovie;
+    @FXML
+    private TableColumn titleColumn, yearColumn;
     @FXML
     private TextField txtFieldSearch, txtFieldIMDBRating,  txtFieldPersonalRating, txtFieldMovieTitle, txtFiledMovieFile, txtFieldMovieCategories, txtFieldYear;
     @FXML
@@ -34,7 +39,11 @@ public class AddMovieController extends BaseController implements Initializable 
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        try {
+            clicks();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
     public void handleInsertFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -62,5 +71,19 @@ public class AddMovieController extends BaseController implements Initializable 
         tableViewSearchMovie.getColumns().addAll();
         tableViewSearchMovie.setItems(movieModel.searchAddMovie(txtFieldSearch.getText()));
 
+    }
+    private void clicks() throws Exception {
+        movieModel = new MovieModel();
+        tableViewSearchMovie.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            //If something is selected, set the data from the selected property into the text fields
+            if (newValue != null) {
+                selectedMovie = (Movie) tableViewSearchMovie.getSelectionModel().getSelectedItem();
+                Movie m = movieModel.searchSelectedMovie(selectedMovie.getImdbID());
+                txtFieldMovieTitle.setText(selectedMovie.getTitle());
+                txtFieldYear.setText(selectedMovie.getYearString());
+                txtFieldIMDBRating.setText(String.valueOf(m.getImdbRating()));
+                txtFieldMovieCategories.setText(movieModel.getMovieCategories());
+            }
+        });
     }
 }

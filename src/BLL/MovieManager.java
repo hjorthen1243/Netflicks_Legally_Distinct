@@ -50,4 +50,12 @@ public class MovieManager {
     public List<Movie> searchAddMovie(String text) {
         return movieDAO.searchAddMovie(text);
     }
+
+    public Movie searchSelectedMovie(String imdbID) {
+        return movieDAO.searchSelectedMovie(imdbID);
+    }
+
+    public String getMovieCategories() {
+        return movieDAO.getMovieCategories();
+    }
 }

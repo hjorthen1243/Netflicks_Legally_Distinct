@@ -71,4 +71,12 @@ public class MovieModel {
         movieResults.addAll(movieManager.searchAddMovie(text));
         return movieResults;
     }
+
+    public Movie searchSelectedMovie(String imdbID) {
+        return movieManager.searchSelectedMovie(imdbID);
+    }
+
+    public String getMovieCategories() {
+        return movieManager.getMovieCategories();
+    }
 }

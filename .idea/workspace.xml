@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="666c997b-ffb9-49a4-975f-e9fd331b848d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BE/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BE/Movie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BLL/MovieManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/MovieManager.java" afterDir="false" />
@@ -10,10 +9,7 @@
       <change beforePath="$PROJECT_DIR$/src/DAL/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MovieDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAL/MyOMDBConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MyOMDBConnector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Model/PMCModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/PMCModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/View/AddMovie.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/AddMovie.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,5 +93,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/DAL/MyOMDBConnector.java</url>
+          <line>156</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
