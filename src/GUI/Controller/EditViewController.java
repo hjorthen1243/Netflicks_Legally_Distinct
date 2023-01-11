@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 
 public class EditViewController extends BaseController {
     public DatePicker datePickerLastSeen;
-    public TextField txtFieldPRating;
     public TextField txtFieldAddCatDb;
     public Button btnAddCatDb;
     public Button btnAddCatMovie;
