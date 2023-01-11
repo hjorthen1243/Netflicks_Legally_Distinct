@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="editView" prefHeight="383.0" prefWidth="434.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.EditViewController">
+   <children>
+      <TextField fx:id="txtFieldPRating" layoutX="202.0" layoutY="31.0" promptText="0.0" />
+      <ComboBox fx:id="comboBoxRemoveCatDb" layoutX="201.0" layoutY="165.0" prefWidth="150.0" />
+      <DatePicker fx:id="datePickerLastSeen" layoutX="202.0" layoutY="73.0" promptText="YYYY/MM/DD" />
+      <Text layoutX="41.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Rating" />
+      <Text layoutX="58.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last seen" />
+      <Text layoutX="7.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove category from database" />
+      <Button fx:id="btnAddCatDb" layoutX="351.0" layoutY="118.0" mnemonicParsing="false" onAction="#addCatDbHandle" prefHeight="25.0" prefWidth="25.0" text="+" />
+      <Button fx:id="btnAddCatMovie" layoutX="351.0" layoutY="211.0" mnemonicParsing="false" onAction="#addCatMovieHandle" prefHeight="25.0" prefWidth="25.0" text="+" />
+      <Text layoutX="14.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add category to database" />
+      <Button fx:id="btnSaveChanges" layoutX="332.0" layoutY="344.0" mnemonicParsing="false" text="Save changes" />
+      <Button fx:id="btnRemoveCatDb" layoutX="351.0" layoutY="165.0" mnemonicParsing="false" onAction="#removeCatDbHandle" prefHeight="25.0" prefWidth="25.0" text="-" />
+      <Button fx:id="btnRemoveCatMovie" layoutX="351.0" layoutY="256.0" mnemonicParsing="false" onAction="#removeCatMovieHandle" prefHeight="25.0" prefWidth="25.0" text="-" />
+      <TextField fx:id="txtFieldAddCatDb" layoutX="202.0" layoutY="118.0" promptText="Add category in database" />
+      <ComboBox fx:id="comboBoxRemoveCatMovie" layoutX="201.0" layoutY="256.0" prefWidth="150.0" />
+      <Text layoutX="21.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add category to movie" />
+      <Text layoutX="14.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove category from movie" />
+      <ComboBox fx:id="comboBoxAddCatMovie" layoutX="201.0" layoutY="211.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>

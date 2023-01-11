@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70af90d9-0548-49a6-a98d-1b0b82010ea3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/GUI/Controller/EditViewController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/View/EditView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BLL/MovieManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/MovieManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/IMovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/IMovieDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MovieDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/View/MainView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/MainView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +63,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f76655df-98f5-4eac-a846-b3fe7130acac" name="Changes" comment="" />
+      <changelist id="70af90d9-0548-49a6-a98d-1b0b82010ea3" name="Changes" comment="" />
       <created>1672738436512</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -75,6 +73,9 @@
       <workItem from="1672739472007" duration="574000" />
       <workItem from="1672816204661" duration="1652000" />
       <workItem from="1672904134962" duration="1755000" />
+      <workItem from="1673351534168" duration="593000" />
+      <workItem from="1673421437542" duration="1597000" />
+      <workItem from="1673423048804" duration="2164000" />
     </task>
     <servers />
   </component>
