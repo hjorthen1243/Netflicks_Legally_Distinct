@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70af90d9-0548-49a6-a98d-1b0b82010ea3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/GUI/Controller/EditViewController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/View/EditView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/View/MainView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/MainView.fxml" afterDir="false" />
-    </list>
-    <list default="true" id="666c997b-ffb9-49a4-975f-e9fd331b848d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/EditViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/EditViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/View/EditView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/EditView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/View/MainView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/MainView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

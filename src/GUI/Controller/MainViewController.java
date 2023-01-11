@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -31,6 +32,7 @@ import java.util.ResourceBundle;
 public class MainViewController extends BaseController implements Initializable {
 
     public ComboBox genreDropDown;
+    public Button btnEdit;
     @FXML
     private TableView movieTable;
     @FXML
@@ -39,6 +41,7 @@ public class MainViewController extends BaseController implements Initializable 
     private CategoryModel categoryModel;
     AddMovieController addController;
     DeleteMovieController delController;
+    EditViewController editController;
     private Label label;
 
     @Override
@@ -91,11 +94,7 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
-    public void savePersonalRatingHandle(ActionEvent event) {
-    }
 
-    public void saveLastSeenHandle(ActionEvent event) {
-    }
 
     public void searchHandle(ActionEvent event) {
     }
@@ -188,5 +187,11 @@ public class MainViewController extends BaseController implements Initializable 
         {
             e.printStackTrace();
         }
+    }
+
+    public void editHandle(ActionEvent actionEvent) {
+        editController = new EditViewController();
+        OpenNewView(actionEvent, "EditView.fxml", "Edit", editController);
+
     }
 }
