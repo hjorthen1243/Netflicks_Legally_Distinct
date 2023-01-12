@@ -31,6 +31,7 @@ import java.util.ResourceBundle;
 
 public class MainViewController extends BaseController implements Initializable {
 
+    public Slider sliderPR;
     @FXML
     private ComboBox genreDropDown;
     @FXML
@@ -54,7 +55,16 @@ public class MainViewController extends BaseController implements Initializable 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        sliderPR.setMajorTickUnit( 1 );
         eventHandler();
+    }
+
+    /**
+     * these are the components that needs to be disabled before a movie is choosen
+     */
+    private void disableComponents() {
+
+
     }
 
     public void addMovieHandle(ActionEvent event) {

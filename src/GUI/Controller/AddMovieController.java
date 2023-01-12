@@ -1,5 +1,7 @@
 package GUI.Controller;
 
+import BE.Category;
+import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
 import BE.Movie;
 import GUI.Model.PMCModel;
@@ -9,11 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -35,6 +33,7 @@ public class AddMovieController extends BaseController implements Initializable{
     public java.sql.Date date;
     public LocalDate localDate;
     public Button btnAddMovie;
+    public ComboBox categoryDropDown;
     ArrayList<TextField> allTextfiels;
 
     public EditViewController editController;
@@ -47,31 +46,73 @@ public class AddMovieController extends BaseController implements Initializable{
     private TextField txtFieldSearch, txtFieldIMDBRating,  txtFieldPersonalRating, txtFieldMovieTitle, txtFiledMovieFile, txtFieldMovieCategories, txtFieldYear;
     @FXML
     private Button btnInsertFile, btnSearchMovie;
+    MainViewController methods;
 
     private MovieModel movieModel;
 
     private PMCModel pmcModel;
+    private CategoryModel categoryModel;
+
+
     @Override
     public void setup() {
+    }
+
+    private void genreDropDownUpdate() {
+        try {
+            categoryModel = new CategoryModel();
+            ArrayList<Category> allCategories;
+            allCategories = categoryModel.getAllCategories();
+            for (Category category: allCategories) {
+                categoryDropDown.getItems().add(category.getCategory());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            makelist();
+            disableBtn();
+            genreDropDownUpdate();
+            clicks();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void makelist() {
         //All the values needed to create a new movie
         allTextfiels = new ArrayList<>();
         allTextfiels.add(txtFieldMovieTitle);
-        allTextfiels.add(txtFieldMovieCategories);
         allTextfiels.add(txtFieldYear);
         allTextfiels.add(txtFieldIMDBRating);
         allTextfiels.add(txtFieldPersonalRating);
         allTextfiels.add(txtFiledMovieFile);
+    }
+
+
+    @FXML
+    private void shouldNotDisable() {
+
+        for (TextField textfield: allTextfiels) {
+            if(textfield.getText().equals("") || textfield.getText() == null){
+                System.out.println("Still need: " + textfield.getId());
+                return;
+            }
+        }
+        btnAddMovie.setDisable(false);
 
     }
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try {
-            clicks();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
+    private void disableBtn() {
+        btnAddMovie.setDisable(true);
     }
+
     public void handleInsertFile(ActionEvent actionEvent) {
+        shouldNotDisable();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select movie");
         fileChooser.getExtensionFilters().add(
@@ -105,6 +146,7 @@ public class AddMovieController extends BaseController implements Initializable{
     }
 
     public void datePicked(ActionEvent event) {
+        shouldNotDisable();
         localDate = datePickerLastSeen.getValue();
     }
     @FXML
