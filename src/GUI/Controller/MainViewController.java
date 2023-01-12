@@ -33,8 +33,7 @@ public class MainViewController extends BaseController implements Initializable 
 
     public ComboBox genreDropDown;
     public Button btnEdit;
-    @FXML
-    private TableView movieTable;
+    public TableView movieTable;
     @FXML
     private TableColumn titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, categoryColumn, lastViewColumn;
     private MovieModel movieModel;
@@ -68,9 +67,7 @@ public class MainViewController extends BaseController implements Initializable 
         alert.setContentText("");
         Optional<ButtonType> option = alert.showAndWait();
         option.get();
-
-        //delController = new DeleteMovieController();
-        //OpenNewView(event, "DeleteMovie.fxml", "Delete a movie", delController);
+        
     }
 
 
@@ -190,9 +187,15 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
-    public void editHandle(ActionEvent actionEvent) {
+
+    public void saveLastSeenHandle(ActionEvent actionEvent) {
+    }
+
+    public void handleEditCategories(ActionEvent actionEvent) {
         editController = new EditViewController();
         OpenNewView(actionEvent, "EditView.fxml", "Edit", editController);
+    }
 
+    public void handleSavePR(ActionEvent actionEvent) {
     }
 }

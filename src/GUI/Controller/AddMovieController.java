@@ -5,13 +5,19 @@ import GUI.Model.MovieModel;
 import GUI.Model.PMCModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -20,6 +26,7 @@ import java.util.ResourceBundle;
 
 public class AddMovieController extends BaseController implements Initializable {
 
+    public EditViewController editController;
     private Movie selectedMovie;
     @FXML
     private TableView tableViewSearchMovie;
@@ -85,5 +92,31 @@ public class AddMovieController extends BaseController implements Initializable 
                 txtFieldMovieCategories.setText(movieModel.getMovieCategories());
             }
         });
+    }
+
+    public void handleCategoriesClick(MouseEvent mouseEvent) {
+        editController = new EditViewController();
+        OpenNewView(mouseEvent, "EditView.fxml", "Edit", editController);
+    }
+
+    private void OpenNewView(MouseEvent event, String fxmlName, String displayName, BaseController controller) {
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/GUI/View/" + fxmlName));
+            AnchorPane pane = loader.load();
+            controller = loader.getController();
+            //controller.setModel(super.getModel());
+            //controller.setup();
+            // Create the dialog stage
+            Stage dialogWindow = new Stage();
+            dialogWindow.setTitle(displayName);
+            dialogWindow.initModality(Modality.WINDOW_MODAL);
+            dialogWindow.initOwner(((Node) event.getSource()).getScene().getWindow());
+            Scene scene = new Scene(pane);
+            dialogWindow.setScene(scene);
+            dialogWindow.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
