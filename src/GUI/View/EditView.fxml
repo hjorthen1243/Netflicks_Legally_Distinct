@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="editView" prefHeight="385.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.EditViewController">
+   <children>
+      <CheckBox fx:id="check1" layoutX="135.0" layoutY="35.0" mnemonicParsing="false" text="1" />
+      <CheckBox fx:id="check2" layoutX="165.0" layoutY="35.0" mnemonicParsing="false" text="2" />
+      <CheckBox fx:id="check3" layoutX="195.0" layoutY="35.0" mnemonicParsing="false" text="3" />
+      <CheckBox fx:id="check4" layoutX="225.0" layoutY="35.0" mnemonicParsing="false" text="4" />
+      <CheckBox fx:id="check5" layoutX="255.0" layoutY="35.0" mnemonicParsing="false" text="5" />
+      <CheckBox fx:id="check6" layoutX="285.0" layoutY="35.0" mnemonicParsing="false" text="6" />
+      <CheckBox fx:id="check7" layoutX="315.0" layoutY="35.0" mnemonicParsing="false" text="7" />
+      <CheckBox fx:id="check8" layoutX="345.0" layoutY="35.0" mnemonicParsing="false" text="8" />
+      <CheckBox fx:id="check9" layoutX="375.0" layoutY="35.0" mnemonicParsing="false" text="9" />
+      <CheckBox fx:id="check10" layoutX="405.0" layoutY="35.0" mnemonicParsing="false" text="10" />
+      <ComboBox fx:id="comboBoxRemoveCatDb" layoutX="201.0" layoutY="165.0" onAction="#dbCatSelectedHandle" prefWidth="150.0" />
+      <DatePicker fx:id="datePickerLastSeen" layoutX="202.0" layoutY="73.0" promptText="YYYY/MM/DD" />
+      <Text layoutX="41.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Rating" />
+      <Text layoutX="58.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last seen" />
+      <Text layoutX="7.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove category from database" />
+      <Button fx:id="btnAddCatDb" layoutX="351.0" layoutY="118.0" mnemonicParsing="false" onAction="#addCatDbHandle" prefHeight="25.0" prefWidth="25.0" text="+" />
+      <Button fx:id="btnAddCatMovie" layoutX="351.0" layoutY="211.0" mnemonicParsing="false" onAction="#addCatMovieHandle" prefHeight="25.0" prefWidth="25.0" text="+" />
+      <Text layoutX="14.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add category to database" />
+      <Button fx:id="btnSaveChanges" layoutX="351.0" layoutY="346.0" mnemonicParsing="false" onAction="#saveChangesHandle" text="Save changes" />
+      <Button fx:id="btnRemoveCatDb" layoutX="351.0" layoutY="165.0" mnemonicParsing="false" onAction="#removeCatDbHandle" prefHeight="25.0" prefWidth="25.0" text="-" />
+      <Button fx:id="btnRemoveCatMovie" layoutX="351.0" layoutY="256.0" mnemonicParsing="false" onAction="#removeCatMovieHandle" prefHeight="25.0" prefWidth="25.0" text="-" />
+      <TextField fx:id="txtFieldAddCatDb" layoutX="202.0" layoutY="118.0" promptText="Add category in database" />
+      <ComboBox fx:id="comboBoxRemoveCatMovie" layoutX="201.0" layoutY="256.0" onAction="#catInMovieSelectedHandle" prefWidth="150.0" />
+      <Text layoutX="21.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add category to movie" />
+      <Text layoutX="14.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove category from movie" />
+      <ComboBox fx:id="comboBoxAddCatMovie" layoutX="201.0" layoutY="211.0" onAction="#catToMovieSelectedHandle" prefWidth="150.0" />
+   </children>
+</AnchorPane>

@@ -1,10 +1,17 @@
 package GUI.Controller;
 
 import GUI.Model.MovieModel;
+import BE.Movie;
+import GUI.Model.PMCModel;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -13,34 +20,46 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
-
-public class AddMovieController extends BaseController {
-    public Button btnInsertFile;
-    public TextField txtFiledMovieFile;
-    public TextField txtFieldIMDBRating;
-    public TextField txtFieldPersonalRating;
-    public TextField barURL;
-    public TextField txtFieldMovieTitle;
-    public TextField txtFieldMovieGenres;
-    public TextField txtFieldYear;
+import java.net.URL;
+import java.util.ResourceBundle;
+public class AddMovieController extends BaseController implements Initializable{
     public DatePicker datePickerLastSeen;
     public java.sql.Date date;
     public LocalDate localDate;
-    MovieModel movieModel;
     ArrayList<TextField> allTextfiels;
 
+    private Movie selectedMovie;
+    @FXML
+    private TableView tableViewSearchMovie;
+    @FXML
+    private TableColumn titleColumn, yearColumn;
+    @FXML
+    private TextField txtFieldSearch, txtFieldIMDBRating,  txtFieldPersonalRating, txtFieldMovieTitle, txtFiledMovieFile, txtFieldMovieCategories, txtFieldYear;
+    @FXML
+    private Button btnInsertFile, btnSearchMovie;
+
+    private MovieModel movieModel;
+
+    private PMCModel pmcModel;
     @Override
     public void setup() {
         //All the values needed to create a new movie
         allTextfiels = new ArrayList<>();
         allTextfiels.add(txtFieldMovieTitle);
-        allTextfiels.add(txtFieldMovieGenres);
+        allTextfiels.add(txtFieldMovieCategories);
         allTextfiels.add(txtFieldYear);
         allTextfiels.add(txtFieldIMDBRating);
         allTextfiels.add(txtFieldPersonalRating);
         allTextfiels.add(txtFiledMovieFile);
 
+    }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            clicks();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
     public void handleInsertFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -73,26 +92,38 @@ public class AddMovieController extends BaseController {
         }
         //Date lastView = lastViewed.
     }
-
-
     public void datePicked(ActionEvent event) {
         localDate = datePickerLastSeen.getValue();
         /**
-        System.out.println("Det virker  " + convertToDateViaInstant(localDate));
-        date = new java.sql.Date();
-        date = new java.sql.Date(java.sql.Date) convertToDateViaInstant(localDate);
+         System.out.println("Det virker  " + convertToDateViaInstant(localDate));
+         date = new java.sql.Date();
+         date = new java.sql.Date(java.sql.Date) convertToDateViaInstant(localDate);
          */
     }
+    @FXML
+    private void handleSearchMovie() throws Exception {
+        movieModel = new MovieModel();
+        movieModel.searchAddMovie(txtFieldSearch.getText());
 
-    public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
-        return dateToConvert.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        yearColumn.setCellValueFactory(new PropertyValueFactory<>("Year"));
+
+        tableViewSearchMovie.getColumns().addAll();
+        tableViewSearchMovie.setItems(movieModel.searchAddMovie(txtFieldSearch.getText()));
+
     }
-
-    public Date convertToDateViaInstant(LocalDate dateToConvert) {
-        return java.util.Date.from(dateToConvert.atStartOfDay()
-                .atZone(ZoneId.systemDefault())
-                .toInstant());
+    private void clicks() throws Exception {
+        movieModel = new MovieModel();
+        tableViewSearchMovie.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            //If something is selected, set the data from the selected property into the text fields
+            if (newValue != null) {
+                selectedMovie = (Movie) tableViewSearchMovie.getSelectionModel().getSelectedItem();
+                Movie m = movieModel.searchSelectedMovie(selectedMovie.getImdbID());
+                txtFieldMovieTitle.setText(selectedMovie.getTitle());
+                txtFieldYear.setText(selectedMovie.getYearString());
+                txtFieldIMDBRating.setText(String.valueOf(m.getImdbRating()));
+                txtFieldMovieCategories.setText(movieModel.getMovieCategories());
+            }
+        });
     }
 }
