@@ -17,15 +17,14 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.net.URL;
 import java.util.ResourceBundle;
 public class AddMovieController extends BaseController implements Initializable{
     public DatePicker datePickerLastSeen;
     public java.sql.Date date;
     public LocalDate localDate;
+    public Button btnAddMovie;
     ArrayList<TextField> allTextfiels;
 
     private Movie selectedMovie;
@@ -86,7 +85,9 @@ public class AddMovieController extends BaseController implements Initializable{
         int personalRating = Integer.parseInt(txtFieldPersonalRating.getText());
         String filePath = txtFiledMovieFile.getText();
         try {
+
             movieModel.addNewMovie(title, year, null, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath);
+            closeWindow();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -94,11 +95,6 @@ public class AddMovieController extends BaseController implements Initializable{
     }
     public void datePicked(ActionEvent event) {
         localDate = datePickerLastSeen.getValue();
-        /**
-         System.out.println("Det virker  " + convertToDateViaInstant(localDate));
-         date = new java.sql.Date();
-         date = new java.sql.Date(java.sql.Date) convertToDateViaInstant(localDate);
-         */
     }
     @FXML
     private void handleSearchMovie() throws Exception {
@@ -110,6 +106,7 @@ public class AddMovieController extends BaseController implements Initializable{
 
         tableViewSearchMovie.getColumns().addAll();
         tableViewSearchMovie.setItems(movieModel.searchAddMovie(txtFieldSearch.getText()));
+
 
     }
     private void clicks() throws Exception {
@@ -125,5 +122,12 @@ public class AddMovieController extends BaseController implements Initializable{
                 txtFieldMovieCategories.setText(movieModel.getMovieCategories());
             }
         });
+    }
+    /**
+     * Closes the window
+     */
+    public void closeWindow() {
+        Stage stage = (Stage) btnAddMovie.getScene().getWindow();
+        stage.close();
     }
 }

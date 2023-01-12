@@ -22,7 +22,6 @@ public class MovieModel {
     public MovieModel() throws Exception {
         movieManager = new MovieManager();
         moviesToBeViewed = FXCollections.observableArrayList();
-        moviesToBeViewed.addAll(movieManager.getAllMovies());
         movie = new ArrayList<>();
         movie.addAll(movieManager.getAllMovies());
     }
