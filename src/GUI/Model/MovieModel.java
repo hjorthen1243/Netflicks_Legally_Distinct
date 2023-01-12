@@ -47,8 +47,6 @@ public class MovieModel {
 
         public void deleteMovie (Movie movie) throws Exception {
             movieManager.deleteMovie(movie);
-
-
             moviesToBeViewed.remove(movie);
         }
 

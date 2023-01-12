@@ -61,13 +61,16 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     public void removeMovieHandle(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete File");
-        alert.setHeaderText("You are about to delete the movie:\n" + "BATMAN" + "\tfrom" + "0000" + "\nAre you sure want to delete this movie?");
-        alert.setContentText("");
-        Optional<ButtonType> option = alert.showAndWait();
-        option.get();
-        
+        try {
+        Movie m = (Movie) movieTable.getFocusModel().getFocusedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + m.getTitle() + " - " + m.getYearString() + "?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+                movieModel.deleteMovie(m);
+            }
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
