@@ -1,8 +1,8 @@
 package GUI.Model;
 
 public class PMCModel {
-    private MovieModel movieModel;
-    private CategoryModel categoryModel;
+    private final MovieModel movieModel;
+    private final CategoryModel categoryModel;
 
     public PMCModel() throws Exception {
         movieModel = new MovieModel();
@@ -11,9 +11,6 @@ public class PMCModel {
 
     public MovieModel getMovieModel() {return movieModel;}
 
-    public void setMovieModel(){this.movieModel = movieModel;}
-
     public CategoryModel getCategoryModel() {return categoryModel;}
 
-    public void setCategoryModel() {this.categoryModel = categoryModel;}
 }

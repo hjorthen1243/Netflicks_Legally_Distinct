@@ -73,6 +73,7 @@ public class MainViewController extends BaseController implements Initializable 
         //OpenNewView(event, "DeleteMovie.fxml", "Delete a movie", delController);
     }
 
+
     private void OpenNewView(ActionEvent event, String fxmlName, String displayName, BaseController controller) {
         try{
             FXMLLoader loader = new FXMLLoader();

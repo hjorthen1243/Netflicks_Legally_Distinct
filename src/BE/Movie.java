@@ -9,6 +9,7 @@ public class Movie {
     private String title;
     private int year;
     private String length;
+    private String imdbID;
     private double imdbRating;
     private int personalRating;
     private Date lastViewDate;
@@ -26,6 +27,17 @@ public class Movie {
         this.lastViewDate = lastViewDate;
         this.pathToFile = pathToFile;
     }
+
+    public Movie(String title, int year, String imdbID){
+        this.title = title;
+        this.year = year;
+        this.imdbID = imdbID;
+    }
+    public Movie(String length, double imdbRating){
+        this.length = length;
+        this.imdbRating = imdbRating;
+    }
+
 
     public int getId() {
         return id;
@@ -87,5 +99,9 @@ public class Movie {
     public void setLength(String length) {
         this.length = length;
 
+    }
+
+    public String getImdbID() {
+        return imdbID;
     }
 }

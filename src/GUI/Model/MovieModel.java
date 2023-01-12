@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieModel {
 
@@ -65,4 +66,17 @@ public class MovieModel {
 
         }
 
+    public ObservableList<Movie> searchAddMovie(String text) {
+        ObservableList<Movie> movieResults = FXCollections.observableArrayList();
+        movieResults.addAll(movieManager.searchAddMovie(text));
+        return movieResults;
+    }
+
+    public Movie searchSelectedMovie(String imdbID) {
+        return movieManager.searchSelectedMovie(imdbID);
+    }
+
+    public String getMovieCategories() {
+        return movieManager.getMovieCategories();
+    }
 }
