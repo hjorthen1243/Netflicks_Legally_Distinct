@@ -16,6 +16,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.net.URL;
@@ -80,19 +84,19 @@ public class AddMovieController extends BaseController implements Initializable{
 
         String title = txtFieldMovieTitle.getText();
         int year = Integer.parseInt(txtFieldYear.getText());
-        String lenght = null;
+        //String lenght = null;
         double imdbRating = Double.parseDouble(txtFieldIMDBRating.getText());
         int personalRating = Integer.parseInt(txtFieldPersonalRating.getText());
         String filePath = txtFiledMovieFile.getText();
-        try {
 
+        try {
             movieModel.addNewMovie(title, year, null, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath);
             closeWindow();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //Date lastView = lastViewed.
     }
+
     public void datePicked(ActionEvent event) {
         localDate = datePickerLastSeen.getValue();
     }

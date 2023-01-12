@@ -31,8 +31,10 @@ import java.util.ResourceBundle;
 
 public class MainViewController extends BaseController implements Initializable {
 
-    public ComboBox genreDropDown;
-    public Button btnEdit;
+    @FXML
+    private ComboBox genreDropDown;
+    @FXML
+    private Button btnEdit;
     @FXML
     private TableView movieTable;
     @FXML
@@ -142,7 +144,6 @@ public class MainViewController extends BaseController implements Initializable 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         }
     }
@@ -164,16 +165,17 @@ public class MainViewController extends BaseController implements Initializable 
         if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) { //Check for double-click on left MouseButton
             TableRow<Movie> row = (TableRow<Movie>) event.getSource();
             if (row.getItem() != null) { //If the item we are choosing is not zero play that song
-                System.out.println("heard the double click");
                 playMedia();
-
             }
         }
     }
 
     private void playMedia() {
-        try {//constructor of file class having file as argument
-            File file = new File("C:\\Users\\aneho\\OneDrive\\Billeder\\Filmrulle\\HueFilm.mp4");
+        try {
+            //constructor of file class having file as argument
+            Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
+
+            File file = new File(movie.getPathToFile());
             //File file = new File("C:\\Users\\aneho\\OneDrive\\Skrivebord\\test.txt");
             if (!Desktop.isDesktopSupported())//check if Desktop is supported by Platform or not
             {
