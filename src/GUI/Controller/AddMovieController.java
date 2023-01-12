@@ -1,7 +1,7 @@
 package GUI.Controller;
 
-import BE.Movie;
 import GUI.Model.MovieModel;
+import BE.Movie;
 import GUI.Model.PMCModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -21,10 +22,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-public class AddMovieController extends BaseController implements Initializable {
+public class AddMovieController extends BaseController implements Initializable{
+    public DatePicker datePickerLastSeen;
+    public java.sql.Date date;
+    public LocalDate localDate;
+    public Button btnAddMovie;
+    ArrayList<TextField> allTextfiels;
 
     public EditViewController editController;
     private Movie selectedMovie;
@@ -42,6 +49,14 @@ public class AddMovieController extends BaseController implements Initializable 
     private PMCModel pmcModel;
     @Override
     public void setup() {
+        //All the values needed to create a new movie
+        allTextfiels = new ArrayList<>();
+        allTextfiels.add(txtFieldMovieTitle);
+        allTextfiels.add(txtFieldMovieCategories);
+        allTextfiels.add(txtFieldYear);
+        allTextfiels.add(txtFieldIMDBRating);
+        allTextfiels.add(txtFieldPersonalRating);
+        allTextfiels.add(txtFiledMovieFile);
 
     }
     @Override
@@ -63,10 +78,31 @@ public class AddMovieController extends BaseController implements Initializable 
             txtFiledMovieFile.setText(String.valueOf(selectedFile));
         }
     }
+    public void handleAddMovie(ActionEvent actionEvent) throws RuntimeException {
+        try {
+            movieModel = new MovieModel();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-    public void handleAddMovie() {
+        String title = txtFieldMovieTitle.getText();
+        int year = Integer.parseInt(txtFieldYear.getText());
+        String length = null;
+        double imdbRating = Double.parseDouble(txtFieldIMDBRating.getText());
+        int personalRating = Integer.parseInt(txtFieldPersonalRating.getText());
+        String filePath = txtFiledMovieFile.getText();
+        try {
+
+            movieModel.addNewMovie(title, year, null, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath);
+            closeWindow();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        //Date lastView = lastViewed.
     }
-
+    public void datePicked(ActionEvent event) {
+        localDate = datePickerLastSeen.getValue();
+    }
     @FXML
     private void handleSearchMovie() throws Exception {
         movieModel = new MovieModel();
@@ -77,6 +113,7 @@ public class AddMovieController extends BaseController implements Initializable 
 
         tableViewSearchMovie.getColumns().addAll();
         tableViewSearchMovie.setItems(movieModel.searchAddMovie(txtFieldSearch.getText()));
+
 
     }
     private void clicks() throws Exception {
@@ -94,13 +131,14 @@ public class AddMovieController extends BaseController implements Initializable 
         });
     }
 
+
     public void handleCategoriesClick(MouseEvent mouseEvent) {
         editController = new EditViewController();
         OpenNewView(mouseEvent, "EditView.fxml", "Edit", editController);
     }
 
     private void OpenNewView(MouseEvent event, String fxmlName, String displayName, BaseController controller) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/" + fxmlName));
             AnchorPane pane = loader.load();
@@ -119,4 +157,14 @@ public class AddMovieController extends BaseController implements Initializable 
             e.printStackTrace();
         }
     }
-}
+
+        /**
+         * Closes the window
+         */
+        public void closeWindow() {
+            Stage stage = (Stage) btnAddMovie.getScene().getWindow();
+            stage.close();
+
+        }
+    }
+
