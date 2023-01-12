@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="666c997b-ffb9-49a4-975f-e9fd331b848d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05-01-2023_08_26__Changes_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BLL/MovieManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/MovieManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAL/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MovieDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/View/AddMovie.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/AddMovie.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,15 +37,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Bruger/OneDrive/Dokumenter/GitHub/Netflicks_Legally_Distinct/src/GUI/View/AddMovie.fxml&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/aneho/OneDrive - Erhvervsakademi Sydvest/Github/Netflicks_Legally_Distinct",
+    "nodejs_package_manager_path": "npm"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="GUI" />
@@ -62,7 +68,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f76655df-98f5-4eac-a846-b3fe7130acac" name="Changes" comment="" />
+      <changelist id="666c997b-ffb9-49a4-975f-e9fd331b848d" name="Changes" comment="" />
       <created>1672738436512</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -72,6 +78,8 @@
       <workItem from="1672739472007" duration="574000" />
       <workItem from="1672816204661" duration="1652000" />
       <workItem from="1672904134962" duration="1755000" />
+      <workItem from="1673421634629" duration="14441000" />
+      <workItem from="1673508505462" duration="2900000" />
     </task>
     <servers />
   </component>
@@ -88,5 +96,20 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.RuntimeException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/BLL/MovieManager.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

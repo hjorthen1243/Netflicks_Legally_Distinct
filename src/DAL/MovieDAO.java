@@ -44,8 +44,8 @@ public class MovieDAO implements IMovieDAO {
                 int year = rs.getInt("Year");
                 Duration time = Duration.ofSeconds(rs.getInt("Length"));
                 String length = time.toMinutesPart() + ":" + time.toSecondsPart();
-                double imdbRating = rs.getDouble("IMDB Rating");
-                int pRating = rs.getInt("Personal Rating");
+                double imdbRating = rs.getDouble("IMDBRating");
+                int pRating = rs.getInt("PersonalRating");
                 Date lastView = rs.getDate("LastView");
 
                 String pathToFile = rs.getString("PathToFile");
@@ -68,7 +68,7 @@ public class MovieDAO implements IMovieDAO {
     public Movie addMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastViewed, String pathToFile) throws Exception {
 
         //SQL Statement and initializing id variable.
-        String sql = "INSERT INTO Movie (Title, Year, Length, IMDB Rating, Personal Rating, LastView, PathToFile) VALUES (?,?,?,?,?,?);";
+        String sql = "INSERT INTO Movie (Title, Year, Length, IMDBRating, PersonalRating, LastView, PathToFile) VALUES (?,?,?,?,?,?,?);";
         int id = 0;
         //Try with resources on the databaseConnector
         try (Connection conn = myDatabaseConnector.getConnection();

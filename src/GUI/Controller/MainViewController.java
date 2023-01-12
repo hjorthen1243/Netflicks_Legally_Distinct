@@ -53,9 +53,27 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     public void addMovieHandle(ActionEvent event) {
-        addController = new AddMovieController();
-        OpenNewView(event, "AddMovie.fxml", "Add a movie", addController);
+        //addController = new AddMovieController();
+        //OpenNewView(event, "AddMovie.fxml", "Add a movie", addController);
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/GUI/View/AddMovie.fxml"));
+            AnchorPane pane = loader.load();
 
+            AddMovieController controller = loader.getController();
+            controller.setModel(super.getModel());
+            controller.setup();
+            // Create the dialog stage
+            Stage dialogWindow = new Stage();
+            dialogWindow.setTitle("Add new movie");
+            dialogWindow.initModality(Modality.WINDOW_MODAL);
+            dialogWindow.initOwner(((Node) event.getSource()).getScene().getWindow());
+            Scene scene = new Scene(pane);
+            dialogWindow.setScene(scene);
+            dialogWindow.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void removeMovieHandle(ActionEvent event) {

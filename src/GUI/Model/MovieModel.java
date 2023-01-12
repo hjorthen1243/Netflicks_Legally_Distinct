@@ -6,6 +6,7 @@ import BLL.MovieManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class MovieModel {
@@ -39,15 +40,13 @@ public class MovieModel {
 
     }
 
-        public void createNewMovie (String title, double imdbRating, String pathToFile,int lastView) throws Exception{
-        //Movie movie = movieManager.createNewMovie(title, imdbRating, pathToFile, lastView);
-            //moviesToBeViewed.add(movie);
+        public void addNewMovie (String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile) throws Exception{
+        Movie movie = movieManager.createNewMovie(title, year, length, imdbRating, personalRating, lastViewDate, pathToFile);
+        moviesToBeViewed.add(movie);
         }
 
         public void deleteMovie (Movie movie) throws Exception {
             movieManager.deleteMovie(movie);
-
-
             moviesToBeViewed.remove(movie);
         }
 
