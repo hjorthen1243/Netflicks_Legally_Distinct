@@ -104,4 +104,19 @@ public class Movie {
     public String getImdbID() {
         return imdbID;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", year=" + year +
+                ", length='" + length + '\'' +
+                ", imdbID='" + imdbID + '\'' +
+                ", imdbRating=" + imdbRating +
+                ", personalRating=" + personalRating +
+                ", lastViewDate=" + lastViewDate +
+                ", pathToFile='" + pathToFile + '\'' +
+                '}';
+    }
 }

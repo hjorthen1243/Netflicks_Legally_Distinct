@@ -121,6 +121,7 @@ public class MovieDAO implements IMovieDAO {
             stmt.setDate(5, (Date) movie.getLastViewDate());
             stmt.setString(6, movie.getPathToFile());
             stmt.setInt(7, movie.getId());
+            System.out.println(movie);
 
             //Execute the update into the DB
             stmt.executeUpdate();

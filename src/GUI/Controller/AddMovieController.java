@@ -177,14 +177,13 @@ public class AddMovieController extends BaseController implements Initializable{
         });
     }
 
-
     public void handleCategoriesClick(MouseEvent mouseEvent) {
         editController = new EditViewController();
         OpenNewView(mouseEvent, "EditView.fxml", "Edit", editController);
     }
 
     private void OpenNewView(MouseEvent event, String fxmlName, String displayName, BaseController controller) {
-        try {
+        try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/" + fxmlName));
             AnchorPane pane = loader.load();

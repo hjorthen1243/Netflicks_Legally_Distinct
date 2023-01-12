@@ -23,15 +23,17 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.awt.Label;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainViewController extends BaseController implements Initializable {
 
     public Slider sliderPR;
+    public Button btnSavePR;
+    public Button btnSaveLastSeen;
+    public DatePicker datePicker;
     @FXML
     private ComboBox genreDropDown;
     @FXML
@@ -57,14 +59,18 @@ public class MainViewController extends BaseController implements Initializable 
     public void initialize(URL location, ResourceBundle resources) {
         sliderPR.setMajorTickUnit( 1 );
         eventHandler();
+        disableEnableComponents(true);
+        addListenerMovieTable();
     }
 
     /**
      * these are the components that needs to be disabled before a movie is choosen
      */
-    private void disableComponents() {
-
-
+    private void disableEnableComponents(Boolean bool) {
+        sliderPR.setDisable(bool);
+        btnSavePR.setDisable(bool);
+        btnSaveLastSeen.setDisable(bool);
+        datePicker.setDisable(bool);
     }
 
     public void addMovieHandle(ActionEvent event) {
@@ -211,6 +217,8 @@ public class MainViewController extends BaseController implements Initializable 
 
 
     public void saveLastSeenHandle(ActionEvent actionEvent) {
+        LocalDate lastSeen = datePicker.getValue();
+        System.out.println(lastSeen);
     }
 
     public void handleEditCategories(ActionEvent actionEvent) {
@@ -219,5 +227,26 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     public void handleSavePR(ActionEvent actionEvent) {
+        int personalrating = (int) sliderPR.getValue();
+        System.out.println(personalrating);
+        Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
+        movie.setPersonalRating(personalrating);
+        try {
+            movieModel.updateMovie(movie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        movie.setPersonalRating(personalrating);
+    }
+
+    private void addListenerMovieTable() {
+        movieTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //If something is selected, buttons will be enabled, else they will be disabled
+            if (newValue != null) {
+                disableEnableComponents(false);
+            } else {
+                disableEnableComponents(true);
+            }
+        });
     }
 }
