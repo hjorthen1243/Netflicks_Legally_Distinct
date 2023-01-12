@@ -14,7 +14,7 @@ public interface IMovieDAO {
 
     void editUpdateMovie(Movie movie) throws Exception;
 
-    void deleteMovie(Movie movie) throws Exception;
+    void deleteMovie(Movie m) throws Exception;
 
     List<Category> getAllCategories() throws Exception;
 

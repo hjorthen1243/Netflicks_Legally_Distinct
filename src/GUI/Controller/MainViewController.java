@@ -68,15 +68,18 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     public void removeMovieHandle(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete File");
-        alert.setHeaderText("You are about to delete the movie:\n" + "BATMAN" + "\tfrom:   " + "0000" + "\nAre you sure want to delete this movie?");
-        alert.setContentText("");
-        Optional<ButtonType> option = alert.showAndWait();
-        option.get();
 
-        //delController = new DeleteMovieController();
-        //OpenNewView(event, "DeleteMovie.fxml", "Delete a movie", delController);
+        try {
+        Movie m = (Movie) movieTable.getFocusModel().getFocusedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + m.getTitle() + " - " + m.getYearString() + "?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+                movieModel.deleteMovie(m);
+            }
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
@@ -196,9 +199,15 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
-    public void editHandle(ActionEvent actionEvent) {
+
+    public void saveLastSeenHandle(ActionEvent actionEvent) {
+    }
+
+    public void handleEditCategories(ActionEvent actionEvent) {
         editController = new EditViewController();
         OpenNewView(actionEvent, "EditView.fxml", "Edit", editController);
+    }
 
+    public void handleSavePR(ActionEvent actionEvent) {
     }
 }
