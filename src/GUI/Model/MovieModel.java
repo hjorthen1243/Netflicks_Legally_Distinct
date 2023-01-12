@@ -50,9 +50,9 @@ public class MovieModel {
         moviesToBeViewed.add(movie);
         }
 
-        public void deleteMovie (Movie movie) throws Exception {
-            movieManager.deleteMovie(movie);
-            moviesToBeViewed.remove(movie);
+        public void deleteMovie (Movie m) throws Exception {
+            movieManager.deleteMovie(m);
+            moviesToBeViewed.remove(m);
         }
 
 

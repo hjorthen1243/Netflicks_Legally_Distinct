@@ -36,8 +36,8 @@ public class MovieManager {
         return movieDAO.addMovie(title, year, length, imdbRating, personalRating, lastView, pathToFile);
     }
 
-    public void deleteMovie(Movie movie) throws Exception {
-        movieDAO.deleteMovie(movie);
+    public void deleteMovie(Movie m) throws Exception {
+        movieDAO.deleteMovie(m);
     }
 
 
