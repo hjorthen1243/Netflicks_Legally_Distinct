@@ -58,7 +58,11 @@ public class MainViewController extends BaseController implements Initializable 
     public void addMovieHandle(ActionEvent event) {
         addController = new AddMovieController();
         OpenNewView(event, "AddMovie.fxml", "Add a movie", addController);
-
+        try {
+            movieTable.setItems(movieModel.getAllMovies());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void removeMovieHandle(ActionEvent event) {

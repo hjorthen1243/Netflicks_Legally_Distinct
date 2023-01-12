@@ -22,8 +22,7 @@ public class MovieModel {
     public MovieModel() throws Exception {
         movieManager = new MovieManager();
         moviesToBeViewed = FXCollections.observableArrayList();
-        movie = new ArrayList<>();
-        movie.addAll(movieManager.getAllMovies());
+        moviesToBeViewed.addAll(movieManager.getAllMovies());
     }
 
     public ObservableList<Movie> getObservableMoviesCategory(Category category) throws Exception {
@@ -31,6 +30,12 @@ public class MovieModel {
         return moviesToBeViewed;
     }
     public ObservableList<Movie> getObservableMovies() {
+        return moviesToBeViewed;
+    }
+
+    public ObservableList<Movie> getAllMovies() throws Exception {
+        moviesToBeViewed.clear();
+        moviesToBeViewed.addAll(movieManager.getAllMovies());
         return moviesToBeViewed;
     }
 
