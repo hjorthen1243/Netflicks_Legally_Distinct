@@ -2,6 +2,7 @@ package DAL;
 
 import BE.Category;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 public class CategoryDAO implements ICategoryDAO {
     MyDatabaseConnector databaseConnector;
 
-    public CategoryDAO(){
+    public CategoryDAO() throws IOException {
         databaseConnector =new MyDatabaseConnector();
     }
 
