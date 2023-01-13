@@ -23,16 +23,21 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.awt.Label;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainViewController extends BaseController implements Initializable {
 
-    public ComboBox genreDropDown;
-    public Button btnEdit;
+    public Slider sliderPR;
+    public Button btnSavePR;
+    public Button btnSaveLastSeen;
+    public DatePicker datePicker;
+    @FXML
+    private ComboBox genreDropDown;
+    @FXML
+    private Button btnEdit;
     @FXML
     private TableView movieTable;
     @FXML
@@ -52,25 +57,45 @@ public class MainViewController extends BaseController implements Initializable 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        sliderPR.setMajorTickUnit( 1 );
         eventHandler();
+        disableEnableComponents(true);
+        addListenerMovieTable();
+    }
+
+    /**
+     * these are the components that needs to be disabled before a movie is choosen
+     */
+    private void disableEnableComponents(Boolean bool) {
+        sliderPR.setDisable(bool);
+        btnSavePR.setDisable(bool);
+        btnSaveLastSeen.setDisable(bool);
+        datePicker.setDisable(bool);
     }
 
     public void addMovieHandle(ActionEvent event) {
         addController = new AddMovieController();
         OpenNewView(event, "AddMovie.fxml", "Add a movie", addController);
-
+        try {
+            movieTable.setItems(movieModel.getAllMovies());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void removeMovieHandle(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete File");
-        alert.setHeaderText("You are about to delete the movie:\n" + "BATMAN" + "\tfrom" + "0000" + "\nAre you sure want to delete this movie?");
-        alert.setContentText("");
-        Optional<ButtonType> option = alert.showAndWait();
-        option.get();
 
-        //delController = new DeleteMovieController();
-        //OpenNewView(event, "DeleteMovie.fxml", "Delete a movie", delController);
+        try {
+        Movie m = (Movie) movieTable.getFocusModel().getFocusedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + m.getTitle() + " - " + m.getYearString() + "?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+                movieModel.deleteMovie(m);
+            }
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
@@ -138,7 +163,6 @@ public class MainViewController extends BaseController implements Initializable 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         }
     }
@@ -160,16 +184,17 @@ public class MainViewController extends BaseController implements Initializable 
         if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) { //Check for double-click on left MouseButton
             TableRow<Movie> row = (TableRow<Movie>) event.getSource();
             if (row.getItem() != null) { //If the item we are choosing is not zero play that song
-                System.out.println("heard the double click");
                 playMedia();
-
             }
         }
     }
 
     private void playMedia() {
-        try {//constructor of file class having file as argument
-            File file = new File("C:\\Users\\aneho\\OneDrive\\Billeder\\Filmrulle\\HueFilm.mp4");
+        try {
+            //constructor of file class having file as argument
+            Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
+
+            File file = new File(movie.getPathToFile());
             //File file = new File("C:\\Users\\aneho\\OneDrive\\Skrivebord\\test.txt");
             if (!Desktop.isDesktopSupported())//check if Desktop is supported by Platform or not
             {
@@ -190,9 +215,38 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
-    public void editHandle(ActionEvent actionEvent) {
+
+    public void saveLastSeenHandle(ActionEvent actionEvent) {
+        LocalDate lastSeen = datePicker.getValue();
+        System.out.println(lastSeen);
+    }
+
+    public void handleEditCategories(ActionEvent actionEvent) {
         editController = new EditViewController();
         OpenNewView(actionEvent, "EditView.fxml", "Edit", editController);
+    }
 
+    public void handleSavePR(ActionEvent actionEvent) {
+        int personalrating = (int) sliderPR.getValue();
+        System.out.println(personalrating);
+        Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
+        movie.setPersonalRating(personalrating);
+        try {
+            movieModel.updateMovie(movie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        movie.setPersonalRating(personalrating);
+    }
+
+    private void addListenerMovieTable() {
+        movieTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //If something is selected, buttons will be enabled, else they will be disabled
+            if (newValue != null) {
+                disableEnableComponents(false);
+            } else {
+                disableEnableComponents(true);
+            }
+        });
     }
 }

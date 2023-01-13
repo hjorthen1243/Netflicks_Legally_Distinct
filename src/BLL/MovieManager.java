@@ -11,7 +11,6 @@ import java.util.List;
 public class MovieManager {
 
     private final IMovieDAO movieDAO;
-    private MovieDAO movieDAOnew;
     private MovieSearcher movieSearcher = new MovieSearcher();
 
     public MovieManager() {
@@ -20,8 +19,7 @@ public class MovieManager {
 
 
     public List<Movie> getAllMoviesCategory(Category category) throws Exception {
-        movieDAOnew = new MovieDAO();
-        return movieDAOnew.getMoviesWithCategory(category);
+        return movieDAO.getMoviesWithCategory(category);
     }
 
     public List<Movie> getAllMovies() throws Exception {
@@ -38,15 +36,14 @@ public class MovieManager {
         return movieDAO.addMovie(title, year, length, imdbRating, personalRating, lastView, pathToFile);
     }
 
-    public void deleteMovie(Movie movie) throws Exception {
-        movieDAO.deleteMovie(movie);
+    public void deleteMovie(Movie m) throws Exception {
+        movieDAO.deleteMovie(m);
     }
 
 
     public void updateMovie(Movie updatedMovie) throws Exception {
         movieDAO.editUpdateMovie(updatedMovie);
     }
-
     public List<Movie> searchAddMovie(String text) {
         return movieDAO.searchAddMovie(text);
     }

@@ -68,7 +68,7 @@ public class MovieDAO implements IMovieDAO {
     public Movie addMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastViewed, String pathToFile) throws Exception {
 
         //SQL Statement and initializing id variable.
-        String sql = "INSERT INTO Movie (Title, Year, Length, IMDBRating, PersonalRating, LastView, PathToFile) VALUES (?,?,?,?,?,?);";
+        String sql = "INSERT INTO Movie (Title, Year, Length, IMDBRating, PersonalRating, LastView, PathToFile) VALUES (?,?,?,?,?,?,?);";
         int id = 0;
         //Try with resources on the databaseConnector
         try (Connection conn = myDatabaseConnector.getConnection();
@@ -121,6 +121,7 @@ public class MovieDAO implements IMovieDAO {
             stmt.setDate(5, (Date) movie.getLastViewDate());
             stmt.setString(6, movie.getPathToFile());
             stmt.setInt(7, movie.getId());
+            System.out.println(movie);
 
             //Execute the update into the DB
             stmt.executeUpdate();
@@ -132,25 +133,24 @@ public class MovieDAO implements IMovieDAO {
     }
 
     @Override
-    public void deleteMovie(Movie movie) throws Exception {
+    public void deleteMovie(Movie m) throws Exception {
         //Get the id of the chosen movie
-        int id = movie.getId();
-
-        //SQL String which deletes the movie from all movies in the DB
-        String sql = "DELETE FROM Movie WHERE Id = " + id + ";";
+        int mID = m.getId();
+        //SQL String which deletes the movie from all moview in the DB
+        String sql = "DELETE FROM Movie WHERE Id = " + mID + ";";
 
         //SQL String which deletes the link between the movie and the category
-        String sql2 = "DELETE FROM CatMovie WHERE id = " + id + ";";
+        //String sql2 = "DELETE FROM CatMovie WHERE MovieID = " + mID + ";";
 
         //Try with resources on the databaseConnector
         try (Connection conn = myDatabaseConnector.getConnection()) {
 
             //Statements are prepared SQL statements
             PreparedStatement ps = conn.prepareStatement(sql);
-            PreparedStatement ps2 = conn.prepareStatement(sql2);
+            //PreparedStatement ps2 = conn.prepareStatement(sql2);
 
             //Execute the update which removes the link between song and playlist first, then remove the song from the DB
-            ps2.executeUpdate();
+            //ps2.executeUpdate();
             ps.executeUpdate();
         }
     }
