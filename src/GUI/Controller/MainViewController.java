@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -26,6 +27,7 @@ import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class MainViewController extends BaseController implements Initializable {
@@ -34,6 +36,7 @@ public class MainViewController extends BaseController implements Initializable 
     public Button btnSavePR;
     public Button btnSaveLastSeen;
     public DatePicker datePicker;
+    public TextField minIMDbRate, maxIMDbRate, minPRate, maxPRate;
     @FXML
     private ComboBox genreDropDown;
     @FXML
