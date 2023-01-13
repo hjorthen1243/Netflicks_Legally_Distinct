@@ -1,11 +1,14 @@
 package DAL;
 
 import BE.Category;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
@@ -140,5 +143,54 @@ public class CategoryDAO implements ICategoryDAO {
             ps2.executeUpdate();
             ps.executeUpdate();
         }
+    }
+
+    @Override
+    public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
+        HashMap<Integer, List<Category>> moviesWithCategories = new HashMap<Integer, List<Category>>();
+        ArrayList<Category> categories = new ArrayList<>();
+        String sql = """
+                SELECT DISTINCT MovieID, Movie.Title, Categories.Category, Categories.id
+                FROM CatMovie
+                JOIN Categories ON CatMovie.categoryID = Categories.Id
+                JOIN Movie ON CatMovie.MovieID = Movie.Id
+                ORDER BY MovieID;""";
+
+        try (Connection conn = databaseConnector.getConnection()) {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            int lastID = 0;
+            boolean firstLine = true;
+            String Category;
+            int CategoryID;
+            while (rs.next()) {
+                int movieID = rs.getInt("MovieID");
+                if (firstLine) {
+                    lastID = movieID;
+                    firstLine = false;
+                    Category = rs.getString("Category");
+                    CategoryID = rs.getInt("id");
+                    Category c = new Category(CategoryID, Category);
+                    categories.add(c);
+                } else if (lastID == movieID) {
+                    Category = rs.getString("Category");
+                    CategoryID = rs.getInt("id");
+                    Category c = new Category(CategoryID, Category);
+                    categories.add(c);
+                } else {
+                    lastID = movieID;
+                    moviesWithCategories.putIfAbsent(movieID, categories);
+                    categories.clear();
+                    Category = rs.getString("Category");
+                    CategoryID = rs.getInt("id");
+                    Category c = new Category(CategoryID, Category);
+                    categories.add(c);
+                }
+                moviesWithCategories.putIfAbsent(movieID, categories);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return moviesWithCategories;
     }
 }

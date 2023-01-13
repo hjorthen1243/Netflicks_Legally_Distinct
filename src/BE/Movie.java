@@ -15,6 +15,7 @@ public class Movie {
     private Date lastViewDate;
     private String pathToFile;
 
+    private String categories;
 
 
     public Movie(int id, String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile){
@@ -118,5 +119,11 @@ public class Movie {
                 ", lastViewDate=" + lastViewDate +
                 ", pathToFile='" + pathToFile + '\'' +
                 '}';
+    }
+    public String getCategories() {
+        return null;
+    }
+    public void setCategories(String categories){
+        this.categories = categories;
     }
 }

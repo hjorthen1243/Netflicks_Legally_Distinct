@@ -4,6 +4,8 @@ import BE.Category;
 import BE.Movie;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -21,12 +24,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.util.*;
 import java.awt.Label;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.List;
 
 public class MainViewController extends BaseController implements Initializable {
 
@@ -51,8 +54,15 @@ public class MainViewController extends BaseController implements Initializable 
 
     @Override
     public void setup() {
+
+        try {
             updateMovieList();
-            addAllCategoriesToComboBox();
+        } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        addAllCategoriesToComboBox();
     }
 
     @Override
@@ -134,8 +144,11 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
-    private void updateMovieList() {
+    private void updateMovieList() throws Exception {
         movieModel = getModel().getMovieModel();
+        ObservableList<Movie> m = movieModel.getObservableMovies();
+        movieTable.getColumns().addAll();
+        movieTable.setItems(m);
 
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("Title"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("Year"));
@@ -143,10 +156,28 @@ public class MainViewController extends BaseController implements Initializable 
         ratingColumn.setCellValueFactory(new PropertyValueFactory<>("ImdbRating"));
         pRatingColumn.setCellValueFactory(new PropertyValueFactory<>("PersonalRating"));
         lastViewColumn.setCellValueFactory(new PropertyValueFactory<>("LastViewDate"));
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Categories"));
+        updateCategories();
+
+    }
+
+    private void updateCategories() throws Exception {
+        categoryModel = new CategoryModel();
+        Map<Integer, List<Category>> categoriesAttachedToMovies = categoryModel.getObservableCategories();
+        StringBuilder c = new StringBuilder();
+        for (int i = 0; i < categoriesAttachedToMovies.size(); i++) {
+            Movie m = (Movie) movieTable.getItems().get(i);
+            int mID = m.getId();
+            for (int j = 0; j < categoriesAttachedToMovies.get(mID).size(); j++) {
+                c.insert(0, categoriesAttachedToMovies.get(mID).get(j).getCategory() + ", ");
+            }
+            c.delete(c.length()-1,c.length());
+            m.setCategories(c.toString());
+        }
+
+        System.out.println(c);
 
         movieTable.getColumns().addAll();
-        movieTable.setItems(movieModel.getObservableMovies());
-
     }
 
     public void CategorySelected(ActionEvent event) {

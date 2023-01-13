@@ -1,18 +1,23 @@
 package GUI.Model;
 
 import BE.Category;
+import BE.Movie;
 import BLL.CategoryManager;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class CategoryModel {
-
+    private List<Category> categoriesToBeViewed;
     private CategoryManager categoryManager;
     private ArrayList<Category> allCategories;
-    private ObservableList<Category> categoriesToBeViewed;
     private Category selectedCategory;
+
+    private ObservableList<Category> categoriesAttachedToMovies;
 
     public Category getSelectedCategory(){return selectedCategory;}
 
@@ -24,8 +29,8 @@ public class CategoryModel {
         //categoriesToBeViewed.addAll(categoryManager.getAllCategories());
     }
 
-    public ObservableList<Category> getObservableCategories(){
-        return categoriesToBeViewed;
+    public Map<Integer, List<Category>> getObservableCategories() throws SQLServerException {
+        return categoryManager.getCategoriesAttachedToMovies();
     }
     public ArrayList<Category> getAllCategories(){
         allCategories = new ArrayList<>();
