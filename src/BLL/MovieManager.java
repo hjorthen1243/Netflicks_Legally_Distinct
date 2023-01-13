@@ -5,6 +5,7 @@ import BE.Movie;
 import DAL.IMovieDAO;
 import DAL.MovieDAO;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class MovieManager {
     private final IMovieDAO movieDAO;
     private MovieSearcher movieSearcher = new MovieSearcher();
 
-    public MovieManager() {
+    public MovieManager() throws IOException {
         movieDAO = new MovieDAO();
     }
 

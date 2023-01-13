@@ -3,6 +3,7 @@ package DAL;
 import BE.Category;
 import BE.Movie;
 
+import java.io.IOException;
 import java.sql.*;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class MovieDAO implements IMovieDAO {
     MyDatabaseConnector myDatabaseConnector;
     MyOMDBConnector myOMDBConnector;
 
-    public MovieDAO (){
+    public MovieDAO () throws IOException {
         myDatabaseConnector = new MyDatabaseConnector();
         myOMDBConnector = new MyOMDBConnector();
     }
