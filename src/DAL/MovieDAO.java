@@ -136,7 +136,7 @@ public class MovieDAO implements IMovieDAO {
         //Get the id of the chosen movie
         int id = movie.getId();
 
-        //SQL String which deletes the movie from all moview in the DB
+        //SQL String which deletes the movie from all movies in the DB
         String sql = "DELETE FROM Movie WHERE Id = " + id + ";";
 
         //SQL String which deletes the link between the movie and the category
