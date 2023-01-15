@@ -5,7 +5,6 @@ import BE.Methods;
 import BE.Movie;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +20,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.awt.Label;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -41,7 +39,7 @@ public class MainViewController extends BaseController implements Initializable 
     @FXML
     private TextField pRatingMax, pRatingMin, imdbMin, imdbMax;
     @FXML
-    private ComboBox genreDropDown;
+    private ComboBox<String> genreDropDown;
     @FXML
     private Button btnEdit;
     @FXML
@@ -53,8 +51,7 @@ public class MainViewController extends BaseController implements Initializable 
     AddMovieController addController;
     DeleteMovieController delController;
     EditViewController editController;
-    private Label label;
-    private boolean programmStartet = true;
+    private boolean programStarted = true;
 
     @Override
     public void setup() {
@@ -75,7 +72,7 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     /**
-     * these are the components that needs to be disabled before a movie is choosen
+     * these are the components that needs to be disabled before a movie is chosen
      */
     private void disableEnableComponents(Boolean bool) {
         sliderPR.setDisable(bool);
@@ -109,7 +106,7 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
-    public void addMovieHandle(ActionEvent event) {
+    public void addMovieHandle() {
         addController = new AddMovieController();
         Methods.openNewView("AddMovie.fxml", "Add a movie");
         updateMovieList();
@@ -120,7 +117,7 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
-    public void removeMovieHandle(ActionEvent event) {
+    public void removeMovieHandle() {
 
         try {
         Movie m = (Movie) movieTable.getSelectionModel().getSelectedItem();
@@ -135,7 +132,7 @@ public class MainViewController extends BaseController implements Initializable 
 
     }
 
-    public void searchHandle(ActionEvent event) {
+    public void searchHandle() {
     }
 
     private void addAllCategoriesToComboBox() {
@@ -152,16 +149,16 @@ public class MainViewController extends BaseController implements Initializable 
         movieModel = getModel().getMovieModel();
 
         try {
-            if (programmStartet) {
+            if (programStarted) {
                 Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
-                programmStartet = false;
+                programStarted = false;
                 ArrayList<Movie> movies = new ArrayList<>();
                 Date currentDate = new Date();
                 movies = movieModel.getMovies(movies);
                 for (Movie movie : movies) {
-                    Date moviedate = movie.getLastViewDate();
-                    long diffInMillies = Math.abs(currentDate.getTime() - moviedate.getTime());
-                    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                    Date movieDate = movie.getLastViewDate();
+                    long diffInMillis = Math.abs(currentDate.getTime() - movieDate.getTime());
+                    long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
                     long biggestDiff = 730;
                     if (diff > biggestDiff && movie.getPersonalRating() < 6) {
                         startRemoveMovie();
@@ -174,20 +171,18 @@ public class MainViewController extends BaseController implements Initializable 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         movieTable.setItems(movieModel.getObservableMovies());
 
     }
 
-    public void CategorySelected(ActionEvent event) {
+    public void CategorySelected() {
         movieModel = getModel().getMovieModel();
         Object selectedItem = genreDropDown.getSelectionModel().getSelectedItem();
-        String categoryChoosen = selectedItem.toString();
+        String categoryChosen = selectedItem.toString();
         ArrayList<Category> allCategories;
         allCategories = categoryModel.getAllCategories();
         for (Category category: allCategories) {
-            if(category.getCategory().equals(categoryChoosen)){
+            if(category.getCategory().equals(categoryChosen)){
                 try {
                     movieTable.getItems().clear();
                     movieTable.setItems(movieModel.getObservableMoviesCategory(category));
@@ -226,14 +221,14 @@ public class MainViewController extends BaseController implements Initializable 
             Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
 
             File file = new File(movie.getPathToFile());
-            //File file = new File("C:\\Users\\aneho\\OneDrive\\Skrivebord\\test.txt");
-            if (!Desktop.isDesktopSupported())//check if Desktop is supported by Platform or not
-            {
+            //check if Desktop is supported by Platform or not
+            if (!Desktop.isDesktopSupported()){
                 System.out.println("not supported");
                 return;
             }
             Desktop desktop = Desktop.getDesktop();
-            if (file.exists()) {         //checks file exists or not
+            //checks file exists or not
+            if (file.exists()) {
                 desktop.open(file);              //opens the specified file
             }
             else {
@@ -247,7 +242,7 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
 
-    public void saveLastSeenHandle(ActionEvent actionEvent) {
+    public void saveLastSeenHandle() {
         LocalDate lastSeen = datePicker.getValue();
         Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         movie.setLastViewDate(java.sql.Date.valueOf(lastSeen));
@@ -261,33 +256,29 @@ public class MainViewController extends BaseController implements Initializable 
         System.out.println(lastSeen);
     }
 
-    public void handleEditCategories(ActionEvent actionEvent) {
+    public void handleEditCategories() {
         editController = new EditViewController();
         Methods.openNewView("EditView.fxml", "Edit");
     }
 
-    public void handleSavePR(ActionEvent actionEvent) {
-        int personalrating = (int) sliderPR.getValue();
-        System.out.println(personalrating);
+    public void handleSavePR() {
+        int personalRating = (int) sliderPR.getValue();
+        System.out.println(personalRating);
         Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
-        movie.setPersonalRating(personalrating);
+        movie.setPersonalRating(personalRating);
         try {
             movieModel.updateMovie(movie);
             movieTable.setItems(movieModel.getAllMovies());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        movie.setPersonalRating(personalrating);
+        movie.setPersonalRating(personalRating);
     }
 
     private void addListenerMovieTable() {
         movieTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             //If something is selected, buttons will be enabled, else they will be disabled
-            if (newValue != null) {
-                disableEnableComponents(false);
-            } else {
-                disableEnableComponents(true);
-            }
+            disableEnableComponents(newValue == null);
         });
     }
 }
