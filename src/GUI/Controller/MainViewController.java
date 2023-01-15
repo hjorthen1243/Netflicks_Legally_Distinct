@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.Category;
+import BE.Methods;
 import BE.Movie;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
@@ -9,10 +10,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -24,11 +25,9 @@ import java.awt.Label;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -39,6 +38,8 @@ public class MainViewController extends BaseController implements Initializable 
     public Button btnSaveLastSeen;
     public DatePicker datePicker;
     public Button btnRemoveMovie;
+    @FXML
+    private TextField pRatingMax, pRatingMin, imdbMin, imdbMax;
     @FXML
     private ComboBox genreDropDown;
     @FXML
@@ -67,6 +68,10 @@ public class MainViewController extends BaseController implements Initializable 
         eventHandler();
         disableEnableComponents(true);
         addListenerMovieTable();
+        Methods.addListenersToNumFields(imdbMax);
+        Methods.addListenersToNumFields(imdbMin);
+        Methods.addListenersToNumFields(pRatingMax);
+        Methods.addListenersToNumFields(pRatingMin);
     }
 
     /**
@@ -106,7 +111,7 @@ public class MainViewController extends BaseController implements Initializable 
 
     public void addMovieHandle(ActionEvent event) {
         addController = new AddMovieController();
-        openNewView("AddMovie.fxml", "Add a movie", addController);
+        Methods.openNewView("AddMovie.fxml", "Add a movie");
         updateMovieList();
         try {
             movieTable.setItems(movieModel.getAllMovies());
@@ -129,29 +134,6 @@ public class MainViewController extends BaseController implements Initializable 
         }
 
     }
-
-
-    private void openNewView(String fxmlName, String displayName, BaseController controller) {
-        try{
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/GUI/View/" + fxmlName));
-            AnchorPane pane = loader.load();
-            controller = loader.getController();
-            controller.setModel(super.getModel());
-            controller.setup();
-            // Create the dialog stage
-            Stage dialogWindow = new Stage();
-            dialogWindow.setTitle(displayName);
-            dialogWindow.initModality(Modality.WINDOW_MODAL);
-            Scene scene = new Scene(pane);
-            dialogWindow.setScene(scene);
-            dialogWindow.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
 
     public void searchHandle(ActionEvent event) {
     }
@@ -281,7 +263,7 @@ public class MainViewController extends BaseController implements Initializable 
 
     public void handleEditCategories(ActionEvent actionEvent) {
         editController = new EditViewController();
-        openNewView("EditView.fxml", "Edit", editController);
+        Methods.openNewView("EditView.fxml", "Edit");
     }
 
     public void handleSavePR(ActionEvent actionEvent) {

@@ -34,10 +34,10 @@
       <ComboBox fx:id="genreDropDown" layoutX="629.0" layoutY="43.0" prefWidth="150.0" />
       <TextField fx:id="searchField" layoutX="430.0" layoutY="9.0" prefHeight="26.0" prefWidth="300.0" promptText="Search for Title, Year, Director..." />
       <Button fx:id="btnSearch" layoutX="728.0" layoutY="9.0" mnemonicParsing="false" onAction="#searchHandle" prefHeight="26.0" prefWidth="52.0" text="Search" />
-      <TextField layoutX="728.0" layoutY="74.0" prefHeight="26.0" prefWidth="52.0" promptText="Max..." />
-      <TextField layoutX="669.0" layoutY="74.0" prefHeight="26.0" prefWidth="52.0" promptText="Min..." />
-      <TextField layoutX="669.0" layoutY="105.0" prefHeight="26.0" prefWidth="52.0" promptText="Min..." />
-      <TextField layoutX="728.0" layoutY="105.0" prefHeight="26.0" prefWidth="52.0" promptText="Max..." />
+      <TextField fx:id="imdbMax" layoutX="728.0" layoutY="74.0" prefHeight="26.0" prefWidth="52.0" promptText="Max..." />
+      <TextField fx:id="imdbMin" layoutX="669.0" layoutY="74.0" prefHeight="26.0" prefWidth="52.0" promptText="Min..." />
+      <TextField fx:id="pRatingMin" layoutX="669.0" layoutY="105.0" prefHeight="26.0" prefWidth="52.0" promptText="Min..." />
+      <TextField fx:id="pRatingMax" layoutX="728.0" layoutY="105.0" prefHeight="26.0" prefWidth="52.0" promptText="Max..." />
       <Label layoutX="585.0" layoutY="78.0" text="IMDb Raiting" />
       <Label layoutX="577.0" layoutY="109.0" text="Personal Raiting" />
       <Line endX="100.0" layoutX="681.0" layoutY="145.0" startX="-252.20001220703125" />

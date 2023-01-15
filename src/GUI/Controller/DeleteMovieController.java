@@ -1,21 +1,17 @@
 package GUI.Controller;
 
+import BE.Methods;
 import BE.Movie;
 import GUI.Model.MovieModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -29,10 +25,6 @@ public class DeleteMovieController extends BaseController implements Initializab
     private Button removemovie;
     @FXML
     private TableView movieTable;
-    @FXML
-    private Button btnYes;
-    @FXML
-    private Button btnNo;
 
     @Override
     public void setup() {
