@@ -68,6 +68,7 @@ public class MainViewController extends BaseController implements Initializable 
      */
     private void disableEnableComponents(Boolean bool) {
         sliderPR.setDisable(bool);
+        sliderPR.setValue(5);
         btnSavePR.setDisable(bool);
         btnSaveLastSeen.setDisable(bool);
         datePicker.setDisable(bool);
@@ -76,6 +77,7 @@ public class MainViewController extends BaseController implements Initializable 
     public void addMovieHandle(ActionEvent event) {
         addController = new AddMovieController();
         OpenNewView(event, "AddMovie.fxml", "Add a movie", addController);
+        updateMovieList();
         try {
             movieTable.setItems(movieModel.getAllMovies());
         } catch (Exception e) {
@@ -218,6 +220,15 @@ public class MainViewController extends BaseController implements Initializable 
 
     public void saveLastSeenHandle(ActionEvent actionEvent) {
         LocalDate lastSeen = datePicker.getValue();
+        Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
+        movie.setLastViewDate(java.sql.Date.valueOf(lastSeen));
+        try {
+            movieModel.updateMovie(movie);
+            movieTable.setItems(movieModel.getAllMovies());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         System.out.println(lastSeen);
     }
 
@@ -233,6 +244,7 @@ public class MainViewController extends BaseController implements Initializable 
         movie.setPersonalRating(personalrating);
         try {
             movieModel.updateMovie(movie);
+            movieTable.setItems(movieModel.getAllMovies());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,9 +256,13 @@ public class MainViewController extends BaseController implements Initializable 
             //If something is selected, buttons will be enabled, else they will be disabled
             if (newValue != null) {
                 disableEnableComponents(false);
+                Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
+                System.out.println("\nMovie chosen" + movieTable.getSelectionModel().getSelectedItem());
+
             } else {
                 disableEnableComponents(true);
             }
         });
     }
+
 }

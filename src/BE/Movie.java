@@ -107,16 +107,8 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", year=" + year +
-                ", length='" + length + '\'' +
-                ", imdbID='" + imdbID + '\'' +
-                ", imdbRating=" + imdbRating +
-                ", personalRating=" + personalRating +
-                ", lastViewDate=" + lastViewDate +
-                ", pathToFile='" + pathToFile + '\'' +
-                '}';
+        return "Movie:\t" +
+                "id: " + id +
+                "\t title='" + title;
     }
 }

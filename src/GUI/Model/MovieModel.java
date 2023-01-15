@@ -78,4 +78,5 @@ public class MovieModel {
     public String getMovieCategories() {
         return movieManager.getMovieCategories();
     }
+
 }
