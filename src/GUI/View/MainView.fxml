@@ -15,7 +15,7 @@
    <children>
       <TableView fx:id="movieTable" editable="true" layoutY="230.0" prefHeight="220.0" prefWidth="800.0">
         <columns>
-          <TableColumn fx:id="titleColumn" prefWidth="126.39999008178711" text="Title" />
+          <TableColumn fx:id="titleColumn" prefWidth="126.4" text="Title" />
           <TableColumn fx:id="yearColumn" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="Year" />
             <TableColumn fx:id="lengthColumn" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="Length" />
             <TableColumn fx:id="categoryColumn" prefWidth="75.0" text="Categories" />

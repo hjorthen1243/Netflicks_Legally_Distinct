@@ -13,7 +13,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -23,10 +22,15 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.awt.Label;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class MainViewController extends BaseController implements Initializable {
 
@@ -34,6 +38,7 @@ public class MainViewController extends BaseController implements Initializable 
     public Button btnSavePR;
     public Button btnSaveLastSeen;
     public DatePicker datePicker;
+    public Button btnRemoveMovie;
     @FXML
     private ComboBox genreDropDown;
     @FXML
@@ -48,11 +53,12 @@ public class MainViewController extends BaseController implements Initializable 
     DeleteMovieController delController;
     EditViewController editController;
     private Label label;
+    private boolean programmStartet = true;
 
     @Override
     public void setup() {
-            updateMovieList();
-            addAllCategoriesToComboBox();
+        updateMovieList();
+        addAllCategoriesToComboBox();
     }
 
     @Override
@@ -72,11 +78,35 @@ public class MainViewController extends BaseController implements Initializable 
         btnSavePR.setDisable(bool);
         btnSaveLastSeen.setDisable(bool);
         datePicker.setDisable(bool);
+        datePicker.setValue(null);
+        btnRemoveMovie.setDisable(bool);
+
+
+    }
+    public void startRemoveMovie(){
+        delController = new DeleteMovieController();
+        //openNewView("DeleteMovie.fxml", "Delete old movies", delController);
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/GUI/View/DeleteMovie.fxml"));
+            AnchorPane pane = loader.load();
+            delController = loader.getController();
+            Stage dialogWindow = new Stage();
+            dialogWindow.setTitle("Remove movies");
+            dialogWindow.initModality(Modality.WINDOW_MODAL);
+
+            Scene scene = new Scene(pane);
+            dialogWindow.setScene(scene);
+            dialogWindow.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addMovieHandle(ActionEvent event) {
         addController = new AddMovieController();
-        OpenNewView(event, "AddMovie.fxml", "Add a movie", addController);
+        openNewView("AddMovie.fxml", "Add a movie", addController);
         updateMovieList();
         try {
             movieTable.setItems(movieModel.getAllMovies());
@@ -88,8 +118,8 @@ public class MainViewController extends BaseController implements Initializable 
     public void removeMovieHandle(ActionEvent event) {
 
         try {
-        Movie m = (Movie) movieTable.getFocusModel().getFocusedItem();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + m.getTitle() + " - " + m.getYearString() + "?", ButtonType.YES, ButtonType.NO);
+        Movie m = (Movie) movieTable.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Remove; " + m.getTitle() + " - " + m.getYearString() + "?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
         if (alert.getResult() == ButtonType.YES) {
                 movieModel.deleteMovie(m);
@@ -101,19 +131,18 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
 
-    private void OpenNewView(ActionEvent event, String fxmlName, String displayName, BaseController controller) {
+    private void openNewView(String fxmlName, String displayName, BaseController controller) {
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/" + fxmlName));
             AnchorPane pane = loader.load();
             controller = loader.getController();
-            //controller.setModel(super.getModel());
-            //controller.setup();
+            controller.setModel(super.getModel());
+            controller.setup();
             // Create the dialog stage
             Stage dialogWindow = new Stage();
             dialogWindow.setTitle(displayName);
             dialogWindow.initModality(Modality.WINDOW_MODAL);
-            dialogWindow.initOwner(((Node) event.getSource()).getScene().getWindow());
             Scene scene = new Scene(pane);
             dialogWindow.setScene(scene);
             dialogWindow.showAndWait();
@@ -137,16 +166,34 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     private void updateMovieList() {
+
         movieModel = getModel().getMovieModel();
 
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        yearColumn.setCellValueFactory(new PropertyValueFactory<>("Year"));
-        lengthColumn.setCellValueFactory(new PropertyValueFactory<>("Length"));
-        ratingColumn.setCellValueFactory(new PropertyValueFactory<>("ImdbRating"));
-        pRatingColumn.setCellValueFactory(new PropertyValueFactory<>("PersonalRating"));
-        lastViewColumn.setCellValueFactory(new PropertyValueFactory<>("LastViewDate"));
+        try {
+            if (programmStartet) {
+                Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
+                programmStartet = false;
+                ArrayList<Movie> movies = new ArrayList<>();
+                Date currentDate = new Date();
+                movies = movieModel.getMovies(movies);
+                for (Movie movie : movies) {
+                    Date moviedate = movie.getLastViewDate();
+                    long diffInMillies = Math.abs(currentDate.getTime() - moviedate.getTime());
+                    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                    long biggestDiff = 730;
+                    if (diff > biggestDiff && movie.getPersonalRating() < 6) {
+                        startRemoveMovie();
+                        updateMovieList();
+                        break;
+                    }
+                }
+            }
 
-        movieTable.getColumns().addAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         movieTable.setItems(movieModel.getObservableMovies());
 
     }
@@ -234,7 +281,7 @@ public class MainViewController extends BaseController implements Initializable 
 
     public void handleEditCategories(ActionEvent actionEvent) {
         editController = new EditViewController();
-        OpenNewView(actionEvent, "EditView.fxml", "Edit", editController);
+        openNewView("EditView.fxml", "Edit", editController);
     }
 
     public void handleSavePR(ActionEvent actionEvent) {
@@ -256,13 +303,9 @@ public class MainViewController extends BaseController implements Initializable 
             //If something is selected, buttons will be enabled, else they will be disabled
             if (newValue != null) {
                 disableEnableComponents(false);
-                Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
-                System.out.println("\nMovie chosen" + movieTable.getSelectionModel().getSelectedItem());
-
             } else {
                 disableEnableComponents(true);
             }
         });
     }
-
 }
