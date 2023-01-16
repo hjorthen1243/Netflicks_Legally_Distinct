@@ -1,7 +1,6 @@
 package GUI.Controller;
 
 import BE.Category;
-import BE.Methods;
 import BE.Movie;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
@@ -87,23 +86,13 @@ public class MainViewController extends BaseController implements Initializable 
     }
     public void startRemoveMovie(){
         delController = new DeleteMovieController();
-        //openNewView("DeleteMovie.fxml", "Delete old movies", delController);
-
+        Methods.openNewView("DeleteMovie.fxml", "Delete old movies");
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/GUI/View/DeleteMovie.fxml"));
-            AnchorPane pane = loader.load();
-            delController = loader.getController();
-            Stage dialogWindow = new Stage();
-            dialogWindow.setTitle("Remove movies");
-            dialogWindow.initModality(Modality.WINDOW_MODAL);
-
-            Scene scene = new Scene(pane);
-            dialogWindow.setScene(scene);
-            dialogWindow.showAndWait();
-        } catch (IOException e) {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        updateMovieList();
     }
 
     public void addMovieHandle() {
@@ -129,7 +118,6 @@ public class MainViewController extends BaseController implements Initializable 
         }catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public void searchHandle() {
@@ -152,9 +140,9 @@ public class MainViewController extends BaseController implements Initializable 
             if (programStarted) {
                 Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
                 programStarted = false;
-                ArrayList<Movie> movies = new ArrayList<>();
+                ArrayList<Movie> movies;
                 Date currentDate = new Date();
-                movies = movieModel.getMovies(movies);
+                movies = movieModel.getMovies();
                 for (Movie movie : movies) {
                     Date movieDate = movie.getLastViewDate();
                     long diffInMillis = Math.abs(currentDate.getTime() - movieDate.getTime());
@@ -162,7 +150,6 @@ public class MainViewController extends BaseController implements Initializable 
                     long biggestDiff = 730;
                     if (diff > biggestDiff && movie.getPersonalRating() < 6) {
                         startRemoveMovie();
-                        updateMovieList();
                         break;
                     }
                 }
@@ -171,8 +158,8 @@ public class MainViewController extends BaseController implements Initializable 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        movieTable.setItems(movieModel.getObservableMovies());
 
+        movieTable.setItems(movieModel.getObservableMovies());
     }
 
     public void CategorySelected() {

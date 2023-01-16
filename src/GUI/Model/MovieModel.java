@@ -38,7 +38,7 @@ public class MovieModel {
         moviesToBeViewed.addAll(movieManager.getAllMovies());
         return moviesToBeViewed;
     }
-    public ArrayList<Movie> getMovies(ArrayList<Movie> movie) throws Exception {
+    public ArrayList<Movie> getMovies() throws Exception {
         movies = (ArrayList<Movie>) movieManager.getAllMovies();
         return movies;
     }

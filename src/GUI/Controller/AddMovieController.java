@@ -1,7 +1,6 @@
 package GUI.Controller;
 
 import BE.Category;
-import BE.Methods;
 import BE.Movie;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;

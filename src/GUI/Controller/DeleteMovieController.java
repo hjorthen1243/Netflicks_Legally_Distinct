@@ -1,6 +1,5 @@
 package GUI.Controller;
 
-import BE.Methods;
 import BE.Movie;
 import GUI.Model.MovieModel;
 import javafx.collections.FXCollections;
@@ -21,10 +20,13 @@ public class DeleteMovieController extends BaseController implements Initializab
 
     private MovieModel movieModel;
     private ObservableList<Movie> observableMovies;
+    private ArrayList<Movie> movies;
     @FXML
     private Button removemovie;
     @FXML
     private TableView movieTable;
+    private boolean isStarting = true;
+    private ArrayList<Movie> moviesToDelete;
 
     @Override
     public void setup() {
@@ -50,14 +52,15 @@ public class DeleteMovieController extends BaseController implements Initializab
                     "rating below 6 and have not been seen the last 2 years", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
-                for (Movie m: observableMovies) {
+                for (Movie m: moviesToDelete) {
+                    System.out.println("Movie to delete: " + m);
                     movieModel.deleteMovie(m);
-                    observableMovies.remove(m);
                 }
-
+                observableMovies.clear();
+                updateMovieList();
             }
         }catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -69,9 +72,10 @@ public class DeleteMovieController extends BaseController implements Initializab
             if (alert.getResult() == ButtonType.YES) {
                 movieModel.deleteMovie(m);
                 observableMovies.remove(m);
+                updateMovieList();
             }
         }catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
     }
@@ -79,23 +83,31 @@ public class DeleteMovieController extends BaseController implements Initializab
     public void updateMovieList() {
 
         try {
-            ArrayList<Movie> movies = new ArrayList<>();
-            movieModel = new MovieModel();
-            Date currentDate = new Date();
+            if(isStarting) {
+                isStarting = false;
+                movies = new ArrayList<>();
+                moviesToDelete = new ArrayList<>();
+                movieModel = new MovieModel();
+                Date currentDate = new Date();
+                movies = movieModel.getMovies();
+                for (Movie movie : movies) {
+                    Date moviedate = movie.getLastViewDate();
+                    long diffInMillies = Math.abs(currentDate.getTime() - moviedate.getTime());
+                    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                    long biggestDiff = 730;
+                    if (diff > biggestDiff && movie.getPersonalRating() < 6) {
+                        observableMovies.add(movie);
+                        moviesToDelete.add(movie);
 
-            movies = movieModel.getMovies(movies);
-            for (Movie movie: movies) {
-                Date moviedate = movie.getLastViewDate();
-                long diffInMillies = Math.abs(currentDate.getTime() - moviedate.getTime());
-                long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-                long biggestDiff = 730;
-                if(diff > biggestDiff && movie.getPersonalRating() < 6){
-                    observableMovies.add(movie);
+                        Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
+                    }
                 }
             }
-            Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
-            movieTable.setItems(observableMovies);
 
+            for (Movie m: observableMovies) {
+                System.out.println("Movies to be added to table: " + m);
+            }
+            movieTable.setItems(observableMovies);
 
         } catch (Exception e) {
             e.printStackTrace();
