@@ -41,8 +41,8 @@ public class CategoryManager {
         return categoryDAO.getCategoriesAttachedToMovies();
     }
 
-    public String getMovieCategories() {
-        return categoryDAO.getMovieCategories().toString();
+    public Category getMovieCategories() {
+        return (Category) categoryDAO.getMovieCategories();
     }
 
     public void addCategoriesToMovie(List<Category> categories) {
