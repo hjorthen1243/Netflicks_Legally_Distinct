@@ -193,19 +193,22 @@ public class CategoryDAO implements ICategoryDAO {
         String movieCategories = myOMDBConnector.getMovieCategories();
         String[] c = movieCategories.split(", ");
         ArrayList<Category> categories = new ArrayList<>();
-        String sql = "";
+        String sql =
+        "SELECT * FROM Categories WHERE";
         for (int i = 0; i < c.length; i++) {
-            sql = """
-            SELECT * FROM Categories
-            WHERE (?)
-            """ + "'" + c[i] + "'" + ";";
-
+            sql = sql + " Category = '" + c[i] + "'" + " OR";
         }
-
+        sql = sql.substring(0,sql.length()-3) + ";";
         try (Connection conn = databaseConnector.getConnection()) {
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String catName = rs.getString("Category");
+                //Create and add Categories to list
+                Category category = new Category(id, catName);
+                categories.add(category);
+            }
 
     } catch (SQLServerException e) {
             throw new RuntimeException(e);
@@ -213,6 +216,11 @@ public class CategoryDAO implements ICategoryDAO {
             throw new RuntimeException(e);
         }
         return categories;
+    }
+
+    @Override
+    public void addCategoriesToMovie(List<Category> categories) {
+
     }
 }
 

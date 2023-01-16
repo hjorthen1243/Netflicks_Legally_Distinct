@@ -103,10 +103,6 @@ public class MyOMDBConnector {
                     int year = Integer.parseInt(searchResults.substring(searchResults.indexOf("Year\":\"")+7, searchResults.indexOf("\",\"imdbID")));
                     String imdbID = searchResults.substring(searchResults.indexOf("imdbID\":\"")+11, searchResults.indexOf("\",\"Type"));
 
-                    System.out.println(title);
-                    System.out.println(year);
-                    System.out.println(imdbID);
-
                     //Map the data into a Movie Object
                     Movie m = new Movie(title, year, imdbID);
                     searchMovies.add(m);

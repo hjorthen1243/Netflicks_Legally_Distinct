@@ -1,7 +1,6 @@
 package GUI.Model;
 
 import BE.Category;
-import BE.Movie;
 import BLL.CategoryManager;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.collections.FXCollections;
@@ -65,7 +64,13 @@ public class CategoryModel {
         categoriesToBeViewed.add(category);
     }
 
-    public String getMovieCategories() {
-        return categoryManager.getMovieCategories();
+    public ObservableList<Category> getMovieCategories() {
+        ObservableList<Category> c = FXCollections.observableArrayList();
+        c.addAll(categoryManager.getMovieCategories());
+        return c;
+    }
+
+    public void addCategoriesToMovie(List<Category> categories) {
+        categoryManager.addCategoriesToMovie(categories);
     }
 }
