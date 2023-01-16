@@ -5,18 +5,17 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class CategoryDAO implements ICategoryDAO {
     MyDatabaseConnector databaseConnector;
+    MyOMDBConnector myOMDBConnector;
 
     public CategoryDAO() throws IOException {
         databaseConnector =new MyDatabaseConnector();
+        myOMDBConnector = new MyOMDBConnector();
     }
 
     /**
@@ -149,7 +148,7 @@ public class CategoryDAO implements ICategoryDAO {
     public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
         Map<Integer, List<Category>> moviesWithCategories = new HashMap<Integer, List<Category>>();
         ArrayList<Category> categories = new ArrayList<>();
-        String sql = """
+        String sql = """ 
                 SELECT DISTINCT MovieID, Movie.Title, Categories.Category, Categories.id
                 FROM CatMovie
                 JOIN Categories ON CatMovie.categoryID = Categories.Id
@@ -183,9 +182,6 @@ public class CategoryDAO implements ICategoryDAO {
                     Category c = new Category(CategoryID, Category);
                     categories.add(c);
                 }
-
-
-
             }
             moviesWithCategories.putIfAbsent(movieID, categories);
         } catch (SQLException e) {
@@ -193,4 +189,30 @@ public class CategoryDAO implements ICategoryDAO {
         }
         return moviesWithCategories;
     }
+    public List<Category> getMovieCategories(){
+        String movieCategories = myOMDBConnector.getMovieCategories();
+        String[] c = movieCategories.split(", ");
+        ArrayList<Category> categories = new ArrayList<>();
+        String sql = "";
+        for (int i = 0; i < c.length; i++) {
+            sql = """
+            SELECT * FROM Categories
+            WHERE (?)
+            """ + "'" + c[i] + "'" + ";";
+
+        }
+
+        try (Connection conn = databaseConnector.getConnection()) {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+
+    } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return categories;
+    }
 }
+

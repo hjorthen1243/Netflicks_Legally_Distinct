@@ -16,4 +16,6 @@ public interface ICategoryDAO {
     void deleteCategory(Category categoryName) throws Exception;
 
     Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException;
+
+    List<Category> getMovieCategories();
 }

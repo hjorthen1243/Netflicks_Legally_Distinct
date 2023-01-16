@@ -78,8 +78,6 @@ public class MovieModel {
         return movieManager.searchSelectedMovie(imdbID);
     }
 
-    public String getMovieCategories() {
-        return movieManager.getMovieCategories();
-    }
-
 }
+
+

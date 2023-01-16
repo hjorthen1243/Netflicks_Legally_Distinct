@@ -205,17 +205,16 @@ public class MainViewController extends BaseController implements Initializable 
         categoryModel = new CategoryModel();
         Map<Integer, List<Category>> categoriesAttachedToMovies = categoryModel.getObservableCategories();
         StringBuilder c = new StringBuilder();
-
         for (int i = 0; i < movieTable.getItems().size() ; i++) {
             Movie m = (Movie) movieTable.getItems().get(i);
             int mID = m.getId();
-            if (categoriesAttachedToMovies.containsKey(mID)) {
+            if (categoriesAttachedToMovies.containsKey(mID)) { //If the movies from the movietable have a matching ID in  the categoriesAttachedToMovies list, we can get the attached catagories.
                 for (int j = 0; j < categoriesAttachedToMovies.get(mID).size(); j++) {
                     c.append(categoriesAttachedToMovies.get(mID).get(j)).append(", ");
                 }
-                c = c.replace(c.length()-2, c.length(), "");
-                m.setCategories(c.toString());
-                c = new StringBuilder();
+                c = c.replace(c.length()-2, c.length(), ""); //Remove the last comma
+                m.setCategories(c.toString()); //Set the categories in the movie Object
+                c = new StringBuilder(); //Clear the contents of the old String builder
             }
        }
     }

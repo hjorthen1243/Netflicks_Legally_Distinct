@@ -19,9 +19,13 @@ public class CategoryModel {
 
     private ObservableList<Category> categoriesAttachedToMovies;
 
-    public Category getSelectedCategory(){return selectedCategory;}
+    public Category getSelectedCategory() {
+        return selectedCategory;
+    }
 
-    public void setSelectedCategory(Category selectedCategory){this.selectedCategory = selectedCategory;}
+    public void setSelectedCategory(Category selectedCategory) {
+        this.selectedCategory = selectedCategory;
+    }
 
     public CategoryModel() throws Exception {
         categoryManager = new CategoryManager();
@@ -32,7 +36,8 @@ public class CategoryModel {
     public Map<Integer, List<Category>> getObservableCategories() throws SQLServerException {
         return categoryManager.getCategoriesAttachedToMovies();
     }
-    public ArrayList<Category> getAllCategories(){
+
+    public ArrayList<Category> getAllCategories() {
         allCategories = new ArrayList<>();
         try {
             allCategories = categoryManager.getAllCategoriesArray();
@@ -58,5 +63,9 @@ public class CategoryModel {
     public void createNewCategory(String genre) throws Exception {
         Category category = categoryManager.createNewCategory(genre);
         categoriesToBeViewed.add(category);
+    }
+
+    public String getMovieCategories() {
+        return categoryManager.getMovieCategories();
     }
 }

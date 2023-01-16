@@ -41,4 +41,7 @@ public class CategoryManager {
     public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
         return categoryDAO.getCategoriesAttachedToMovies();
     }
+    public String getMovieCategories() {
+        return categoryDAO.getMovieCategories();
+    }
 }
