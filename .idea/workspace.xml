@@ -2,22 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="666c997b-ffb9-49a4-975f-e9fd331b848d" name="Changes" comment="">
-<<<<<<< Updated upstream
-      <change afterPath="$PROJECT_DIR$/data/database.settings.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06-01-2023_11_26_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06-01-2023_11_26__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MovieDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" afterDir="false" />
-=======
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BE/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BE/Movie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BLL/CategoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/CategoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/ICategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/ICategoryDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" afterDir="false" />
->>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
