@@ -41,7 +41,6 @@ public class MovieDAO implements IMovieDAO {
             while (rs.next()) {
                 //Map DB row to Movie Object
                 int id = rs.getInt("Id");
-<<<<<<< Updated upstream
                 String title = rs.getString("Title");
                 int year = rs.getInt("Year");
                 Duration time = Duration.ofSeconds(rs.getInt("Length"));
@@ -51,15 +50,6 @@ public class MovieDAO implements IMovieDAO {
                 Date lastView = rs.getDate("LastView");
 
                 String pathToFile = rs.getString("PathToFile");
-=======
-                String name = rs.getString("Title");
-                int year = rs.getInt("Year");
-                double imdbRating= rs.getDouble("IMDB Rating");
-                
-                String pathToFile = rs.getString("PathToFile");
-                Date lastView = rs.getDate("LastView");
->>>>>>> Stashed changes
-
 
                 //Add Movie to list allMovies
                 Movie movie = new Movie(id, title, year, length, imdbRating, pRating , lastView, pathToFile);
