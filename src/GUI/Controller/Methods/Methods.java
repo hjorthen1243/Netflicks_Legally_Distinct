@@ -1,7 +1,6 @@
 package GUI.Controller.Methods;
 
 import BE.Category;
-import BLL.CategoryManager;
 import GUI.Model.CategoryModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,8 +16,6 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class Methods {
-
-    private static CategoryModel categoryModel;
 
     /**
      * The shorter way to describe what the different columns should contain in the tableview
@@ -66,6 +63,10 @@ public class Methods {
         }
     }
 
+    /**
+     * Makes sure the user can not write any letters or special characters, but only numbers in the text-fields
+     * @param editfield the text-field
+     */
     public static void addListenersToNumFields(TextField editfield) {
 
         // force the field to be numeric only
@@ -75,8 +76,14 @@ public class Methods {
             }
         });
     }
+
+    /**
+     * Adds all the categories to the given combobox
+     * @param categoryDropDown given combobox
+     * @throws Exception exception thrown
+     */
     public static void addAllCategoriesToComboBox(ComboBox categoryDropDown) throws Exception {
-        categoryModel = new CategoryModel();
+        CategoryModel categoryModel = new CategoryModel();
         ArrayList<Category> allCategories = categoryModel.getAllCategories();
         for (Category category : allCategories) {
             categoryDropDown.getItems().add(category.getCategory());

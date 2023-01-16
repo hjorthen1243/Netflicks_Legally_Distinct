@@ -1,7 +1,3 @@
-//TODO remove instead of delete
-//TODO @FXML
-//TODO genre should be named categories
-
 package GUI.Controller;
 
 import BE.Category;
@@ -28,6 +24,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class MainViewController extends BaseController implements Initializable {
 
@@ -121,9 +119,11 @@ public class MainViewController extends BaseController implements Initializable 
      * After something is added, it tries to update the movie table
      */
     public void addMovieHandle() {
-        addController = new AddMovieController();
-        Methods.openNewView("AddMovie.fxml", "Add a movie");
         try {
+            addController = new  AddMovieController();
+            addController.setup();
+            Methods.openNewView("AddMovie.fxml", "Add a movie");
+
             movieTable.setItems(movieModel.getAllMovies());
         } catch (Exception e) {
             e.printStackTrace();
@@ -211,9 +211,10 @@ public class MainViewController extends BaseController implements Initializable 
        }
     }
 
-
-
-
+    /**
+     * Sorts though the categories, when a category is chosen
+     * @param event
+     */
     public void CategorySelected(ActionEvent event) {
         movieModel = getModel().getMovieModel();
         Object selectedItem = categoryDropDown.getSelectionModel().getSelectedItem();
@@ -233,6 +234,9 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
+    /**
+     * Looks after, if something is clicked and calls clicks
+     */
     private void eventHandler() {
         EventHandler<MouseEvent> onClick = this::clicks;
         movieTable.setRowFactory(param -> {
@@ -243,8 +247,7 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     /**
-     * Handles the mouse button clicks inside songsTable & songsInsidePlaylist table
-     *
+     * Handles the mouse button clicks in the movie table
      * @param event mouse button events, specifically double clicks
      */
     private void clicks(MouseEvent event) {
@@ -256,6 +259,10 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
+
+    /**
+     * Plays the movie if it exists on the given filepath
+     */
     private void playMedia() {
         try {
             //constructor of file class having file as argument
@@ -272,7 +279,8 @@ public class MainViewController extends BaseController implements Initializable 
             if (file.exists()) {
                 desktop.open(file);              //opens the specified file
             } else {
-                System.out.println("not existing");
+                //shows a message, like the alert boxes
+                showMessageDialog(null, "This movie does not exist on the given filepath");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -280,6 +288,9 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
 
+    /**
+     * Saves the given value from the DatePicker, and updates the specific movie.
+     */
     public void saveLastSeenHandle() {
         LocalDate lastSeen = datePicker.getValue();
         Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
@@ -290,15 +301,19 @@ public class MainViewController extends BaseController implements Initializable 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println(lastSeen);
     }
 
+    /**
+     * Edit the different categories
+     */
     public void handleEditCategories() {
         editController = new EditViewController();
         Methods.openNewView("EditView.fxml", "Edit");
     }
 
+    /**
+     * Saves the given value from the PersonalRating Slider, and updates the specific movie.
+     */
     public void handleSavePR() {
         int personalRating = (int) sliderPR.getValue();
         System.out.println(personalRating);
@@ -313,6 +328,9 @@ public class MainViewController extends BaseController implements Initializable 
         movie.setPersonalRating(personalRating);
     }
 
+    /**
+     * Adds a listener to the table, and the eventHandler looks after the clicks
+     */
     private void addListenerMovieTable() {
         movieTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             //If something is selected, buttons will be enabled, else they will be disabled
