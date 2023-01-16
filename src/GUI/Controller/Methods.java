@@ -1,4 +1,4 @@
-package BE;
+package GUI.Controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

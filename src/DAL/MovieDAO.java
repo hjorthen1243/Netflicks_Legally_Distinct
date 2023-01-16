@@ -51,7 +51,6 @@ public class MovieDAO implements IMovieDAO {
 
                 String pathToFile = rs.getString("PathToFile");
 
-
                 //Add Movie to list allMovies
                 Movie movie = new Movie(id, title, year, length, imdbRating, pRating , lastView, pathToFile);
                 allMovies.add(movie);
