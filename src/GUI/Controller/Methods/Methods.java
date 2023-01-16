@@ -1,7 +1,11 @@
-package GUI.Controller;
+package GUI.Controller.Methods;
 
+import BE.Category;
+import BLL.CategoryManager;
+import GUI.Model.CategoryModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -10,7 +14,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class Methods {
+
+    private static CategoryModel categoryModel;
 
     /**
      * The shorter way to describe what the different columns should contain in the tableview
@@ -66,5 +74,12 @@ public class Methods {
                 editfield.setText(newValue.replaceAll("\\D", ""));
             }
         });
+    }
+    public static void addAllCategoriesToComboBox(ComboBox categoryDropDown) throws Exception {
+        categoryModel = new CategoryModel();
+        ArrayList<Category> allCategories = categoryModel.getAllCategories();
+        for (Category category : allCategories) {
+            categoryDropDown.getItems().add(category.getCategory());
+        }
     }
 }
