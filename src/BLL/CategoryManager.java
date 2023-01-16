@@ -1,7 +1,6 @@
 package BLL;
 
 import BE.Category;
-import BE.Movie;
 import DAL.CategoryDAO;
 
 import DAL.ICategoryDAO;
@@ -41,7 +40,11 @@ public class CategoryManager {
     public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
         return categoryDAO.getCategoriesAttachedToMovies();
     }
-    public String getMovieCategories() {
+    public List<Category> getMovieCategories() {
         return categoryDAO.getMovieCategories();
+    }
+
+    public void addCategoriesToMovie(List<Category> categories) {
+        categoryDAO.addCategoriesToMovie(categories);
     }
 }

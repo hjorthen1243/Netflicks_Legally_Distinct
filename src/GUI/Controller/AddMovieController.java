@@ -3,11 +3,14 @@ package GUI.Controller;
 import BE.Category;
 import BE.Methods;
 import BE.Movie;
+import BLL.CategoryManager;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
 import GUI.Model.PMCModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +24,7 @@ import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddMovieController extends BaseController implements Initializable{
@@ -47,6 +51,8 @@ public class AddMovieController extends BaseController implements Initializable{
     private PMCModel pmcModel;
     private CategoryModel categoryModel;
 
+    private ObservableList<Category> categoriesInAddMovie;
+
 
     @Override
     public void setup() {
@@ -57,6 +63,7 @@ public class AddMovieController extends BaseController implements Initializable{
             categoryModel = new CategoryModel();
             ArrayList<Category> allCategories;
             allCategories = categoryModel.getAllCategories();
+            allCategories.remove(0);
             for (Category category: allCategories) {
                 categoryDropDown.getItems().add(category.getCategory());
             }
@@ -129,13 +136,13 @@ public class AddMovieController extends BaseController implements Initializable{
 
         String title = txtFieldMovieTitle.getText();
         int year = Integer.parseInt(txtFieldYear.getText());
-        //String lenght = null;
         double imdbRating = Double.parseDouble(txtFieldIMDBRating.getText());
         int personalRating = Integer.parseInt(txtFieldPersonalRating.getText());
         String filePath = txtFiledMovieFile.getText();
-
+        List<Category> categories = categoryTable.getItems().subList(0,categoryTable.getItems().size());
         try {
             movieModel.addNewMovie(title, year, null, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath);
+            categoryModel.addCategoriesToMovie(categories);
             closeWindow();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -173,7 +180,10 @@ public class AddMovieController extends BaseController implements Initializable{
     }
 
     private void addCategoriesToChosenMovie() {
-        String c = categoryModel.getMovieCategories();
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Category"));
+        categoryTable.getColumns().addAll();
+        categoryTable.setItems(categoryModel.getMovieCategories());
+        categoriesInAddMovie = categoryModel.getMovieCategories();
 
     }
 
@@ -196,19 +206,44 @@ public class AddMovieController extends BaseController implements Initializable{
         });
     }
 
-        /**
-         * Closes the window
-         */
-        public void closeWindow() {
-            Stage stage = (Stage) btnAddMovie.getScene().getWindow();
-            stage.close();
+    /**
+     * Closes the window
+     * */
+    public void closeWindow() {
+        Stage stage = (Stage) btnAddMovie.getScene().getWindow();
+        stage.close();
         }
 
     public void handleAddCategory(ActionEvent actionEvent) {
+        if (categoryDropDown.getSelectionModel().getSelectedItem() != null) {
+            List<Category> d = categoriesInAddMovie.subList(0, categoriesInAddMovie.size());
+            ObservableList<Category> e = FXCollections.observableArrayList();
+            Category category = new Category(categoryDropDown.getSelectionModel().getSelectedItem().toString());
+            if (!d.toString().contains(category.getCategory())) {
+                d.add(category);
+                e.addAll(d);
+                categoryTable.setItems(e);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Category already attached to movie");
+                alert.showAndWait();
+            }
+
+        }else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a Category to be added in the dropdown menu");
+            alert.showAndWait();
+        }
+
     }
 
     public void handleRemoveCategory(ActionEvent actionEvent) {
-
+        if (categoryTable.getFocusModel().getFocusedIndex()  >=0 && categoryTable.getFocusModel().getFocusedIndex() < categoryTable.getItems().size()) {
+            categoriesInAddMovie.remove(categoryTable.getFocusModel().getFocusedIndex());
+            categoryTable.setItems(categoriesInAddMovie);
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please choose a Category to be deleted");
+            alert.showAndWait();
+        }
     }
 }
 
