@@ -53,6 +53,7 @@ public class DeleteMovieController extends BaseController implements Initializab
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
                 for (Movie m: moviesToDelete) {
+                    //Test
                     System.out.println("Movie to delete: " + m);
                     movieModel.deleteMovie(m);
                 }
