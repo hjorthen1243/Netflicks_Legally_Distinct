@@ -1,33 +1,28 @@
 package GUI.Controller;
 
 import BE.Category;
+import BE.Methods;
+import BE.Movie;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
-import BE.Movie;
 import GUI.Model.PMCModel;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.net.URL;
 import java.util.ResourceBundle;
+
 public class AddMovieController extends BaseController implements Initializable{
     public DatePicker datePickerLastSeen;
     public java.sql.Date date;
@@ -75,6 +70,9 @@ public class AddMovieController extends BaseController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         try {
             makelist();
+            Methods.addListenersToNumFields(txtFieldYear);
+            Methods.addListenersToNumFields(txtFieldPersonalRating);
+            Methods.addListenersToNumFields(txtFieldIMDBRating);
             disableBtn();
             genreDropDownUpdate();
             clicks();
@@ -82,6 +80,7 @@ public class AddMovieController extends BaseController implements Initializable{
             e.printStackTrace();
         }
     }
+
 
     private void makelist() {
         //All the values needed to create a new movie
@@ -99,7 +98,6 @@ public class AddMovieController extends BaseController implements Initializable{
 
         for (TextField textfield: allTextfiels) {
             if(textfield.getText().equals("") || textfield.getText() == null){
-                System.out.println("Still need: " + textfield.getId());
                 return;
             }
         }
@@ -179,28 +177,21 @@ public class AddMovieController extends BaseController implements Initializable{
 
     public void handleCategoriesClick(MouseEvent mouseEvent) {
         editController = new EditViewController();
-        OpenNewView(mouseEvent, "EditView.fxml", "Edit", editController);
+        Methods.openNewView("EditView.fxml", "Edit");
     }
 
-    private void OpenNewView(MouseEvent event, String fxmlName, String displayName, BaseController controller) {
-        try{
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/GUI/View/" + fxmlName));
-            AnchorPane pane = loader.load();
-            controller = loader.getController();
-            //controller.setModel(super.getModel());
-            //controller.setup();
-            // Create the dialog stage
-            Stage dialogWindow = new Stage();
-            dialogWindow.setTitle(displayName);
-            dialogWindow.initModality(Modality.WINDOW_MODAL);
-            dialogWindow.initOwner(((Node) event.getSource()).getScene().getWindow());
-            Scene scene = new Scene(pane);
-            dialogWindow.setScene(scene);
-            dialogWindow.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+    private void addListenersToNumFiels(TextField txtfield) {
+
+        // force the field to be numeric only
+        txtfield.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    txtfield.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
     }
 
         /**
@@ -209,7 +200,6 @@ public class AddMovieController extends BaseController implements Initializable{
         public void closeWindow() {
             Stage stage = (Stage) btnAddMovie.getScene().getWindow();
             stage.close();
-
         }
     }
 

@@ -56,4 +56,5 @@ public class MovieManager {
     public String getMovieCategories() {
         return movieDAO.getMovieCategories();
     }
+
 }

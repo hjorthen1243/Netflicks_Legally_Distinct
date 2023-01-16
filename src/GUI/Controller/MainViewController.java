@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.Category;
+import BE.Methods;
 import BE.Movie;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
@@ -11,12 +12,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TextField;
+
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -27,9 +29,15 @@ import java.awt.*;
 import java.util.*;
 import java.awt.Label;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class MainViewController extends BaseController implements Initializable {
 
@@ -37,6 +45,9 @@ public class MainViewController extends BaseController implements Initializable 
     public Button btnSavePR;
     public Button btnSaveLastSeen;
     public DatePicker datePicker;
+    public Button btnRemoveMovie;
+    @FXML
+    private TextField pRatingMax, pRatingMin, imdbMin, imdbMax;
     @FXML
     private ComboBox genreDropDown;
     @FXML
@@ -51,10 +62,10 @@ public class MainViewController extends BaseController implements Initializable 
     DeleteMovieController delController;
     EditViewController editController;
     private Label label;
+    private boolean programmStartet = true;
 
     @Override
     public void setup() {
-
         try {
             updateMovieList();
         } catch (SQLServerException e) {
@@ -67,10 +78,14 @@ public class MainViewController extends BaseController implements Initializable 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sliderPR.setMajorTickUnit( 1 );
+        sliderPR.setMajorTickUnit(1);
         eventHandler();
         disableEnableComponents(true);
         addListenerMovieTable();
+        Methods.addListenersToNumFields(imdbMax);
+        Methods.addListenersToNumFields(imdbMin);
+        Methods.addListenersToNumFields(pRatingMax);
+        Methods.addListenersToNumFields(pRatingMin);
     }
 
     /**
@@ -78,14 +93,41 @@ public class MainViewController extends BaseController implements Initializable 
      */
     private void disableEnableComponents(Boolean bool) {
         sliderPR.setDisable(bool);
+        sliderPR.setValue(5);
         btnSavePR.setDisable(bool);
         btnSaveLastSeen.setDisable(bool);
         datePicker.setDisable(bool);
+        datePicker.setValue(null);
+        btnRemoveMovie.setDisable(bool);
+
+
     }
 
-    public void addMovieHandle(ActionEvent event) {
+    public void startRemoveMovie() {
+        delController = new DeleteMovieController();
+        //openNewView("DeleteMovie.fxml", "Delete old movies", delController);
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/GUI/View/DeleteMovie.fxml"));
+            AnchorPane pane = loader.load();
+            delController = loader.getController();
+            Stage dialogWindow = new Stage();
+            dialogWindow.setTitle("Remove movies");
+            dialogWindow.initModality(Modality.WINDOW_MODAL);
+
+            Scene scene = new Scene(pane);
+            dialogWindow.setScene(scene);
+            dialogWindow.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addMovieHandle(ActionEvent event) throws Exception {
         addController = new AddMovieController();
-        OpenNewView(event, "AddMovie.fxml", "Add a movie", addController);
+        Methods.openNewView("AddMovie.fxml", "Add a movie");
+        updateMovieList();
         try {
             movieTable.setItems(movieModel.getAllMovies());
         } catch (Exception e) {
@@ -96,41 +138,17 @@ public class MainViewController extends BaseController implements Initializable 
     public void removeMovieHandle(ActionEvent event) {
 
         try {
-        Movie m = (Movie) movieTable.getFocusModel().getFocusedItem();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + m.getTitle() + " - " + m.getYearString() + "?", ButtonType.YES, ButtonType.NO);
-        alert.showAndWait();
-        if (alert.getResult() == ButtonType.YES) {
+            Movie m = (Movie) movieTable.getSelectionModel().getSelectedItem();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Remove; " + m.getTitle() + " - " + m.getYearString() + "?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
                 movieModel.deleteMovie(m);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
-
-
-    private void OpenNewView(ActionEvent event, String fxmlName, String displayName, BaseController controller) {
-        try{
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/GUI/View/" + fxmlName));
-            AnchorPane pane = loader.load();
-            controller = loader.getController();
-            //controller.setModel(super.getModel());
-            //controller.setup();
-            // Create the dialog stage
-            Stage dialogWindow = new Stage();
-            dialogWindow.setTitle(displayName);
-            dialogWindow.initModality(Modality.WINDOW_MODAL);
-            dialogWindow.initOwner(((Node) event.getSource()).getScene().getWindow());
-            Scene scene = new Scene(pane);
-            dialogWindow.setScene(scene);
-            dialogWindow.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
 
     public void searchHandle(ActionEvent event) {
     }
@@ -139,17 +157,17 @@ public class MainViewController extends BaseController implements Initializable 
         categoryModel = getModel().getCategoryModel();
         ArrayList<Category> allCategories;
         allCategories = categoryModel.getAllCategories();
-        for (Category category: allCategories) {
+        for (Category category : allCategories) {
             genreDropDown.getItems().add(category.getCategory());
         }
     }
+
 
     private void updateMovieList() throws Exception {
         movieModel = getModel().getMovieModel();
         ObservableList<Movie> m = movieModel.getObservableMovies();
         movieTable.getColumns().addAll();
         movieTable.setItems(m);
-
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("Title"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("Year"));
         lengthColumn.setCellValueFactory(new PropertyValueFactory<>("Length"));
@@ -158,7 +176,29 @@ public class MainViewController extends BaseController implements Initializable 
         lastViewColumn.setCellValueFactory(new PropertyValueFactory<>("LastViewDate"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Categories"));
         updateCategories();
+        try {
+            if (programmStartet) {
+                Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
+                programmStartet = false;
+                ArrayList<Movie> movies = new ArrayList<>();
+                Date currentDate = new Date();
+                movies = movieModel.getMovies(movies);
+                for (Movie movie : movies) {
+                    Date moviedate = movie.getLastViewDate();
+                    long diffInMillies = Math.abs(currentDate.getTime() - moviedate.getTime());
+                    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                    long biggestDiff = 730;
+                    if (diff > biggestDiff && movie.getPersonalRating() < 6) {
+                        startRemoveMovie();
+                        updateMovieList();
+                        break;
+                    }
+                }
+            }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateCategories() throws Exception {
@@ -171,13 +211,14 @@ public class MainViewController extends BaseController implements Initializable 
             for (int j = 0; j < categoriesAttachedToMovies.get(mID).size(); j++) {
                 c.insert(0, categoriesAttachedToMovies.get(mID).get(j).getCategory() + ", ");
             }
-            c.delete(c.length()-1,c.length());
+            c.delete(c.length() - 1, c.length());
             m.setCategories(c.toString());
         }
-
         System.out.println(c);
-
         movieTable.getColumns().addAll();
+        movieTable.setItems(movieModel.getObservableMovies());
+
+
     }
 
     public void CategorySelected(ActionEvent event) {
@@ -186,8 +227,8 @@ public class MainViewController extends BaseController implements Initializable 
         String categoryChoosen = selectedItem.toString();
         ArrayList<Category> allCategories;
         allCategories = categoryModel.getAllCategories();
-        for (Category category: allCategories) {
-            if(category.getCategory().equals(categoryChoosen)){
+        for (Category category : allCategories) {
+            if (category.getCategory().equals(categoryChoosen)) {
                 try {
                     movieTable.getItems().clear();
                     movieTable.setItems(movieModel.getObservableMoviesCategory(category));
@@ -198,7 +239,7 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
-    private void eventHandler(){
+    private void eventHandler() {
         EventHandler<MouseEvent> onClick = this::clicks;
         movieTable.setRowFactory(param -> {
             TableRow<Movie> row = new TableRow<>();
@@ -209,6 +250,7 @@ public class MainViewController extends BaseController implements Initializable 
 
     /**
      * Handles the mouse button clicks inside songsTable & songsInsidePlaylist table
+     *
      * @param event mouse button events, specifically double clicks
      */
     private void clicks(MouseEvent event) {
@@ -235,13 +277,10 @@ public class MainViewController extends BaseController implements Initializable 
             Desktop desktop = Desktop.getDesktop();
             if (file.exists()) {         //checks file exists or not
                 desktop.open(file);              //opens the specified file
-            }
-            else {
+            } else {
                 System.out.println("not existing");
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -249,12 +288,21 @@ public class MainViewController extends BaseController implements Initializable 
 
     public void saveLastSeenHandle(ActionEvent actionEvent) {
         LocalDate lastSeen = datePicker.getValue();
+        Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
+        movie.setLastViewDate(java.sql.Date.valueOf(lastSeen));
+        try {
+            movieModel.updateMovie(movie);
+            movieTable.setItems(movieModel.getAllMovies());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         System.out.println(lastSeen);
     }
 
     public void handleEditCategories(ActionEvent actionEvent) {
         editController = new EditViewController();
-        OpenNewView(actionEvent, "EditView.fxml", "Edit", editController);
+        Methods.openNewView("EditView.fxml", "Edit");
     }
 
     public void handleSavePR(ActionEvent actionEvent) {
@@ -264,6 +312,7 @@ public class MainViewController extends BaseController implements Initializable 
         movie.setPersonalRating(personalrating);
         try {
             movieModel.updateMovie(movie);
+            movieTable.setItems(movieModel.getAllMovies());
         } catch (Exception e) {
             e.printStackTrace();
         }

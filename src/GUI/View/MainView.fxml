@@ -15,7 +15,7 @@
    <children>
       <TableView fx:id="movieTable" editable="true" layoutY="230.0" prefHeight="220.0" prefWidth="800.0">
         <columns>
-          <TableColumn fx:id="titleColumn" prefWidth="126.39999008178711" text="Title" />
+          <TableColumn fx:id="titleColumn" prefWidth="126.4" text="Title" />
           <TableColumn fx:id="yearColumn" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="Year" />
             <TableColumn fx:id="lengthColumn" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="Length" />
             <TableColumn fx:id="categoryColumn" prefWidth="75.0" text="Categories" />
@@ -34,10 +34,10 @@
       <ComboBox fx:id="genreDropDown" layoutX="629.0" layoutY="43.0" prefWidth="150.0" />
       <TextField fx:id="searchField" layoutX="430.0" layoutY="9.0" prefHeight="26.0" prefWidth="300.0" promptText="Search for Title, Year, Director..." />
       <Button fx:id="btnSearch" layoutX="728.0" layoutY="9.0" mnemonicParsing="false" onAction="#searchHandle" prefHeight="26.0" prefWidth="52.0" text="Search" />
-      <TextField layoutX="728.0" layoutY="74.0" prefHeight="26.0" prefWidth="52.0" promptText="Max..." />
-      <TextField layoutX="669.0" layoutY="74.0" prefHeight="26.0" prefWidth="52.0" promptText="Min..." />
-      <TextField layoutX="669.0" layoutY="105.0" prefHeight="26.0" prefWidth="52.0" promptText="Min..." />
-      <TextField layoutX="728.0" layoutY="105.0" prefHeight="26.0" prefWidth="52.0" promptText="Max..." />
+      <TextField fx:id="imdbMax" layoutX="728.0" layoutY="74.0" prefHeight="26.0" prefWidth="52.0" promptText="Max..." />
+      <TextField fx:id="imdbMin" layoutX="669.0" layoutY="74.0" prefHeight="26.0" prefWidth="52.0" promptText="Min..." />
+      <TextField fx:id="pRatingMin" layoutX="669.0" layoutY="105.0" prefHeight="26.0" prefWidth="52.0" promptText="Min..." />
+      <TextField fx:id="pRatingMax" layoutX="728.0" layoutY="105.0" prefHeight="26.0" prefWidth="52.0" promptText="Max..." />
       <Label layoutX="585.0" layoutY="78.0" text="IMDb Raiting" />
       <Label layoutX="577.0" layoutY="109.0" text="Personal Raiting" />
       <Line endX="100.0" layoutX="681.0" layoutY="145.0" startX="-252.20001220703125" />
