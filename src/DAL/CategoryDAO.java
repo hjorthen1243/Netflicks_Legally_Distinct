@@ -147,7 +147,7 @@ public class CategoryDAO implements ICategoryDAO {
 
     @Override
     public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
-        HashMap<Integer, List<Category>> moviesWithCategories = new HashMap<Integer, List<Category>>();
+        Map<Integer, List<Category>> moviesWithCategories = new HashMap<Integer, List<Category>>();
         ArrayList<Category> categories = new ArrayList<>();
         String sql = """
                 SELECT DISTINCT MovieID, Movie.Title, Categories.Category, Categories.id
@@ -163,31 +163,31 @@ public class CategoryDAO implements ICategoryDAO {
             boolean firstLine = true;
             String Category;
             int CategoryID;
+            int movieID = 0;
             while (rs.next()) {
-                int movieID = rs.getInt("MovieID");
+                movieID = rs.getInt("MovieID");
                 if (firstLine) {
                     lastID = movieID;
                     firstLine = false;
+                } if (lastID == movieID) {
                     Category = rs.getString("Category");
                     CategoryID = rs.getInt("id");
                     Category c = new Category(CategoryID, Category);
                     categories.add(c);
-                } else if (lastID == movieID) {
-                    Category = rs.getString("Category");
-                    CategoryID = rs.getInt("id");
-                    Category c = new Category(CategoryID, Category);
-                    categories.add(c);
-                } else {
+                } else  {
+                    moviesWithCategories.putIfAbsent(lastID, categories);
                     lastID = movieID;
-                    moviesWithCategories.putIfAbsent(movieID, categories);
-                    categories.clear();
+                    categories = new ArrayList<>();
                     Category = rs.getString("Category");
                     CategoryID = rs.getInt("id");
                     Category c = new Category(CategoryID, Category);
                     categories.add(c);
                 }
-                moviesWithCategories.putIfAbsent(movieID, categories);
+
+
+
             }
+            moviesWithCategories.putIfAbsent(movieID, categories);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

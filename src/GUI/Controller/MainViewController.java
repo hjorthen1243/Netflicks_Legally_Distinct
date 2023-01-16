@@ -205,21 +205,23 @@ public class MainViewController extends BaseController implements Initializable 
         categoryModel = new CategoryModel();
         Map<Integer, List<Category>> categoriesAttachedToMovies = categoryModel.getObservableCategories();
         StringBuilder c = new StringBuilder();
-        for (int i = 0; i < categoriesAttachedToMovies.size(); i++) {
+
+        for (int i = 0; i < movieTable.getItems().size() ; i++) {
             Movie m = (Movie) movieTable.getItems().get(i);
             int mID = m.getId();
-            for (int j = 0; j < categoriesAttachedToMovies.get(mID).size(); j++) {
-                c.insert(0, categoriesAttachedToMovies.get(mID).get(j).getCategory() + ", ");
+            if (categoriesAttachedToMovies.containsKey(mID)) {
+                for (int j = 0; j < categoriesAttachedToMovies.get(mID).size(); j++) {
+                    c.append(categoriesAttachedToMovies.get(mID).get(j)).append(", ");
+                }
+                c = c.replace(c.length()-2, c.length(), "");
+                m.setCategories(c.toString());
+                c = new StringBuilder();
             }
-            c.delete(c.length() - 1, c.length());
-            m.setCategories(c.toString());
-        }
-        System.out.println(c);
-        movieTable.getColumns().addAll();
-        movieTable.setItems(movieModel.getObservableMovies());
-
-
+       }
     }
+
+
+
 
     public void CategorySelected(ActionEvent event) {
         movieModel = getModel().getMovieModel();

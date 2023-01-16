@@ -4,6 +4,8 @@
     <list default="true" id="666c997b-ffb9-49a4-975f-e9fd331b848d" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/src/BE/Methods.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BE/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BE/Movie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" afterDir="false" />
@@ -106,6 +108,16 @@
           <url>file://$PROJECT_DIR$/src/DAL/MyOMDBConnector.java</url>
           <line>156</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/GUI/Controller/MainViewController.java</url>
+          <line>208</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/DAL/CategoryDAO.java</url>
+          <line>166</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

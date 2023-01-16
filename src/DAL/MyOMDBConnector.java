@@ -47,7 +47,6 @@ public class MyOMDBConnector {
                 //Close the scanner
                 scanner.close();
 
-                System.out.println(informationString);
 
                 /**
                  //JSON simple library Setup with Maven is used to convert strings to JSON

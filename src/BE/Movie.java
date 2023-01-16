@@ -113,7 +113,7 @@ public class Movie {
                 "\t title='" + title;
     }
     public String getCategories() {
-        return null;
+        return categories;
     }
     public void setCategories(String categories){
         this.categories = categories;
