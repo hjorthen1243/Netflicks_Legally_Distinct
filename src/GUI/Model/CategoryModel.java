@@ -1,22 +1,31 @@
 package GUI.Model;
 
 import BE.Category;
+import BE.Movie;
 import BLL.CategoryManager;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class CategoryModel {
-
+    private List<Category> categoriesToBeViewed;
     private CategoryManager categoryManager;
     private ArrayList<Category> allCategories;
-    private ObservableList<Category> categoriesToBeViewed;
     private Category selectedCategory;
 
-    public Category getSelectedCategory(){return selectedCategory;}
+    private ObservableList<Category> categoriesAttachedToMovies;
 
-    public void setSelectedCategory(Category selectedCategory){this.selectedCategory = selectedCategory;}
+    public Category getSelectedCategory() {
+        return selectedCategory;
+    }
+
+    public void setSelectedCategory(Category selectedCategory) {
+        this.selectedCategory = selectedCategory;
+    }
 
     public CategoryModel() throws Exception {
         categoryManager = new CategoryManager();
@@ -24,10 +33,11 @@ public class CategoryModel {
         //categoriesToBeViewed.addAll(categoryManager.getAllCategories());
     }
 
-    public ObservableList<Category> getObservableCategories(){
-        return categoriesToBeViewed;
+    public Map<Integer, List<Category>> getObservableCategories() throws SQLServerException {
+        return categoryManager.getCategoriesAttachedToMovies();
     }
-    public ArrayList<Category> getAllCategories(){
+
+    public ArrayList<Category> getAllCategories() {
         allCategories = new ArrayList<>();
         try {
             allCategories = categoryManager.getAllCategoriesArray();
@@ -53,5 +63,9 @@ public class CategoryModel {
     public void createNewCategory(String genre) throws Exception {
         Category category = categoryManager.createNewCategory(genre);
         categoriesToBeViewed.add(category);
+    }
+
+    public String getMovieCategories() {
+        return categoryManager.getMovieCategories();
     }
 }

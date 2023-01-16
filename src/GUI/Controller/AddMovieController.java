@@ -29,13 +29,12 @@ public class AddMovieController extends BaseController implements Initializable{
     public Button btnAddMovie;
     public ComboBox categoryDropDown;
     ArrayList<TextField> allTextfiels;
-
     public EditViewController editController;
     private Movie selectedMovie;
     @FXML
-    private TableView tableViewSearchMovie;
+    private TableView tableViewSearchMovie, categoryTable;
     @FXML
-    private TableColumn titleColumn, yearColumn;
+    private TableColumn titleColumn, yearColumn, categoryColumn;
     @FXML
     private TextField txtFieldSearch, txtFieldIMDBRating,  txtFieldPersonalRating, txtFieldMovieTitle, txtFiledMovieFile, txtFieldMovieCategories, txtFieldYear;
     @FXML
@@ -150,10 +149,8 @@ public class AddMovieController extends BaseController implements Initializable{
     private void handleSearchMovie() throws Exception {
         movieModel = new MovieModel();
         movieModel.searchAddMovie(txtFieldSearch.getText());
-
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("Title"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("Year"));
-
         tableViewSearchMovie.getColumns().addAll();
         tableViewSearchMovie.setItems(movieModel.searchAddMovie(txtFieldSearch.getText()));
 
@@ -169,9 +166,14 @@ public class AddMovieController extends BaseController implements Initializable{
                 txtFieldMovieTitle.setText(selectedMovie.getTitle());
                 txtFieldYear.setText(selectedMovie.getYearString());
                 txtFieldIMDBRating.setText(String.valueOf(m.getImdbRating()));
-                txtFieldMovieCategories.setText(movieModel.getMovieCategories());
+                addCategoriesToChosenMovie();
             }
         });
+    }
+
+    private void addCategoriesToChosenMovie() {
+        String c = categoryModel.getMovieCategories();
+
     }
 
     public void handleCategoriesClick(MouseEvent mouseEvent) {
@@ -200,5 +202,12 @@ public class AddMovieController extends BaseController implements Initializable{
             Stage stage = (Stage) btnAddMovie.getScene().getWindow();
             stage.close();
         }
+
+    public void handleAddCategory(ActionEvent actionEvent) {
     }
+
+    public void handleRemoveCategory(ActionEvent actionEvent) {
+
+    }
+}
 

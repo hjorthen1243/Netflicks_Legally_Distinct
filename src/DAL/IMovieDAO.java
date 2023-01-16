@@ -32,5 +32,4 @@ public interface IMovieDAO {
 
     Movie searchSelectedMovie(String imdbID);
 
-    String getMovieCategories();
 }

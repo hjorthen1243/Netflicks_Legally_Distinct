@@ -291,8 +291,6 @@ public class MovieDAO implements IMovieDAO {
         return myOMDBConnector.chosenMovieMoreInfo(imdbID);
     }
 
-    public String getMovieCategories(){
-        return myOMDBConnector.getMovieCategories();
-    }
+
 
 }
