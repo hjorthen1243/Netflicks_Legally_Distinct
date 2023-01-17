@@ -66,7 +66,11 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     /**
+<<<<<<< Updated upstream
      * When the program is loading, the
+=======
+     * When the program is loading, the 
+>>>>>>> Stashed changes
      * @param location
      * The location used to resolve relative paths for the root object, or
      * {@code null} if the location is not known.

@@ -5,9 +5,7 @@ import BE.Movie;
 import GUI.Controller.Methods.Methods;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -36,7 +34,7 @@ public class AddMovieController extends BaseController implements Initializable{
     @FXML
     private Button btnInsertFile, btnSearchMovie, btnAddMovie, btnRemoveCategory, btnAddCategory;
 
-    ArrayList<TextField> allTextfiels;
+    ArrayList<TextField> allTextiles;
     public EditViewController editController;
     private Movie selectedMovie;
     private LocalDate localDate;
@@ -85,12 +83,12 @@ public class AddMovieController extends BaseController implements Initializable{
      */
     private void makeList() {
         //All the values needed to create a new movie
-        allTextfiels = new ArrayList<>();
-        allTextfiels.add(txtFieldMovieTitle);
-        allTextfiels.add(txtFieldYear);
-        allTextfiels.add(txtFieldIMDBRating);
-        allTextfiels.add(txtFieldPersonalRating);
-        allTextfiels.add(txtFiledMovieFile);
+        allTextiles = new ArrayList<>();
+        allTextiles.add(txtFieldMovieTitle);
+        allTextiles.add(txtFieldYear);
+        allTextiles.add(txtFieldIMDBRating);
+        allTextiles.add(txtFieldPersonalRating);
+        allTextiles.add(txtFiledMovieFile);
     }
 
 
@@ -100,7 +98,7 @@ public class AddMovieController extends BaseController implements Initializable{
     @FXML
     private void shouldNotDisable() {
 
-        for (TextField textfield: allTextfiels) {
+        for (TextField textfield: allTextiles) {
             if(textfield.getText().equals("") || textfield.getText() == null){
                 return;
             }
@@ -206,8 +204,9 @@ public class AddMovieController extends BaseController implements Initializable{
             categoryModel = new CategoryModel();
             categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Category"));
             categoryTable.getColumns().addAll();
-            categoryTable.setItems(categoryModel.getMovieCategories());
             categoriesInAddMovie = categoryModel.getMovieCategories();
+            categoriesInAddMovie.addAll(categoryTable.getItems());
+            categoryTable.setItems(categoriesInAddMovie);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -235,7 +234,7 @@ public class AddMovieController extends BaseController implements Initializable{
      * When button is clicked it checks if there is any chosen category to add. If there is a
      * category to add, it adds the category to the movie
      */
-    /**
+/**
     public void handleAddCategory() {
         if (categoriesInAddMovie == null){
             categoriesInAddMovie = FXCollections.observableArrayList();
@@ -245,7 +244,7 @@ public class AddMovieController extends BaseController implements Initializable{
             List<Category> categoryList = categoriesInAddMovie.subList(0, categoriesInAddMovie.size());
             ObservableList<Category> categoryObservableList = FXCollections.observableArrayList();
             Category category = new Category(categoryDropDown.getSelectionModel().getSelectedItem().toString());
-            //checks if the specific category allready is linked to the movie
+            //checks if the specific category already is linked to the movie
             if (!categoryList.toString().contains(category.getCategory())) {
                 categoryList.add(category);
                 categoryObservableList.addAll(categoryList);
@@ -260,7 +259,7 @@ public class AddMovieController extends BaseController implements Initializable{
             alert.showAndWait();
         }
     }
-     */
+ */
 
     /**
      * When a category is chosen this method looks at what has been chosen, and if the category is already
@@ -277,8 +276,9 @@ public class AddMovieController extends BaseController implements Initializable{
         Category category = new Category(categoryDropDown.getSelectionModel().getSelectedItem().toString());
         ObservableList<Category> categoryObservableList = categoryTable.getItems();
         categoryObservableList.add(category);
-        categoryTable.setItems(categoryObservableList);
+        System.out.println("All the categories to the movie: " + categoryObservableList);
         categoryDropDown.setValue(1);
+        categoryTable.setItems(categoryObservableList);
     }
 
     /**
@@ -287,12 +287,7 @@ public class AddMovieController extends BaseController implements Initializable{
     private void addListenerCategoryTable() {
         categoryTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             //If something is selected, the button will be enabled, else it will be disabled
-            if(newValue == null){
-                btnRemoveCategory.setDisable(true);
-            }
-            else {
-                btnRemoveCategory.setDisable(false);
-            }
+            btnRemoveCategory.setDisable(newValue == null);
         });
     }
 
