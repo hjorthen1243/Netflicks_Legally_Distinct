@@ -232,9 +232,8 @@ public class CategoryDAO implements ICategoryDAO {
         try (Connection conn = databaseConnector.getConnection()) {
 
             //Statement is a prepared SQL statement
-            PreparedStatement ps = conn.prepareStatement(sql + c);
-
             System.out.println(sql + c);
+            PreparedStatement ps = conn.prepareStatement(sql + c);
             //Execute Update
             ps.executeUpdate();
 
@@ -243,6 +242,38 @@ public class CategoryDAO implements ICategoryDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Category> getUpdatedCategories(List<Category> categories) {
+        List<Category>  categories1 = new ArrayList<>();
+        String[] c = categories.toString().split(", ");
+        String sql = "SELECT * FROM Categories WHERE";
+        for (int i = 0; i < c.length; i++) {
+            sql = sql + " Category = '" + c[i] + "'" + " OR";
+        }
+        sql = sql.substring(0,sql.length()-3) + ";";
+        sql = sql.replaceAll("\\[", "");
+        sql = sql.replaceAll("]", "");
+        try (Connection conn = databaseConnector.getConnection()) {
+            //Statement is a prepared SQL statement
+            System.out.println(sql);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String catName = rs.getString("Category");
+                Category category = new Category(id, catName);;
+                categories1.add(category);
+            }
+
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return categories1;
     }
 }
 

@@ -139,9 +139,10 @@ public class AddMovieController extends BaseController implements Initializable{
             String  filePath        = txtFiledMovieFile.getText();
 
             List<Category> categories = categoryTable.getItems().subList(0,categoryTable.getItems().size());
+            List<Category> updatedCategories = categoryModel.getUpdatedCategories(categories);
             Movie movie = movieModel.addNewMovie(title, year, null, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath);
             int mID = movie.getId();
-            categoryModel.addCategoriesToMovie(mID,categories);
+            categoryModel.addCategoriesToMovie(mID,updatedCategories);
             closeWindow();
         } catch (Exception e) {
             e.printStackTrace();

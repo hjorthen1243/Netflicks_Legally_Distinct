@@ -18,7 +18,7 @@ public class CategoryModel {
 
     private ObservableList<Category> categoriesAttachedToMovies;
 
-    public Category getSelectedCategory() {
+    public Category getSelectedCategory(List<Category> categories) {
         return selectedCategory;
     }
 
@@ -72,5 +72,9 @@ public class CategoryModel {
 
     public void addCategoriesToMovie(int mID,List<Category> categories) {
         categoryManager.addCategoriesToMovie(mID,categories);
+    }
+
+    public List<Category> getUpdatedCategories(List<Category> categories) {
+        return categoryManager.getUpdatedCategories(categories);
     }
 }

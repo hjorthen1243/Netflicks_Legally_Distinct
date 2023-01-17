@@ -5,7 +5,6 @@ import DAL.CategoryDAO;
 
 import DAL.ICategoryDAO;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import javafx.collections.ObservableList;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,5 +47,10 @@ public class CategoryManager {
 
     public void addCategoriesToMovie(int mID, List<Category> categories) {
         categoryDAO.addCategoriesToMovie(mID, categories);
+    }
+
+    public List<Category> getUpdatedCategories(List<Category> categories) {
+        return categoryDAO.getUpdatedCategories(categories);
+
     }
 }

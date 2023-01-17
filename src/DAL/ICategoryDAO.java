@@ -20,4 +20,6 @@ public interface ICategoryDAO {
     List<Category> getMovieCategories();
 
     void addCategoriesToMovie(int mID, List<Category> categories);
+
+    List<Category> getUpdatedCategories(List<Category> categories);
 }
