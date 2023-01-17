@@ -1,7 +1,10 @@
-package GUI.Controller;
+package GUI.Controller.Methods;
 
+import BE.Category;
+import GUI.Model.CategoryModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -9,6 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class Methods {
 
@@ -58,6 +63,10 @@ public class Methods {
         }
     }
 
+    /**
+     * Makes sure the user can not write any letters or special characters, but only numbers in the text-fields
+     * @param editfield the text-field
+     */
     public static void addListenersToNumFields(TextField editfield) {
 
         // force the field to be numeric only
@@ -66,5 +75,18 @@ public class Methods {
                 editfield.setText(newValue.replaceAll("\\D", ""));
             }
         });
+    }
+
+    /**
+     * Adds all the categories to the given combobox
+     * @param categoryDropDown given combobox
+     * @throws Exception exception thrown
+     */
+    public static void addAllCategoriesToComboBox(ComboBox categoryDropDown) throws Exception {
+        CategoryModel categoryModel = new CategoryModel();
+        ArrayList<Category> allCategories = categoryModel.getAllCategories();
+        for (Category category : allCategories) {
+            categoryDropDown.getItems().add(category.getCategory());
+        }
     }
 }

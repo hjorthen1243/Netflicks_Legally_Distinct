@@ -65,9 +65,9 @@ public class CategoryModel {
     }
 
     public ObservableList<Category> getMovieCategories() {
-        ObservableList<Category> c = FXCollections.observableArrayList();
-        c.addAll(categoryManager.getMovieCategories());
-        return c;
+        ObservableList<Category> categories = FXCollections.observableArrayList();
+        categories.addAll(categoryManager.getMovieCategories());
+        return categories;
     }
 
     public void addCategoriesToMovie(List<Category> categories) {

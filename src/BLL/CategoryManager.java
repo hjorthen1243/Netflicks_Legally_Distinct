@@ -5,6 +5,7 @@ import DAL.CategoryDAO;
 
 import DAL.ICategoryDAO;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import javafx.collections.ObservableList;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class CategoryManager {
     public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
         return categoryDAO.getCategoriesAttachedToMovies();
     }
+
     public List<Category> getMovieCategories() {
         return categoryDAO.getMovieCategories();
     }
