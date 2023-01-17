@@ -161,28 +161,37 @@ public class MainViewController extends BaseController implements Initializable 
     private void updateMovieList() {
         movieModel = getModel().getMovieModel();
         try {
-            //sets the cellValueFactory to all the entities, that a movie has
-            Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
-            categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Categories"));
-            updateCategories();
+            if (programStarted) {
+                Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
+                categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Categories"));
+                //sets the cellValueFactory to all the entities, that a movie has
+                Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
+                categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Categories"));
 
-            //checks if there are any movies that has a low personal rating and not been seen more than 2 years
-            ArrayList<Movie> movies = movieModel.getMovies();
-            Date currentDate = new Date();
-            for (Movie movie : movies) {
-                Date movieDate = movie.getLastViewDate();
-                long diffInMillis = Math.abs(currentDate.getTime() - movieDate.getTime());
-                long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
-                int biggestDiff = 730;
-                if (diff > biggestDiff && movie.getPersonalRating() < 6) {
-                    startRemoveMovie();
-                    break;
+
+                //checks if there are any movies that has a low personal rating and not been seen more than 2 years
+                ArrayList<Movie> movies = movieModel.getMovies();
+                Date currentDate = new Date();
+                for (Movie movie : movies) {
+                    Date movieDate = movie.getLastViewDate();
+                    long diffInMillis = Math.abs(currentDate.getTime() - movieDate.getTime());
+                    long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+                    int biggestDiff = 730;
+                    if (diff > biggestDiff && movie.getPersonalRating() < 6) {
+                        startRemoveMovie();
+                        break;
+                    }
                 }
+                movieTable.setItems(movieModel.getObservableMovies());
             }
-            movieTable.setItems(movieModel.getObservableMovies());
-
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        movieTable.setItems(movieModel.getObservableMovies());
+        try {
+            updateCategories();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -199,7 +208,7 @@ public class MainViewController extends BaseController implements Initializable 
         categoryModel = new CategoryModel();
         Map<Integer, List<Category>> categoriesAttachedToMovies = categoryModel.getObservableCategories();
         StringBuilder c = new StringBuilder();
-        for (int i = 0; i < movieTable.getItems().size() ; i++) {
+        for (int i = 0; i < movieTable.getItems().size(); i++) {
             Movie m = (Movie) movieTable.getItems().get(i);
             int mID = m.getId();
             if (categoriesAttachedToMovies.containsKey(mID)) { //If the movies from the movietable have a matching ID in  the categoriesAttachedToMovies list, we can get the attached catagories.
@@ -211,6 +220,7 @@ public class MainViewController extends BaseController implements Initializable 
                 c = new StringBuilder(); //Clear the contents of the old String builder
             }
        }
+
     }
 
     /**
