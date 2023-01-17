@@ -151,7 +151,7 @@ public class MainViewController extends BaseController implements Initializable 
             if (programStarted) {
                 Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
                 categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Categories"));
-                updateCategories();
+
 
                 programStarted = false;
                 ArrayList<Movie> movies;
@@ -173,6 +173,11 @@ public class MainViewController extends BaseController implements Initializable 
             e.printStackTrace();
         }
         movieTable.setItems(movieModel.getObservableMovies());
+        try {
+            updateCategories();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void CategorySelected() {
@@ -182,7 +187,7 @@ public class MainViewController extends BaseController implements Initializable 
         categoryModel = new CategoryModel();
         Map<Integer, List<Category>> categoriesAttachedToMovies = categoryModel.getObservableCategories();
         StringBuilder c = new StringBuilder();
-        for (int i = 0; i < movieTable.getItems().size() ; i++) {
+        for (int i = 0; i < movieTable.getItems().size(); i++) {
             Movie m = (Movie) movieTable.getItems().get(i);
             int mID = m.getId();
             if (categoriesAttachedToMovies.containsKey(mID)) { //If the movies from the movietable have a matching ID in  the categoriesAttachedToMovies list, we can get the attached catagories.
@@ -194,6 +199,7 @@ public class MainViewController extends BaseController implements Initializable 
                 c = new StringBuilder(); //Clear the contents of the old String builder
             }
        }
+
     }
 
 
