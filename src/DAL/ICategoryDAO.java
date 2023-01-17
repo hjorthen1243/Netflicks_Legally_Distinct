@@ -19,5 +19,5 @@ public interface ICategoryDAO {
 
     List<Category> getMovieCategories();
 
-    void addCategoriesToMovie(List<Category> categories);
+    void addCategoriesToMovie(int mID, List<Category> categories);
 }

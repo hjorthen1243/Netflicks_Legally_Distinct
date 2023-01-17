@@ -219,8 +219,30 @@ public class CategoryDAO implements ICategoryDAO {
     }
 
     @Override
-    public void addCategoriesToMovie(List<Category> categories) {
+    public void addCategoriesToMovie(int mID, List<Category> categories) {
+        //SQL String which adds the categories attached to the movie
+        String sql = "INSERT INTO CatMovie(MovieID, CategoryID) VALUES ";
+        String c = "";
+        for (int i = 0; i < categories.size(); i++) {
+            c = c + "(" + mID + "," + categories.get(i).getId() + "), ";
+        }
+        c = c.substring(0,c.length()-2);
+        c = c + ";";
+        //Try with resources on the databaseConnector
+        try (Connection conn = databaseConnector.getConnection()) {
 
+            //Statement is a prepared SQL statement
+            PreparedStatement ps = conn.prepareStatement(sql + c);
+
+            System.out.println(sql + c);
+            //Execute Update
+            ps.executeUpdate();
+
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }
 

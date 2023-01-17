@@ -70,7 +70,7 @@ public class CategoryModel {
         return categories;
     }
 
-    public void addCategoriesToMovie(List<Category> categories) {
-        categoryManager.addCategoriesToMovie(categories);
+    public void addCategoriesToMovie(int mID,List<Category> categories) {
+        categoryManager.addCategoriesToMovie(mID,categories);
     }
 }
