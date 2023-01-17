@@ -36,39 +36,64 @@ public class CategoryModel {
         categoriesToBeViewed.addAll(categoryManager.getAllCategories());
     }
 
-    
+    /**
+     * Gets all the categories, that has a link to a movie.
+     * @return the integer is the movieID and the list of Category is the linked categories
+     * @throws SQLServerException
+     */
     public Map<Integer, List<Category>> getObservableCategories() throws SQLServerException {
         return categoryManager.getCategoriesAttachedToMovies();
     }
 
+    /**
+     * Returns all the categories from the db
+     * @return ArrayList<Category>
+     */
     public ArrayList<Category> getAllCategories() {
-        allCategories = new ArrayList<>();
         try {
-            allCategories = categoryManager.getAllCategoriesArray();
-            return allCategories;
+            return categoryManager.getAllCategoriesArray();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
+    /**
+     * Removes the specific category
+     * @param deletedCategory category to delete
+     * @throws Exception
+     */
     public void deleteCategory(Category deletedCategory) throws Exception {
         categoryManager.deletedCategory(deletedCategory);
         categoriesToBeViewed.remove(deletedCategory);
     }
 
+    /**
+     * Updates a specific category
+     * @param oldCategoryName String
+     * @param newCategoryName Category
+     * @throws Exception
+     */
     public void updatedCategory(String oldCategoryName, Category newCategoryName) throws Exception {
         categoryManager.editUpdateCategory(oldCategoryName, newCategoryName);
-
         categoriesToBeViewed.clear();
         categoriesToBeViewed.addAll(categoryManager.getAllCategories());
     }
 
-    public void createNewCategory(String genre) throws Exception {
-        Category category = categoryManager.createNewCategory(genre);
+    /**
+     * Creates a new category from a string and adds the category to categories to be viewed
+     * @param newcategory String on new name
+     * @throws Exception
+     */
+    public void createNewCategory(String newcategory) throws Exception {
+        Category category = categoryManager.createNewCategory(newcategory);
         categoriesToBeViewed.add(category);
     }
 
+    /**
+     *
+     * @return
+     */
     public ObservableList<Category> getMovieCategories() {
         ObservableList<Category> categories = FXCollections.observableArrayList();
         categories.addAll(categoryManager.getMovieCategories());

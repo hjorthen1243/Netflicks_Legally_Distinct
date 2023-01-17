@@ -144,6 +144,7 @@ public class CategoryDAO implements ICategoryDAO {
         }
     }
 
+    //TODO get Ane to understand how to join
     @Override
     public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
         Map<Integer, List<Category>> moviesWithCategories = new HashMap<Integer, List<Category>>();
