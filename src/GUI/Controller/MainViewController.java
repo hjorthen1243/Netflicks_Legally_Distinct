@@ -68,12 +68,10 @@ public class MainViewController extends BaseController implements Initializable 
     public void setup() {
         try {
             updateMovieList();
-        } catch (SQLServerException e) {
-            throw new RuntimeException(e);
+            addAllCategoriesToComboBox();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        addAllCategoriesToComboBox();
     }
 
     @Override
@@ -205,7 +203,6 @@ public class MainViewController extends BaseController implements Initializable 
         categoryModel = new CategoryModel();
         Map<Integer, List<Category>> categoriesAttachedToMovies = categoryModel.getObservableCategories();
         StringBuilder c = new StringBuilder();
-<<<<<<< HEAD
         for (int i = 0; i < movieTable.getItems().size() ; i++) {
             Movie m = (Movie) movieTable.getItems().get(i);
             int mID = m.getId();
@@ -216,13 +213,6 @@ public class MainViewController extends BaseController implements Initializable 
                 c = c.replace(c.length()-2, c.length(), ""); //Remove the last comma
                 m.setCategories(c.toString()); //Set the categories in the movie Object
                 c = new StringBuilder(); //Clear the contents of the old String builder
-=======
-        for (int i = 0; i < categoriesAttachedToMovies.size(); i++) {
-            Movie m = (Movie) movieTable.getItems().get(i);
-            int mID = m.getId();
-            for (int j = 0; j < categoriesAttachedToMovies.get(mID).size(); j++) {
-                c.insert(0, categoriesAttachedToMovies.get(mID).get(j).getCategory() + ", ");
->>>>>>> parent of cc8e963 (Categories now shown in mainview)
             }
             c.delete(c.length() - 1, c.length());
             m.setCategories(c.toString());
@@ -230,8 +220,6 @@ public class MainViewController extends BaseController implements Initializable 
         System.out.println(c);
         movieTable.getColumns().addAll();
         movieTable.setItems(movieModel.getObservableMovies());
-
-
     }
 
     public void CategorySelected(ActionEvent event) {

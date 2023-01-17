@@ -185,10 +185,7 @@ public class CategoryDAO implements ICategoryDAO {
                     Category c = new Category(CategoryID, Category);
                     categories.add(c);
                 }
-<<<<<<< HEAD
-=======
                 moviesWithCategories.putIfAbsent(movieID, categories);
->>>>>>> parent of cc8e963 (Categories now shown in mainview)
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
