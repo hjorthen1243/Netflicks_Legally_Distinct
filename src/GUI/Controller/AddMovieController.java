@@ -2,7 +2,6 @@ package GUI.Controller;
 
 import BE.Category;
 import BE.Movie;
-import GUI.Controller.Methods.Methods;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
 import GUI.Model.PMCModel;
@@ -51,15 +50,29 @@ public class AddMovieController extends BaseController implements Initializable{
     @Override
     public void setup() {
     }
+
+    private void genreDropDownUpdate() {
+        try {
+            categoryModel = new CategoryModel();
+            ArrayList<Category> allCategories;
+            allCategories = categoryModel.getAllCategories();
+            for (Category category: allCategories) {
+                categoryDropDown.getItems().add(category.getCategory());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             makelist();
-            Methods.addAllCategoriesToComboBox(categoryDropDown);
             Methods.addListenersToNumFields(txtFieldYear);
             Methods.addListenersToNumFields(txtFieldPersonalRating);
             Methods.addListenersToNumFields(txtFieldIMDBRating);
             disableBtn();
+            genreDropDownUpdate();
             clicks();
         } catch (Exception e) {
             e.printStackTrace();
@@ -166,6 +179,20 @@ public class AddMovieController extends BaseController implements Initializable{
     public void handleCategoriesClick(MouseEvent mouseEvent) {
         editController = new EditViewController();
         Methods.openNewView("EditView.fxml", "Edit");
+    }
+
+
+    private void addListenersToNumFiels(TextField txtfield) {
+
+        // force the field to be numeric only
+        txtfield.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    txtfield.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
     }
 
         /**
