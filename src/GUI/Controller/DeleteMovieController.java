@@ -19,13 +19,14 @@ public class DeleteMovieController extends BaseController implements Initializab
     @FXML
     private TableColumn titleColumn, yearColumn, lengthColumn, categoryColumn, ratingColumn, pRatingColumn, lastViewColumn;
 
-    private MovieModel movieModel;
-    private ObservableList<Movie> observableMovies;
-    private ArrayList<Movie> movies;
     @FXML
     private Button removemovie;
     @FXML
     private TableView movieTable;
+
+    private MovieModel movieModel;
+    private ObservableList<Movie> observableMovies;
+    private ArrayList<Movie> movies;
     private boolean isStarting = true;
     private ArrayList<Movie> moviesToDelete;
 

@@ -1,6 +1,4 @@
-//TODO remove instead of delete
-//TODO @FXML
-//TODO genre should be named categories
+//TODO all buttons should start with btn_Name
 
 package GUI.Controller;
 
@@ -9,13 +7,14 @@ import BE.Movie;
 import GUI.Controller.Methods.Methods;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -28,17 +27,18 @@ import java.util.List;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class MainViewController extends BaseController implements Initializable {
 
     @FXML
     private Slider sliderPR;
     @FXML
-    private Button btnSavePR, btnSaveLastSeen, btnRemoveMovie, btnEdit, btnSearch;
+    private Button btnSavePR, btnSaveLastSeen, btnRemoveMovie, btnEdit;
     @FXML
     private DatePicker datePicker;
     @FXML
-    private TextField pRatingMax, pRatingMin, imdbMin, imdbMax,searchField;
+    private TextField pRatingMax, pRatingMin, imdbMin, imdbMax;
     @FXML
     private ComboBox<String> categoryDropDown;
     @FXML
@@ -57,7 +57,6 @@ public class MainViewController extends BaseController implements Initializable 
      */
     @Override
     public void setup() {
-
         try {
             updateMovieList();
             Methods.addAllCategoriesToComboBox(categoryDropDown);
@@ -67,10 +66,15 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     /**
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  {@code null} if the location is not known.
-     * @param resources The resources used to localize the root object, or {@code null} if
-     *                  the root object was not localized.
+     * When the program is loading, the slider is set to only be able to hit integers.
+     * Listeners are added to the different components.
+     * @param location
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resources
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -100,7 +104,7 @@ public class MainViewController extends BaseController implements Initializable 
 
     /**
      * Opens the window to remove low-rated old movies, when the program is starting.
-     * After window is closed, it tries to update the movietable
+     * After window is closed, it tries to update the movieTable
      */
     public void startRemoveMovie() {
         delController = new DeleteMovieController();
@@ -117,9 +121,11 @@ public class MainViewController extends BaseController implements Initializable 
      * After something is added, it tries to update the movie table
      */
     public void addMovieHandle() {
-        addController = new AddMovieController();
-        Methods.openNewView("AddMovie.fxml", "Add a movie");
         try {
+            addController = new  AddMovieController();
+            addController.setup();
+            Methods.openNewView("AddMovie.fxml", "Add a movie");
+
             movieTable.setItems(movieModel.getAllMovies());
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,28 +161,37 @@ public class MainViewController extends BaseController implements Initializable 
     private void updateMovieList() {
         movieModel = getModel().getMovieModel();
         try {
-            //sets the cellValueFactory to all the entities, that a movie has
-            Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
-            categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Categories"));
-            updateCategories();
+            if (programStarted) {
+                Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
+                categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Categories"));
+                //sets the cellValueFactory to all the entities, that a movie has
+                Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
+                categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Categories"));
 
-            //checks if there are any movies that has a low personal rating and not been seen more than 2 years
-            ArrayList<Movie> movies = movieModel.getMovies();
-            Date currentDate = new Date();
-            for (Movie movie : movies) {
-                Date movieDate = movie.getLastViewDate();
-                long diffInMillis = Math.abs(currentDate.getTime() - movieDate.getTime());
-                long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
-                int biggestDiff = 730;
-                if (diff > biggestDiff && movie.getPersonalRating() < 6) {
-                    startRemoveMovie();
-                    break;
+
+                //checks if there are any movies that has a low personal rating and not been seen more than 2 years
+                ArrayList<Movie> movies = movieModel.getMovies();
+                Date currentDate = new Date();
+                for (Movie movie : movies) {
+                    Date movieDate = movie.getLastViewDate();
+                    long diffInMillis = Math.abs(currentDate.getTime() - movieDate.getTime());
+                    long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+                    int biggestDiff = 730;
+                    if (diff > biggestDiff && movie.getPersonalRating() < 6) {
+                        startRemoveMovie();
+                        break;
+                    }
                 }
+                movieTable.setItems(movieModel.getObservableMovies());
             }
-            movieTable.setItems(movieModel.getObservableMovies());
-
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        movieTable.setItems(movieModel.getObservableMovies());
+        try {
+            updateCategories();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -186,6 +201,7 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     /**
+     *
      * @throws Exception
      */
     private void updateCategories() throws Exception {
@@ -199,22 +215,26 @@ public class MainViewController extends BaseController implements Initializable 
                 for (int j = 0; j < categoriesAttachedToMovies.get(mID).size(); j++) {
                     c.append(categoriesAttachedToMovies.get(mID).get(j)).append(", ");
                 }
-                c = c.replace(c.length() - 2, c.length(), ""); //Remove the last comma
+                c = c.replace(c.length()-2, c.length(), ""); //Remove the last comma
                 m.setCategories(c.toString()); //Set the categories in the movie Object
                 c = new StringBuilder(); //Clear the contents of the old String builder
             }
-        }
+       }
+
     }
 
-
+    /**
+     * Sorts though the categories, when a category is chosen
+     * @param event
+     */
     public void CategorySelected(ActionEvent event) {
         movieModel = getModel().getMovieModel();
         Object selectedItem = categoryDropDown.getSelectionModel().getSelectedItem();
         String categoryChosen = selectedItem.toString();
         ArrayList<Category> allCategories;
         allCategories = categoryModel.getAllCategories();
-        for (Category category : allCategories) {
-            if (category.getCategory().equals(categoryChosen)) {
+        for (Category category: allCategories) {
+            if(category.getCategory().equals(categoryChosen)){
 
                 try {
                     movieTable.getItems().clear();
@@ -226,6 +246,9 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
+    /**
+     * Looks after, if something is clicked and calls clicks
+     */
     private void eventHandler() {
         EventHandler<MouseEvent> onClick = this::clicks;
         movieTable.setRowFactory(param -> {
@@ -236,8 +259,7 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     /**
-     * Handles the mouse button clicks inside songsTable & songsInsidePlaylist table
-     *
+     * Handles the mouse button clicks in the movie table
      * @param event mouse button events, specifically double clicks
      */
     private void clicks(MouseEvent event) {
@@ -249,6 +271,10 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
+
+    /**
+     * Plays the movie if it exists on the given filepath
+     */
     private void playMedia() {
         try {
             //constructor of file class having file as argument
@@ -256,7 +282,7 @@ public class MainViewController extends BaseController implements Initializable 
 
             File file = new File(movie.getPathToFile());
             //check if Desktop is supported by Platform or not
-            if (!Desktop.isDesktopSupported()) {
+            if (!Desktop.isDesktopSupported()){
                 System.out.println("not supported");
                 return;
             }
@@ -265,7 +291,8 @@ public class MainViewController extends BaseController implements Initializable 
             if (file.exists()) {
                 desktop.open(file);              //opens the specified file
             } else {
-                System.out.println("not existing");
+                //shows a message, like the alert boxes
+                showMessageDialog(null, "This movie does not exist on the given filepath");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -273,6 +300,9 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
 
+    /**
+     * Saves the given value from the DatePicker, and updates the specific movie.
+     */
     public void saveLastSeenHandle() {
         LocalDate lastSeen = datePicker.getValue();
         Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
@@ -283,15 +313,19 @@ public class MainViewController extends BaseController implements Initializable 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println(lastSeen);
     }
 
+    /**
+     * Edit the different categories
+     */
     public void handleEditCategories() {
         editController = new EditViewController();
         Methods.openNewView("EditView.fxml", "Edit");
     }
 
+    /**
+     * Saves the given value from the PersonalRating Slider, and updates the specific movie.
+     */
     public void handleSavePR() {
         int personalRating = (int) sliderPR.getValue();
         System.out.println(personalRating);
@@ -306,43 +340,13 @@ public class MainViewController extends BaseController implements Initializable 
         movie.setPersonalRating(personalRating);
     }
 
+    /**
+     * Adds a listener to the table, and the eventHandler looks after the clicks
+     */
     private void addListenerMovieTable() {
         movieTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             //If something is selected, buttons will be enabled, else they will be disabled
             disableEnableComponents(newValue == null);
         });
     }
-
-    private ArrayList<Movie> iMDbRateSearch() {
-        ArrayList<Movie> minValue = new ArrayList<Movie>();
-
-        for (int i = 0; i < movieTable.getHeight(); i++) {
-
-            double minimumVal = Double.parseDouble(imdbMin.getText());
-            if (Double.parseDouble((String) movieTable.getColumns().get(4)) <= minimumVal && Double.parseDouble((String) movieTable.getColumns().get(4)) >= minimumVal) {
-
-                minValue.add(i, (Movie) movieTable.getColumns());
-            }
-        }
-
-        ArrayList<Movie> maxValue = new ArrayList<>();
-        for (int i = 0; i < movieTable.getHeight(); i++) {
-            double maximumVal = Double.parseDouble(imdbMax.getText());
-            if (Double.parseDouble((String) movieTable.getColumns().get(4)) <= maximumVal && Double.parseDouble((String) movieTable.getColumns().get(4)) >= maximumVal) {
-                maxValue.add(i, (Movie) movieTable.getColumns());
-
-            }
-
-        }
-
-        ArrayList<Movie> minToMaxValue = null;
-        if (Double.parseDouble(imdbMin.getText()) < Double.parseDouble(imdbMax.getText())) {
-            minToMaxValue = minValue;
-            minToMaxValue.retainAll(maxValue);
-
-            System.out.println(minToMaxValue);
-        }
-        return minToMaxValue;
-    }
-
 }
