@@ -18,6 +18,4 @@ public interface ICategoryDAO {
     Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException;
 
     List<Category> getMovieCategories();
-
-    void addCategoriesToMovie(List<Category> categories);
 }

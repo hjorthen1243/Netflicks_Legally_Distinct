@@ -8,9 +8,6 @@ public class Category {
         this.id = id;
         this.category = category;
     }
-    public Category(String category){
-        this.category = category;
-    }
     public Category(int id, String category, int numberOfMovies){
         this.id = id;
         this.category = category;
