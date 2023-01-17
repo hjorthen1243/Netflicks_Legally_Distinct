@@ -1,3 +1,5 @@
+//TODO all buttons should start with btn_Name
+
 package GUI.Controller;
 
 import BE.Category;
@@ -55,7 +57,6 @@ public class MainViewController extends BaseController implements Initializable 
      */
     @Override
     public void setup() {
-
         try {
             updateMovieList();
             Methods.addAllCategoriesToComboBox(categoryDropDown);
@@ -65,7 +66,7 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     /**
-     *
+     * When the program is loading, the
      * @param location
      * The location used to resolve relative paths for the root object, or
      * {@code null} if the location is not known.
