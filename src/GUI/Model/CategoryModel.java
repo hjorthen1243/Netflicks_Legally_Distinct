@@ -18,20 +18,25 @@ public class CategoryModel {
 
     private ObservableList<Category> categoriesAttachedToMovies;
 
+    //TODO what does this gat and set do?
     public Category getSelectedCategory() {
         return selectedCategory;
     }
-
     public void setSelectedCategory(Category selectedCategory) {
         this.selectedCategory = selectedCategory;
     }
 
+    /**
+     * Constructor for the categoryModel. Categories to be viewed is set to be all the categories
+     * @throws Exception
+     */
     public CategoryModel() throws Exception {
         categoryManager = new CategoryManager();
         categoriesToBeViewed = FXCollections.observableArrayList();
-        //categoriesToBeViewed.addAll(categoryManager.getAllCategories());
+        categoriesToBeViewed.addAll(categoryManager.getAllCategories());
     }
 
+    
     public Map<Integer, List<Category>> getObservableCategories() throws SQLServerException {
         return categoryManager.getCategoriesAttachedToMovies();
     }
