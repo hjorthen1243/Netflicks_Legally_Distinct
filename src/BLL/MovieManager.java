@@ -2,6 +2,7 @@ package BLL;
 
 import BE.Category;
 import BE.Movie;
+import DAL.CategoryDAO;
 import DAL.IMovieDAO;
 import DAL.MovieDAO;
 
@@ -53,7 +54,6 @@ public class MovieManager {
         return movieDAO.searchSelectedMovie(imdbID);
     }
 
-    public String getMovieCategories() {
-        return movieDAO.getMovieCategories();
-    }
+
+
 }

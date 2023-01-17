@@ -51,7 +51,6 @@ public class MovieDAO implements IMovieDAO {
 
                 String pathToFile = rs.getString("PathToFile");
 
-
                 //Add Movie to list allMovies
                 Movie movie = new Movie(id, title, year, length, imdbRating, pRating , lastView, pathToFile);
                 allMovies.add(movie);
@@ -109,10 +108,12 @@ public class MovieDAO implements IMovieDAO {
         try (Connection conn = myDatabaseConnector.getConnection()){
 
             //SQL Statement and initializing id variable.
-            String sql = "UPDATE Movie SET Title=?, Year=?, IMDBRating=?, personalRating=?, LastView=?, PathToFile=?" +
-                    "WHERE Id = ?;";
+            //String sql = "UPDATE Movie SET Title=?, Year=?, IMDBRating=?, personalRating=?, LastView=?, PathToFile=?" +
+            //        "WHERE Id = ?;";
+            String sql = "UPDATE Movie SET Title=?, Year=?, IMDBRating=?, personalRating=?, LastView=?, PathToFile=? WHERE Id = ?;";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
+
 
             //Bind parameters to the SQL statement.
             stmt.setString(1, movie.getTitle());
@@ -122,14 +123,24 @@ public class MovieDAO implements IMovieDAO {
             stmt.setDate(5, (Date) movie.getLastViewDate());
             stmt.setString(6, movie.getPathToFile());
             stmt.setInt(7, movie.getId());
-            System.out.println(movie);
 
+
+                        /**
+            //Bind parameters to the SQL statement.
+            stmt.setString(1, movie.getTitle());
+            stmt.setInt(2, movie.getYear());
+            stmt.setDouble(3, movie.getImdbRating());
+            stmt.setInt(4, movie.getPersonalRating());
+            stmt.setDate(5, (Date) movie.getLastViewDate());
+            stmt.setString(6, movie.getPathToFile());
+            stmt.setInt(7, movie.getId());
+            System.out.println(movie);
+             */
             //Execute the update into the DB
             stmt.executeUpdate();
         }
         catch (SQLException ex){
             ex.printStackTrace();
-            throw new Exception("Could not update the movie", ex);
         }
     }
 
@@ -280,7 +291,6 @@ public class MovieDAO implements IMovieDAO {
         return myOMDBConnector.chosenMovieMoreInfo(imdbID);
     }
 
-    public String getMovieCategories(){
-        return myOMDBConnector.getMovieCategories();
-    }
+
+
 }

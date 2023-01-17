@@ -4,10 +4,12 @@ import BE.Category;
 import DAL.CategoryDAO;
 
 import DAL.ICategoryDAO;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CategoryManager {
     ICategoryDAO categoryDAO;
@@ -35,4 +37,15 @@ public class CategoryManager {
         return categoryDAO.createNewCategory(genre);
     }
 
+    public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
+        return categoryDAO.getCategoriesAttachedToMovies();
+    }
+
+    public String getMovieCategories() {
+        return categoryDAO.getMovieCategories().toString();
+    }
+
+    public void addCategoriesToMovie(List<Category> categories) {
+        categoryDAO.addCategoriesToMovie(categories);
+    }
 }

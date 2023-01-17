@@ -36,12 +36,12 @@
       </TableView>
       <Button fx:id="btnSearchMovie" layoutX="376.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleSearchMovie" prefHeight="25.0" prefWidth="79.0" text="Search" />
       <ComboBox fx:id="categoryDropDown" layoutX="100.0" layoutY="200.0" prefWidth="150.0" />
-      <TableView layoutX="340.0" layoutY="159.0" prefHeight="194.0" prefWidth="114.0">
+      <TableView fx:id="categoryTable" layoutX="340.0" layoutY="159.0" prefHeight="194.0" prefWidth="114.0">
         <columns>
-          <TableColumn prefWidth="113.5999755859375" text="Categories" />
+          <TableColumn fx:id="categoryColumn" prefWidth="113.5999755859375" text="Categories" />
         </columns>
       </TableView>
-      <Button layoutX="305.0" layoutY="191.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="25.0" text="+" />
-      <Button layoutX="305.0" layoutY="217.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="25.0" text="-" />
+      <Button fx:id="btnAddCategory" layoutX="305.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleAddCategory" prefHeight="17.0" prefWidth="25.0" text="+" />
+      <Button fx:id="btnRemoveCategory" layoutX="305.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleRemoveCategory" prefHeight="26.0" prefWidth="25.0" text="-" />
    </children>
 </AnchorPane>

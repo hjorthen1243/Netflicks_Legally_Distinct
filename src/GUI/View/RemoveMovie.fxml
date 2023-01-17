@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.DeleteMovieController">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="746.0">
+         <children>
+            <Pane prefHeight="410.0" prefWidth="746.0">
+               <children>
+                  <Label layoutX="60.0" layoutY="14.0" prefHeight="64.0" prefWidth="570.0" text="These movies has a personal rating below 6 and have not been seen for more than 2 years">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="movieTable" layoutX="25.0" layoutY="185.0" prefHeight="200.0" prefWidth="714.0">
+                     <columns>
+                        <TableColumn fx:id="titleColumn" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" text="Title" />
+                        <TableColumn fx:id="yearColumn" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="Year" />
+                        <TableColumn fx:id="lengthColumn" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="Length" />
+                        <TableColumn fx:id="categoryColumn" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Categories" />
+                        <TableColumn fx:id="ratingColumn" maxWidth="95.0" minWidth="95.0" prefWidth="95.0" text="IMDb Raiting" />
+                        <TableColumn fx:id="pRatingColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Personal Raiting" />
+                        <TableColumn fx:id="lastViewColumn" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Last Seen" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="60.0" layoutY="78.0" prefHeight="46.0" prefWidth="540.0" text="Would you like to delete these movies?">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="deleteAll" layoutX="25.0" layoutY="134.0" mnemonicParsing="false" onAction="#deleteAll" prefHeight="39.0" prefWidth="90.0" text="Delete all">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="removemovie" layoutX="496.0" layoutY="134.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="39.0" prefWidth="116.0" text="Remove movie">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </children></Pane>
+   </children>
+</AnchorPane>

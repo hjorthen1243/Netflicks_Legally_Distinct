@@ -1,19 +1,21 @@
 package DAL;
 
 import BE.Category;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class CategoryDAO implements ICategoryDAO {
     MyDatabaseConnector databaseConnector;
+    MyOMDBConnector myOMDBConnector;
 
     public CategoryDAO() throws IOException {
         databaseConnector =new MyDatabaseConnector();
+        myOMDBConnector = new MyOMDBConnector();
     }
 
     /**
@@ -141,4 +143,84 @@ public class CategoryDAO implements ICategoryDAO {
             ps.executeUpdate();
         }
     }
+
+    @Override
+    public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
+        Map<Integer, List<Category>> moviesWithCategories = new HashMap<Integer, List<Category>>();
+        ArrayList<Category> categories = new ArrayList<>();
+        String sql = """ 
+                SELECT DISTINCT MovieID, Movie.Title, Categories.Category, Categories.id
+                FROM CatMovie
+                JOIN Categories ON CatMovie.categoryID = Categories.Id
+                JOIN Movie ON CatMovie.MovieID = Movie.Id
+                ORDER BY MovieID;""";
+
+        try (Connection conn = databaseConnector.getConnection()) {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            int lastID = 0;
+            boolean firstLine = true;
+            String Category;
+            int CategoryID;
+            int movieID = 0;
+            while (rs.next()) {
+                movieID = rs.getInt("MovieID");
+                if (firstLine) {
+                    lastID = movieID;
+                    firstLine = false;
+                } if (lastID == movieID) {
+                    Category = rs.getString("Category");
+                    CategoryID = rs.getInt("id");
+                    Category c = new Category(CategoryID, Category);
+                    categories.add(c);
+                } else  {
+                    moviesWithCategories.putIfAbsent(lastID, categories);
+                    lastID = movieID;
+                    categories = new ArrayList<>();
+                    Category = rs.getString("Category");
+                    CategoryID = rs.getInt("id");
+                    Category c = new Category(CategoryID, Category);
+                    categories.add(c);
+                }
+            }
+            moviesWithCategories.putIfAbsent(movieID, categories);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return moviesWithCategories;
+    }
+    public List<Category> getMovieCategories(){
+        String movieCategories = myOMDBConnector.getMovieCategories();
+        String[] c = movieCategories.split(", ");
+        ArrayList<Category> categories = new ArrayList<>();
+        String sql =
+        "SELECT * FROM Categories WHERE";
+        for (int i = 0; i < c.length; i++) {
+            sql = sql + " Category = '" + c[i] + "'" + " OR";
+        }
+        sql = sql.substring(0,sql.length()-3) + ";";
+        try (Connection conn = databaseConnector.getConnection()) {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String catName = rs.getString("Category");
+                //Create and add Categories to list
+                Category category = new Category(id, catName);
+                categories.add(category);
+            }
+
+    } catch (SQLServerException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return categories;
+    }
+
+    @Override
+    public void addCategoriesToMovie(List<Category> categories) {
+
+    }
 }
+

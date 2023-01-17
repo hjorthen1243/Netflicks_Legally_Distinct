@@ -15,6 +15,7 @@ public class Movie {
     private Date lastViewDate;
     private String pathToFile;
 
+    private String categories;
 
 
     public Movie(int id, String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile){
@@ -107,16 +108,14 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", year=" + year +
-                ", length='" + length + '\'' +
-                ", imdbID='" + imdbID + '\'' +
-                ", imdbRating=" + imdbRating +
-                ", personalRating=" + personalRating +
-                ", lastViewDate=" + lastViewDate +
-                ", pathToFile='" + pathToFile + '\'' +
-                '}';
+        return "Movie:\t" +
+                "id: " + id +
+                "\t title='" + title;
+    }
+    public String getCategories() {
+        return categories;
+    }
+    public void setCategories(String categories){
+        this.categories = categories;
     }
 }

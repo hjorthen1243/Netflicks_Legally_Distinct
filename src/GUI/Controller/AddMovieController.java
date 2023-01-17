@@ -1,33 +1,32 @@
 package GUI.Controller;
 
 import BE.Category;
+import BE.Movie;
+import GUI.Controller.Methods.Methods;
+import BLL.CategoryManager;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
-import BE.Movie;
 import GUI.Model.PMCModel;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+
 public class AddMovieController extends BaseController implements Initializable{
     public DatePicker datePickerLastSeen;
     public java.sql.Date date;
@@ -35,13 +34,12 @@ public class AddMovieController extends BaseController implements Initializable{
     public Button btnAddMovie;
     public ComboBox categoryDropDown;
     ArrayList<TextField> allTextfiels;
-
     public EditViewController editController;
     private Movie selectedMovie;
     @FXML
-    private TableView tableViewSearchMovie;
+    private TableView tableViewSearchMovie, categoryTable;
     @FXML
-    private TableColumn titleColumn, yearColumn;
+    private TableColumn titleColumn, yearColumn, categoryColumn;
     @FXML
     private TextField txtFieldSearch, txtFieldIMDBRating,  txtFieldPersonalRating, txtFieldMovieTitle, txtFiledMovieFile, txtFieldMovieCategories, txtFieldYear;
     @FXML
@@ -53,35 +51,28 @@ public class AddMovieController extends BaseController implements Initializable{
     private PMCModel pmcModel;
     private CategoryModel categoryModel;
 
+    private ObservableList<Category> categoriesInAddMovie;
+
 
     @Override
     public void setup() {
-    }
-
-    private void genreDropDownUpdate() {
-        try {
-            categoryModel = new CategoryModel();
-            ArrayList<Category> allCategories;
-            allCategories = categoryModel.getAllCategories();
-            for (Category category: allCategories) {
-                categoryDropDown.getItems().add(category.getCategory());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             makelist();
+            Methods.addAllCategoriesToComboBox(categoryDropDown);
+            Methods.addListenersToNumFields(txtFieldYear);
+            Methods.addListenersToNumFields(txtFieldPersonalRating);
+            Methods.addListenersToNumFields(txtFieldIMDBRating);
             disableBtn();
-            genreDropDownUpdate();
             clicks();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     private void makelist() {
         //All the values needed to create a new movie
@@ -99,7 +90,6 @@ public class AddMovieController extends BaseController implements Initializable{
 
         for (TextField textfield: allTextfiels) {
             if(textfield.getText().equals("") || textfield.getText() == null){
-                System.out.println("Still need: " + textfield.getId());
                 return;
             }
         }
@@ -132,13 +122,13 @@ public class AddMovieController extends BaseController implements Initializable{
 
         String title = txtFieldMovieTitle.getText();
         int year = Integer.parseInt(txtFieldYear.getText());
-        //String lenght = null;
         double imdbRating = Double.parseDouble(txtFieldIMDBRating.getText());
         int personalRating = Integer.parseInt(txtFieldPersonalRating.getText());
         String filePath = txtFiledMovieFile.getText();
-
+        List<Category> categories = categoryTable.getItems().subList(0,categoryTable.getItems().size());
         try {
             movieModel.addNewMovie(title, year, null, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath);
+            categoryModel.addCategoriesToMovie(categories);
             closeWindow();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -153,10 +143,8 @@ public class AddMovieController extends BaseController implements Initializable{
     private void handleSearchMovie() throws Exception {
         movieModel = new MovieModel();
         movieModel.searchAddMovie(txtFieldSearch.getText());
-
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("Title"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("Year"));
-
         tableViewSearchMovie.getColumns().addAll();
         tableViewSearchMovie.setItems(movieModel.searchAddMovie(txtFieldSearch.getText()));
 
@@ -172,44 +160,62 @@ public class AddMovieController extends BaseController implements Initializable{
                 txtFieldMovieTitle.setText(selectedMovie.getTitle());
                 txtFieldYear.setText(selectedMovie.getYearString());
                 txtFieldIMDBRating.setText(String.valueOf(m.getImdbRating()));
-                txtFieldMovieCategories.setText(movieModel.getMovieCategories());
+                addCategoriesToChosenMovie();
             }
         });
     }
 
+    private void addCategoriesToChosenMovie() {
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Category"));
+        categoryTable.getColumns().addAll();
+        categoryTable.setItems(categoryModel.getMovieCategories());
+        categoriesInAddMovie = categoryModel.getMovieCategories();
+
+    }
+
     public void handleCategoriesClick(MouseEvent mouseEvent) {
         editController = new EditViewController();
-        OpenNewView(mouseEvent, "EditView.fxml", "Edit", editController);
+        Methods.openNewView("EditView.fxml", "Edit");
     }
 
-    private void OpenNewView(MouseEvent event, String fxmlName, String displayName, BaseController controller) {
-        try{
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/GUI/View/" + fxmlName));
-            AnchorPane pane = loader.load();
-            controller = loader.getController();
-            //controller.setModel(super.getModel());
-            //controller.setup();
-            // Create the dialog stage
-            Stage dialogWindow = new Stage();
-            dialogWindow.setTitle(displayName);
-            dialogWindow.initModality(Modality.WINDOW_MODAL);
-            dialogWindow.initOwner(((Node) event.getSource()).getScene().getWindow());
-            Scene scene = new Scene(pane);
-            dialogWindow.setScene(scene);
-            dialogWindow.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
+    /**
+     * Closes the window
+     * */
+    public void closeWindow() {
+        Stage stage = (Stage) btnAddMovie.getScene().getWindow();
+        stage.close();
+        }
+
+    public void handleAddCategory(ActionEvent actionEvent) {
+        if (categoryDropDown.getSelectionModel().getSelectedItem() != null) {
+            List<Category> d = categoriesInAddMovie.subList(0, categoriesInAddMovie.size());
+            ObservableList<Category> e = FXCollections.observableArrayList();
+            Category category = new Category(categoryDropDown.getSelectionModel().getSelectedItem().toString());
+            if (!d.toString().contains(category.getCategory())) {
+                d.add(category);
+                e.addAll(d);
+                categoryTable.setItems(e);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Category already attached to movie");
+                alert.showAndWait();
+            }
+
+        }else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a Category to be added in the dropdown menu");
+            alert.showAndWait();
+        }
+
+    }
+
+    public void handleRemoveCategory(ActionEvent actionEvent) {
+        if (categoryTable.getFocusModel().getFocusedIndex()  >=0 && categoryTable.getFocusModel().getFocusedIndex() < categoryTable.getItems().size()) {
+            categoriesInAddMovie.remove(categoryTable.getFocusModel().getFocusedIndex());
+            categoryTable.setItems(categoriesInAddMovie);
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please choose a Category to be deleted");
+            alert.showAndWait();
         }
     }
-
-        /**
-         * Closes the window
-         */
-        public void closeWindow() {
-            Stage stage = (Stage) btnAddMovie.getScene().getWindow();
-            stage.close();
-
-        }
-    }
+}
 

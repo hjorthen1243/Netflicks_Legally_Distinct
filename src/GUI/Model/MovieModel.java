@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MovieModel {
 
-    private ArrayList<Movie> movie;
+    private ArrayList<Movie> movies;
     private ObservableList<Movie> moviesToBeViewed;
 
     private MovieManager movieManager;
@@ -38,7 +38,10 @@ public class MovieModel {
         moviesToBeViewed.addAll(movieManager.getAllMovies());
         return moviesToBeViewed;
     }
-
+    public ArrayList<Movie> getMovies() throws Exception {
+        movies = (ArrayList<Movie>) movieManager.getAllMovies();
+        return movies;
+    }
 
     public void searchMovie(String query) throws Exception {
         //List<Movie> searchResults = movieManager.searchMovies(query);
@@ -75,7 +78,6 @@ public class MovieModel {
         return movieManager.searchSelectedMovie(imdbID);
     }
 
-    public String getMovieCategories() {
-        return movieManager.getMovieCategories();
-    }
 }
+
+
