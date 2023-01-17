@@ -2,27 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e08b885-4271-4be3-bc5b-96b3f05dba7b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/GUI/Controller/Methods/Methods.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/View/RemoveMovie.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06-01-2023_11_26_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06-01-2023_11_26__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BE/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BE/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BE/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BE/Movie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BLL/CategoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/CategoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BLL/MovieManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/MovieManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/ICategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/ICategoryDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/IMovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/IMovieDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MovieDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/MyOMDBConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MyOMDBConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/View/AddMovie.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/AddMovie.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/View/DeleteMovie.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/View/MainView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/MainView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,16 +35,10 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Bruger/OneDrive/Dokumenter/GitHub/Netflicks_Legally_Distinct/src/GUI/View/AddMovie.fxml&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/aneho/OneDrive - Erhvervsakademi Sydvest/Github/Netflicks_Legally_Distinct&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -86,7 +63,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="666c997b-ffb9-49a4-975f-e9fd331b848d" name="Changes" comment="" />
+      <changelist id="0e08b885-4271-4be3-bc5b-96b3f05dba7b" name="Changes" comment="" />
       <created>1672738436512</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -105,6 +82,10 @@
       <workItem from="1673603824733" duration="2641000" />
       <workItem from="1673814413846" duration="8350000" />
       <workItem from="1673823342290" duration="2369000" />
+      <workItem from="1673924954404" duration="3270000" />
+      <workItem from="1673929485290" duration="4671000" />
+      <workItem from="1673939010563" duration="4038000" />
+      <workItem from="1673943081537" duration="3865000" />
     </task>
     <servers />
   </component>
