@@ -146,7 +146,7 @@ public class CategoryDAO implements ICategoryDAO {
 
     @Override
     public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
-        Map<Integer, List<Category>> moviesWithCategories = new HashMap<Integer, List<Category>>();
+        HashMap<Integer, List<Category>> moviesWithCategories = new HashMap<Integer, List<Category>>();
         ArrayList<Category> categories = new ArrayList<>();
         String sql = """ 
                 SELECT DISTINCT MovieID, Movie.Title, Categories.Category, Categories.id
@@ -162,28 +162,34 @@ public class CategoryDAO implements ICategoryDAO {
             boolean firstLine = true;
             String Category;
             int CategoryID;
-            int movieID = 0;
             while (rs.next()) {
-                movieID = rs.getInt("MovieID");
+                int movieID = rs.getInt("MovieID");
                 if (firstLine) {
                     lastID = movieID;
                     firstLine = false;
-                } if (lastID == movieID) {
                     Category = rs.getString("Category");
                     CategoryID = rs.getInt("id");
                     Category c = new Category(CategoryID, Category);
                     categories.add(c);
-                } else  {
-                    moviesWithCategories.putIfAbsent(lastID, categories);
+                } else if (lastID == movieID) {
+                    Category = rs.getString("Category");
+                    CategoryID = rs.getInt("id");
+                    Category c = new Category(CategoryID, Category);
+                    categories.add(c);
+                } else {
                     lastID = movieID;
-                    categories = new ArrayList<>();
+                    moviesWithCategories.putIfAbsent(movieID, categories);
+                    categories.clear();
                     Category = rs.getString("Category");
                     CategoryID = rs.getInt("id");
                     Category c = new Category(CategoryID, Category);
                     categories.add(c);
                 }
+<<<<<<< HEAD
+=======
+                moviesWithCategories.putIfAbsent(movieID, categories);
+>>>>>>> parent of cc8e963 (Categories now shown in mainview)
             }
-            moviesWithCategories.putIfAbsent(movieID, categories);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
