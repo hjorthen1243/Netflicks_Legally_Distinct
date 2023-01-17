@@ -66,11 +66,8 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     /**
-<<<<<<< Updated upstream
-     * When the program is loading, the
-=======
-     * When the program is loading, the 
->>>>>>> Stashed changes
+     * When the program is loading, the slider is set to only be able to hit integers.
+     * Listeners are added to the different components.
      * @param location
      * The location used to resolve relative paths for the root object, or
      * {@code null} if the location is not known.
@@ -107,7 +104,7 @@ public class MainViewController extends BaseController implements Initializable 
 
     /**
      * Opens the window to remove low-rated old movies, when the program is starting.
-     * After window is closed, it tries to update the movietable
+     * After window is closed, it tries to update the movieTable
      */
     public void startRemoveMovie() {
         delController = new DeleteMovieController();
