@@ -222,10 +222,6 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
-    //TODO add something to the method
-
-    public void CategorySelected() {
-    }
 
     /**
      *
