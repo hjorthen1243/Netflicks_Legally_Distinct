@@ -55,9 +55,10 @@ public class MovieModel {
         moviesToBeViewed.addAll(imdbSearchResult);
     }
 
-    public void addNewMovie (String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile) throws Exception{
+    public Movie addNewMovie (String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile) throws Exception{
         Movie movie = movieManager.createNewMovie(title, year, length, imdbRating, personalRating, lastViewDate, pathToFile);
         moviesToBeViewed.add(movie);
+        return movie;
     }
 
     public void deleteMovie (Movie m) throws Exception {

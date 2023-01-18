@@ -152,17 +152,17 @@ public class MovieDAO implements IMovieDAO {
         String sql = "DELETE FROM Movie WHERE Id = " + mID + ";";
 
         //SQL String which deletes the link between the movie and the category
-        //String sql2 = "DELETE FROM CatMovie WHERE MovieID = " + mID + ";";
+        String sql2 = "DELETE FROM CatMovie WHERE MovieID = " + mID + ";";
 
         //Try with resources on the databaseConnector
         try (Connection conn = myDatabaseConnector.getConnection()) {
 
             //Statements are prepared SQL statements
             PreparedStatement ps = conn.prepareStatement(sql);
-            //PreparedStatement ps2 = conn.prepareStatement(sql2);
+            PreparedStatement ps2 = conn.prepareStatement(sql2);
 
             //Execute the update which removes the link between song and playlist first, then remove the song from the DB
-            //ps2.executeUpdate();
+            ps2.executeUpdate();
             ps.executeUpdate();
         }
     }

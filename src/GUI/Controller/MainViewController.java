@@ -128,6 +128,7 @@ public class MainViewController extends BaseController implements Initializable 
             Methods.openNewView("AddMovie.fxml", "Add a movie");
 
             movieTable.setItems(movieModel.getAllMovies());
+            updateCategories();
         } catch (Exception e) {
             e.printStackTrace();
         }
