@@ -13,7 +13,7 @@ public interface ICategoryDAO {
 
     Category editUpdateCategory(String oldCategoryName, Category newCategoryName) throws Exception;
 
-    void deleteCategory(Category categoryName) throws Exception;
+    void removeCategory(Category categoryName) throws Exception;
 
     Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException;
 

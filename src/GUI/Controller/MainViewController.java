@@ -344,8 +344,14 @@ public class MainViewController extends BaseController implements Initializable 
      */
     public void handleEditCategories() {
         editController = new EditViewController();
-        Methods.openNewView("EditView.fxml", "Edit");
         editController.setup();
+        Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
+        if (movie!= null) {
+            Methods.openNewView("EditView.fxml", "Edit:  " + movie.getTitle());
+        }
+        else {
+            Methods.openNewView("EditView.fxml", "Edit categories");
+        }
     }
 
     /**

@@ -25,8 +25,8 @@ public class CategoryManager {
         return categoryDAONew.getAllCategoriesArray();
     }
 
-    public void deletedCategory(Category deletedCategory) throws Exception {
-        categoryDAO.deleteCategory(deletedCategory);
+    public void removeCategory(Category removeCategory) throws Exception {
+        categoryDAO.removeCategory(removeCategory);
     }
 
     public void editUpdateCategory(String oldCategoryName, Category newCategoryName) throws Exception {
