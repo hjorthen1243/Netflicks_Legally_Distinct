@@ -33,7 +33,7 @@ public class MainViewController extends BaseController implements Initializable 
     @FXML
     private Slider sliderPR;
     @FXML
-    private Button btnSavePR, btnSaveLastSeen, btnRemoveMovie, btnEdit;
+    private Button btnSavePR, btnSaveLastSeen, btnRemoveMovie, btnEditCategories;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -164,9 +164,11 @@ public class MainViewController extends BaseController implements Initializable 
         }});
         imdbMin.textProperty().addListener((observable, oldValue, newValue) -> {
             try{
-                    movieModel.imdbSearch(newValue);
-                    updateCategories();
+                System.out.println(newValue);
+                movieModel.imdbSearch(newValue);
+                updateCategories();
             } catch (Exception e) {
+                System.out.println("No sucess");
                 throw new RuntimeException(e);
             }
         });
@@ -221,8 +223,7 @@ public class MainViewController extends BaseController implements Initializable 
             throw new RuntimeException(e);
         }
     }
-
-
+    
     /**
      *
      * @throws Exception
@@ -248,9 +249,8 @@ public class MainViewController extends BaseController implements Initializable 
 
     /**
      * Sorts though the categories, when a category is chosen
-     * @param event
      */
-    public void CategorySelected(ActionEvent event) {
+    public void CategorySelected() {
         movieModel = getModel().getMovieModel();
         Object selectedItem = categoryDropDown.getSelectionModel().getSelectedItem();
         String categoryChosen = selectedItem.toString();
@@ -345,6 +345,7 @@ public class MainViewController extends BaseController implements Initializable 
     public void handleEditCategories() {
         editController = new EditViewController();
         Methods.openNewView("EditView.fxml", "Edit");
+        editController.setup();
     }
 
     /**
@@ -375,7 +376,6 @@ public class MainViewController extends BaseController implements Initializable 
     }
     private ArrayList<Movie> iMDbRateSearch() {
         ArrayList<Movie> minValue = new ArrayList<Movie>();
-
         for (int i = 0; i < movieTable.getHeight(); i++) {
 
             double minimumVal = Double.parseDouble(imdbMin.getText());
