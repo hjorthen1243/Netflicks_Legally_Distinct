@@ -33,6 +33,11 @@ public class MovieManager {
         List<Movie> searchResult = movieSearcher.search(allMovies, query);
         return searchResult;
     }
+    public  List<Movie> imdbSearch(String imdbQuery) throws Exception {
+        List<Movie> allMovies = getAllMovies();
+        List<Movie> imdbSearchResult = movieSearcher.searchImdb(allMovies, imdbQuery);
+        return imdbSearchResult;
+    }
 
     public Movie createNewMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastView, String pathToFile) throws Exception {
         return movieDAO.addMovie(title, year, length, imdbRating, personalRating, lastView, pathToFile);

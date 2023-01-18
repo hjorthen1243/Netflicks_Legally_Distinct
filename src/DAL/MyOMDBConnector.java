@@ -44,21 +44,6 @@ public class MyOMDBConnector {
                 }
                 //Close the scanner
                 scanner.close();
-
-
-                /**
-                 //JSON simple library Setup with Maven is used to convert strings to JSON
-                 JSONParser parse = new JSONParser();
-                 JSONArray dataObject = (JSONArray) parse.parse(String.valueOf(informationString));
-                 *  Get the first JSON object in the JSON array
-                 *  System.out.println(dataObject.get(0));
-                 *
-                 *  JSONObject data = (JSONObject) dataObject.get(0);
-                 *
-                 *  System.out.println(data.get("something"));
-                 */
-
-
             }
         } catch (IOException /** | ParseException */e) {
             throw new RuntimeException(e);

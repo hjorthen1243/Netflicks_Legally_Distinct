@@ -63,7 +63,6 @@ public class CategoryDAO implements ICategoryDAO {
         }
     }
 
-
     /**
      * Create a new category
      * @param categoryName Sting
@@ -156,6 +155,7 @@ public class CategoryDAO implements ICategoryDAO {
     public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
         Map<Integer, List<Category>> moviesWithCategories = new HashMap<Integer, List<Category>>();
         ArrayList<Category> categories = new ArrayList<>();
+        //join on values
         String sql = """ 
                 SELECT DISTINCT MovieID, Movie.Title, Categories.Category, Categories.id
                 FROM CatMovie
@@ -247,7 +247,6 @@ public class CategoryDAO implements ICategoryDAO {
         try (Connection conn = databaseConnector.getConnection()) {
 
             //Statement is a prepared SQL statement
-            System.out.println(sql + c);
             PreparedStatement ps = conn.prepareStatement(sql + c);
             //Execute Update
             ps.executeUpdate();
@@ -275,7 +274,6 @@ public class CategoryDAO implements ICategoryDAO {
         sql = sql.replaceAll("]", "");
         try (Connection conn = databaseConnector.getConnection()) {
             //Statement is a prepared SQL statement
-            System.out.println(sql);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 

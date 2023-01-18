@@ -22,7 +22,6 @@ public class RemoveMovieController extends BaseController implements Initializab
     private Button btnRemoveMovie, btnRemoveAll;
     @FXML
     private TableView movieTable;
-
     private MovieModel movieModel;
     private ObservableList<Movie> observableMovies;
     private ArrayList<Movie> movies;
@@ -63,7 +62,6 @@ public class RemoveMovieController extends BaseController implements Initializab
         btnRemoveMovie.setDisable(bool);
     }
 
-
     /**
      * Gives the user the option to remove all the low-rated not seen for 2 years movies at once.
      * It opens an alert box to make sure, that is what the user wants.
@@ -102,7 +100,6 @@ public class RemoveMovieController extends BaseController implements Initializab
         }catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -150,5 +147,4 @@ public class RemoveMovieController extends BaseController implements Initializab
                 disableEnableComponents(newValue == null);
         });
     }
-
 }

@@ -37,7 +37,7 @@ public class MainViewController extends BaseController implements Initializable 
     @FXML
     private DatePicker datePicker;
     @FXML
-    private TextField pRatingMax, pRatingMin, imdbMin, imdbMax;
+    private TextField pRatingMax, pRatingMin, imdbMin, imdbMax, searchField;
     @FXML
     private ComboBox<String> categoryDropDown;
     @FXML
@@ -62,6 +62,7 @@ public class MainViewController extends BaseController implements Initializable 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        searchHandle();
     }
 
     /**
@@ -127,6 +128,7 @@ public class MainViewController extends BaseController implements Initializable 
             Methods.openNewView("AddMovie.fxml", "Add a movie");
 
             movieTable.setItems(movieModel.getAllMovies());
+            updateCategories();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -151,6 +153,27 @@ public class MainViewController extends BaseController implements Initializable 
 
     //TODO describe searchHandle();
     public void searchHandle() {
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+        try{
+            movieModel.searchMovie(newValue);
+        }
+        catch (Exception e){
+            throw new RuntimeException(e);
+        }});
+        imdbMin.textProperty().addListener((observable, oldValue, newValue) -> {
+            try{
+                    movieModel.imdbSearch(newValue);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        imdbMax.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                movieModel.imdbSearch(newValue);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     /**
@@ -310,6 +333,7 @@ public class MainViewController extends BaseController implements Initializable 
         try {
             movieModel.updateMovie(movie);
             movieTable.setItems(movieModel.getAllMovies());
+            updateCategories();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -328,12 +352,12 @@ public class MainViewController extends BaseController implements Initializable 
      */
     public void handleSavePR() {
         int personalRating = (int) sliderPR.getValue();
-        System.out.println(personalRating);
         Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         movie.setPersonalRating(personalRating);
         try {
             movieModel.updateMovie(movie);
             movieTable.setItems(movieModel.getAllMovies());
+            updateCategories();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -348,5 +372,36 @@ public class MainViewController extends BaseController implements Initializable 
             //If something is selected, buttons will be enabled, else they will be disabled
             disableEnableComponents(newValue == null);
         });
+    }
+    private ArrayList<Movie> iMDbRateSearch() {
+        ArrayList<Movie> minValue = new ArrayList<Movie>();
+
+        for (int i = 0; i < movieTable.getHeight(); i++) {
+
+            double minimumVal = Double.parseDouble(imdbMin.getText());
+            if (Double.parseDouble((String) movieTable.getColumns().get(4)) <= minimumVal && Double.parseDouble((String) movieTable.getColumns().get(4)) >= minimumVal) {
+
+                minValue.add(i, (Movie) movieTable.getColumns());
+            }
+        }
+
+        ArrayList<Movie> maxValue = new ArrayList<>();
+        for (int i = 0; i < movieTable.getHeight(); i++) {
+            double maximumVal = Double.parseDouble(imdbMax.getText());
+            if (Double.parseDouble((String) movieTable.getColumns().get(4)) <= maximumVal && Double.parseDouble((String) movieTable.getColumns().get(4)) >= maximumVal) {
+                maxValue.add(i, (Movie) movieTable.getColumns());
+
+            }
+
+        }
+
+        ArrayList<Movie> minToMaxValue = null;
+        if (Double.parseDouble(imdbMin.getText()) < Double.parseDouble(imdbMax.getText())) {
+            minToMaxValue = minValue;
+            minToMaxValue.retainAll(maxValue);
+
+            System.out.println(minToMaxValue);
+        }
+        return minToMaxValue;
     }
 }

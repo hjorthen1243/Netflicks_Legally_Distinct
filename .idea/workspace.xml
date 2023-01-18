@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
+    <list default="true" id="0e08b885-4271-4be3-bc5b-96b3f05dba7b" name="Changes" comment="" />
+=======
     <list default="true" id="666c997b-ffb9-49a4-975f-e9fd331b848d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BLL/CategoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/CategoryManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAL/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MovieDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAL/MyOMDBConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MyOMDBConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" afterDir="false" />
     </list>
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,11 +41,10 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/aneho/OneDrive - Erhvervsakademi Sydvest/Github/Netflicks_Legally_Distinct&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -62,7 +69,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="666c997b-ffb9-49a4-975f-e9fd331b848d" name="Changes" comment="" />
+      <changelist id="0e08b885-4271-4be3-bc5b-96b3f05dba7b" name="Changes" comment="" />
       <created>1672738436512</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -75,10 +82,18 @@
       <workItem from="1673351534168" duration="593000" />
       <workItem from="1673421437542" duration="1597000" />
       <workItem from="1673423048804" duration="2164000" />
+      <workItem from="1673513064659" duration="3985000" />
+      <workItem from="1673517652875" duration="3935000" />
       <workItem from="1673515554434" duration="2595000" />
+      <workItem from="1673603824733" duration="2641000" />
       <workItem from="1673814413846" duration="8350000" />
       <workItem from="1673823342290" duration="2369000" />
+      <workItem from="1673924954404" duration="3270000" />
+      <workItem from="1673929485290" duration="4671000" />
+      <workItem from="1673939010563" duration="4038000" />
+      <workItem from="1673943081537" duration="3865000" />
       <workItem from="1673939114680" duration="249000" />
+      <workItem from="1674014185508" duration="5169000" />
     </task>
     <servers />
   </component>
