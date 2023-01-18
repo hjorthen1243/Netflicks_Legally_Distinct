@@ -44,8 +44,15 @@ public class MovieModel {
     }
 
     public void searchMovie(String query) throws Exception {
-        //List<Movie> searchResults = movieManager.searchMovies(query);
+        List<Movie> searchResults = movieManager.searchMovies(query);
+        moviesToBeViewed.clear();
+        moviesToBeViewed.addAll(searchResults);
 
+    }
+    public void imdbSearch(String imdbQuery) throws Exception {
+        List<Movie> imdbSearchResult = movieManager.imdbSearch(imdbQuery);
+        moviesToBeViewed.clear();
+        moviesToBeViewed.addAll(imdbSearchResult);
     }
 
     public void addNewMovie (String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile) throws Exception{
