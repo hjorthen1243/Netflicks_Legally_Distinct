@@ -24,7 +24,7 @@
       <Button fx:id="btnRemoveMovie" layoutX="666.0" layoutY="196.0" mnemonicParsing="false" onAction="#removeMovieHandle" prefHeight="26.0" prefWidth="110.0" text="Remove Movie" />
       <Button fx:id="btnSaveLastSeen" layoutX="438.0" layoutY="196.0" mnemonicParsing="false" onAction="#saveLastSeenHandle" text="Save Last Seen" />
       <DatePicker fx:id="datePicker" layoutX="533.0" layoutY="196.0" prefHeight="26.0" prefWidth="94.0" promptText="YYYY/MM/DD" />
-      <ComboBox fx:id="categoryDropDown" layoutX="629.0" layoutY="43.0" prefWidth="150.0" />
+      <ComboBox fx:id="categoryDropDown" layoutX="629.0" layoutY="43.0" onAction="#categorySelected" prefWidth="150.0" />
       <TextField fx:id="searchField" layoutX="430.0" layoutY="9.0" prefHeight="26.0" prefWidth="300.0" promptText="Search for Title, Year, Director..." />
       <Button fx:id="btnSearch" layoutX="728.0" layoutY="9.0" mnemonicParsing="false" onAction="#searchHandle" prefHeight="26.0" prefWidth="52.0" text="Search" />
       <TextField fx:id="minPRate" layoutX="669.0" layoutY="105.0" prefHeight="26.0" prefWidth="52.0" promptText="Min..." />

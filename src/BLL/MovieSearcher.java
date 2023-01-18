@@ -75,7 +75,7 @@ public class MovieSearcher {
 
 
         for (Movie movie : pRateSearchBase) {
-            if (compareIMDbRating(pRateMinStr, pRateMaxStr, movie)) {
+            if (comparePRating(pRateMinStr, pRateMaxStr, movie)) {
                 pRateSearchResult.add(movie);
             }
         }
@@ -131,6 +131,13 @@ public class MovieSearcher {
             pRatingMax = true;
         }
         return pRatingMax;
+    }
+    private boolean comparePRating(String pRateMinStr, String pRateMaxStr, Movie movie) {
+        boolean pRating = false;
+        if (movie.getPersonalRating() <= Integer.parseInt(pRateMaxStr) && movie.getImdbRating() >= Integer.parseInt(pRateMinStr)) {
+            pRating = true;
+        }
+        return pRating;
     }
 
 }
