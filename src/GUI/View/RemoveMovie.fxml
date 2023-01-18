@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.DeleteMovieController">
+<AnchorPane prefHeight="400.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.RemoveMovieController">
    <children>
       <Pane prefHeight="400.0" prefWidth="746.0">
          <children>
@@ -35,12 +35,12 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="deleteAll" layoutX="25.0" layoutY="134.0" mnemonicParsing="false" onAction="#deleteAll" prefHeight="39.0" prefWidth="90.0" text="Delete all">
+                  <Button fx:id="btnRemoveAll" layoutX="25.0" layoutY="134.0" mnemonicParsing="false" onAction="#removeAll" prefHeight="39.0" prefWidth="90.0" text="Delete all">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="removemovie" layoutX="496.0" layoutY="134.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="39.0" prefWidth="116.0" text="Remove movie">
+                  <Button fx:id="btnRemoveMovie" layoutX="496.0" layoutY="134.0" mnemonicParsing="false" onAction="#removeMovie" prefHeight="39.0" prefWidth="116.0" text="Remove movie">
                      <font>
                         <Font size="14.0" />
                      </font>

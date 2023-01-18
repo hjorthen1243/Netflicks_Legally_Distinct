@@ -27,6 +27,9 @@ public abstract class BaseController {
         return model;
     }
 
+    /**
+     * Method for setting up the window
+     */
     public abstract void setup();
 
 }

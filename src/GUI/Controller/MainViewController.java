@@ -7,7 +7,6 @@ import BE.Movie;
 import GUI.Controller.Methods.Methods;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -48,7 +47,7 @@ public class MainViewController extends BaseController implements Initializable 
     private MovieModel movieModel;
     private CategoryModel categoryModel;
     private AddMovieController addController;
-    private DeleteMovieController delController;
+    private RemoveMovieController delController;
     private EditViewController editController;
     private boolean programStarted = true;
 
@@ -109,7 +108,8 @@ public class MainViewController extends BaseController implements Initializable 
      * After window is closed, it tries to update the movieTable
      */
     public void startRemoveMovie() {
-        delController = new DeleteMovieController();
+        delController = new RemoveMovieController();
+        delController.setup();
         Methods.openNewView("RemoveMovie.fxml", "Remove old movies");
         try {
             movieTable.setItems(movieModel.getAllMovies());

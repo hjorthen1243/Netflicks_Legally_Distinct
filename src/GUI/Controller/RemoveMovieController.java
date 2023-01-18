@@ -15,11 +15,11 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
-public class DeleteMovieController extends BaseController implements Initializable {
+public class RemoveMovieController extends BaseController implements Initializable {
     @FXML
     private TableColumn titleColumn, yearColumn, lengthColumn, categoryColumn, ratingColumn, pRatingColumn, lastViewColumn;
     @FXML
-    private Button removemovie;
+    private Button btnRemoveMovie, btnRemoveAll;
     @FXML
     private TableView movieTable;
     private MovieModel movieModel;
@@ -32,28 +32,47 @@ public class DeleteMovieController extends BaseController implements Initializab
     public void setup() {
         movieModel = getModel().getMovieModel();
     }
+
+    /**
+     * Runs one time, when the window opens.
+     * Starts by disable the button remove., because nothing is selected.
+     * makes an observable list.
+     * sets the values in the movieTable and adds a listener.
+     * @param location
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resources
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         disableEnableComponents(true);
         observableMovies = FXCollections.observableArrayList();
         updateMovieList();
         addListenerMovieTable();
-
     }
 
+    /**
+     * Disables or enables the button depending on the boolean sent into the method
+     * @param bool if true: disable. if false: enable
+     */
     private void disableEnableComponents(Boolean bool) {
-        removemovie.setDisable(bool);
+        btnRemoveMovie.setDisable(bool);
     }
 
-    public void deleteAll() {
+    /**
+     * Gives the user the option to remove all the low-rated not seen for 2 years movies at once.
+     * It opens an alert box to make sure, that is what the user wants.
+     */
+    public void removeAll() {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Remove all the movies with a personal" +
                     "rating below 6 and have not been seen the last 2 years", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
                 for (Movie m: moviesToDelete) {
-                    //Test
-                    System.out.println("Movie to delete: " + m);
                     movieModel.deleteMovie(m);
                 }
                 observableMovies.clear();
@@ -64,7 +83,11 @@ public class DeleteMovieController extends BaseController implements Initializab
         }
     }
 
-    public void deleteMovie() {
+    /**
+     * Linked to the remove movie button, it is enabled, when something in the tableView is chosen.
+     * Opens an alert to make sure the user want to remove the specific movie, if yes, it removes the movie.
+     */
+    public void removeMovie() {
         try {
             Movie m = (Movie) movieTable.getSelectionModel().getSelectedItem();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Remove; " + m.getTitle() + " - " + m.getYearString() + "?", ButtonType.YES, ButtonType.NO);
@@ -79,8 +102,11 @@ public class DeleteMovieController extends BaseController implements Initializab
         }
     }
 
+    /**
+     * When window opens the different lists are created and the movies that has the specific values are added to the
+     * remove-Movie-Table.
+     */
     public void updateMovieList() {
-
         try {
             if(isStarting) {
                 isStarting = false;
@@ -89,6 +115,8 @@ public class DeleteMovieController extends BaseController implements Initializab
                 movieModel = new MovieModel();
                 Date currentDate = new Date();
                 movies = movieModel.getMovies();
+
+                //Adds movies to the tableView
                 for (Movie movie : movies) {
                     Date moviedate = movie.getLastViewDate();
                     long diffInMillies = Math.abs(currentDate.getTime() - moviedate.getTime());
@@ -102,26 +130,21 @@ public class DeleteMovieController extends BaseController implements Initializab
                     }
                 }
             }
-
-            for (Movie m: observableMovies) {
-                System.out.println("Movies to be added to table: " + m);
-            }
             movieTable.setItems(observableMovies);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Looks at the table, to find out, if there are any new values, that are selected.
+     * If something is selected, then the disabled button, will be enabled
+     */
     private void addListenerMovieTable() {
         movieTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             //If something is selected, buttons will be enabled, else they will be disabled
-            if (newValue != null) {
-                disableEnableComponents(false);
-                System.out.println("\nMovie chosen" + movieTable.getSelectionModel().getSelectedItem());
-
-            } else {
-                disableEnableComponents(true);
-            }
+                disableEnableComponents(newValue == null);
         });
     }
 }
