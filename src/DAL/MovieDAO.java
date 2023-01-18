@@ -44,7 +44,7 @@ public class MovieDAO implements IMovieDAO {
                 String title = rs.getString("Title");
                 int year = rs.getInt("Year");
                 Duration time = Duration.ofSeconds(rs.getInt("Length"));
-                String length = time.toMinutesPart() + ":" + time.toSecondsPart();
+                String length = String.format("%02d:%02d:%02d", time.toHours(), time.toMinutesPart(), time.toSecondsPart());
                 double imdbRating = rs.getDouble("IMDBRating");
                 int pRating = rs.getInt("PersonalRating");
                 Date lastView = rs.getDate("LastView");
