@@ -37,6 +37,7 @@ public class CategoryManager {
         return categoryDAO.createNewCategory(genre);
     }
 
+    //Gets categories linked to movies
     public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
         return categoryDAO.getCategoriesAttachedToMovies();
     }

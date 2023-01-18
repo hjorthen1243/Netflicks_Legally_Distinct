@@ -13,6 +13,7 @@ public class CategoryDAO implements ICategoryDAO {
     MyDatabaseConnector databaseConnector;
     MyOMDBConnector myOMDBConnector;
 
+    //constructor
     public CategoryDAO() throws IOException {
         databaseConnector =new MyDatabaseConnector();
         myOMDBConnector = new MyOMDBConnector();
@@ -30,12 +31,14 @@ public class CategoryDAO implements ICategoryDAO {
         return allCategoryList; //Return the full set of categories
     }
 
+    //Gets all the different categories
     public ArrayList<Category> getAllCategoriesArray() throws Exception {
         ArrayList<Category> allCategoryList = new ArrayList<>();
         getCategories(allCategoryList);
         return allCategoryList; //Return the full set of categories
     }
 
+    //Gets all the categories from the db
     public void getCategories(List<Category> categoryLists) throws Exception {
         try (Connection conn = databaseConnector.getConnection()) {
             //SQL String which gets all Categories
@@ -62,8 +65,8 @@ public class CategoryDAO implements ICategoryDAO {
 
 
     /**
-     *
-     * @param categoryName
+     * Create a new category
+     * @param categoryName Sting
      * @return
      * @throws Exception
      */
@@ -99,6 +102,8 @@ public class CategoryDAO implements ICategoryDAO {
         //Return the category, so it can be fed into the observable list
         return new Category(id, categoryName);
     }
+
+    //update the name of a category
     @Override
     public Category editUpdateCategory(String oldCategoryName, Category newCategory) throws Exception {
 
@@ -124,6 +129,7 @@ public class CategoryDAO implements ICategoryDAO {
         return new Category(id, newCategory.getCategory());
     }
 
+    // Remove a category from the db
     @Override
     public void deleteCategory(Category category) throws Exception {
         //Get id of the selected playlist
@@ -145,6 +151,7 @@ public class CategoryDAO implements ICategoryDAO {
     }
 
     //TODO get Ane to understand how to join
+    //Gets all the categories, that has a movie linked to it
     @Override
     public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
         Map<Integer, List<Category>> moviesWithCategories = new HashMap<Integer, List<Category>>();
@@ -190,6 +197,8 @@ public class CategoryDAO implements ICategoryDAO {
         }
         return moviesWithCategories;
     }
+
+    //TODO understand
     public List<Category> getMovieCategories(){
         String movieCategories = myOMDBConnector.getMovieCategories();
         String[] c = movieCategories.split(", ");
@@ -219,6 +228,11 @@ public class CategoryDAO implements ICategoryDAO {
         return categories;
     }
 
+    /**
+     * Adds one or more categories to a movie.
+     * @param mID the movie
+     * @param categories List of categories
+     */
     @Override
     public void addCategoriesToMovie(int mID, List<Category> categories) {
         //SQL String which adds the categories attached to the movie
@@ -238,13 +252,16 @@ public class CategoryDAO implements ICategoryDAO {
             //Execute Update
             ps.executeUpdate();
 
-
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
+    /**
+     *
+     * @param categories
+     * @return
+     */
     @Override
     public List<Category> getUpdatedCategories(List<Category> categories) {
         List<Category>  categories1 = new ArrayList<>();
@@ -268,8 +285,6 @@ public class CategoryDAO implements ICategoryDAO {
                 Category category = new Category(id, catName);;
                 categories1.add(category);
             }
-
-
 
         } catch (SQLException ex) {
             ex.printStackTrace();
