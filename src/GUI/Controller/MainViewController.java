@@ -223,7 +223,7 @@ public class MainViewController extends BaseController implements Initializable 
             throw new RuntimeException(e);
         }
     }
-    
+
     /**
      *
      * @throws Exception
@@ -250,20 +250,31 @@ public class MainViewController extends BaseController implements Initializable 
     /**
      * Sorts though the categories, when a category is chosen
      */
-    public void CategorySelected() {
+    public void categorySelected() throws Exception {
         movieModel = getModel().getMovieModel();
         Object selectedItem = categoryDropDown.getSelectionModel().getSelectedItem();
         String categoryChosen = selectedItem.toString();
         ArrayList<Category> allCategories;
         allCategories = categoryModel.getAllCategories();
-        for (Category category: allCategories) {
-            if(category.getCategory().equals(categoryChosen)){
+        if (categoryChosen.equals("All")) {
+            movieTable.setItems(movieModel.getAllMovies());
+            try {
+                updateCategories();
+            } catch (Exception e) {
+                e.printStackTrace();
 
-                try {
-                    movieTable.getItems().clear();
-                    movieTable.setItems(movieModel.getObservableMoviesCategory(category));
-                } catch (Exception e) {
-                    e.printStackTrace();
+            }}
+            else {
+            for (Category category : allCategories) {
+                if (category.getCategory().equals(categoryChosen)) {
+
+                    try {
+                        movieTable.getItems().clear();
+                        movieTable.setItems(movieModel.getObservableMoviesCategory(category));
+                        updateCategories();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
