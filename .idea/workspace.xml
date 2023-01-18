@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< Updated upstream
-    <list default="true" id="0e08b885-4271-4be3-bc5b-96b3f05dba7b" name="Changes" comment="" />
-=======
-    <list default="true" id="666c997b-ffb9-49a4-975f-e9fd331b848d" name="Changes" comment="">
+    <list default="true" id="0e08b885-4271-4be3-bc5b-96b3f05dba7b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAL/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MovieDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" afterDir="false" />
@@ -13,7 +11,6 @@
       <change beforePath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/DeleteMovieController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" afterDir="false" />
     </list>
->>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

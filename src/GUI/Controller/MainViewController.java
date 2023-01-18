@@ -64,6 +64,7 @@ public class MainViewController extends BaseController implements Initializable 
             e.printStackTrace();
         }
         searchHandle();
+
     }
 
     /**
@@ -156,6 +157,7 @@ public class MainViewController extends BaseController implements Initializable 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
         try{
             movieModel.searchMovie(newValue);
+            updateCategories();
         }
         catch (Exception e){
             throw new RuntimeException(e);
@@ -163,6 +165,7 @@ public class MainViewController extends BaseController implements Initializable 
         imdbMin.textProperty().addListener((observable, oldValue, newValue) -> {
             try{
                     movieModel.imdbSearch(newValue);
+                    updateCategories();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -170,6 +173,7 @@ public class MainViewController extends BaseController implements Initializable 
         imdbMax.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 movieModel.imdbSearch(newValue);
+                updateCategories();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
