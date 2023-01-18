@@ -253,37 +253,6 @@ public class AddMovieController extends BaseController implements Initializable{
         }
 
     /**
-     * When button is clicked it checks if there is any chosen category to add. If there is a
-     * category to add, it adds the category to the movie
-     */
-/**
-    public void handleAddCategory() {
-        if (categoriesInAddMovie == null){
-            categoriesInAddMovie = FXCollections.observableArrayList();
-        }
-        //checks if any category is chosen
-        if (categoryDropDown.getSelectionModel().getSelectedItem() != null) {
-            List<Category> categoryList = categoriesInAddMovie.subList(0, categoriesInAddMovie.size());
-            ObservableList<Category> categoryObservableList = FXCollections.observableArrayList();
-            Category category = new Category(categoryDropDown.getSelectionModel().getSelectedItem().toString());
-            //checks if the specific category already is linked to the movie
-            if (!categoryList.toString().contains(category.getCategory())) {
-                categoryList.add(category);
-                categoryObservableList.addAll(categoryList);
-                categoryTable.setItems(categoryObservableList);
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Category already attached to movie");
-                alert.showAndWait();
-            }
-
-        }else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a Category to be added in the dropdown menu");
-            alert.showAndWait();
-        }
-    }
- */
-
-    /**
      * When a category is chosen this method looks at what has been chosen, and if the category is already
      * linked to the movie
      */
