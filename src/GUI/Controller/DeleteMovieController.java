@@ -18,12 +18,10 @@ import java.util.concurrent.TimeUnit;
 public class DeleteMovieController extends BaseController implements Initializable {
     @FXML
     private TableColumn titleColumn, yearColumn, lengthColumn, categoryColumn, ratingColumn, pRatingColumn, lastViewColumn;
-
     @FXML
     private Button removemovie;
     @FXML
     private TableView movieTable;
-
     private MovieModel movieModel;
     private ObservableList<Movie> observableMovies;
     private ArrayList<Movie> movies;
@@ -46,7 +44,6 @@ public class DeleteMovieController extends BaseController implements Initializab
     private void disableEnableComponents(Boolean bool) {
         removemovie.setDisable(bool);
     }
-
 
     public void deleteAll() {
         try {
@@ -80,7 +77,6 @@ public class DeleteMovieController extends BaseController implements Initializab
         }catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void updateMovieList() {
@@ -128,5 +124,4 @@ public class DeleteMovieController extends BaseController implements Initializab
             }
         });
     }
-
 }

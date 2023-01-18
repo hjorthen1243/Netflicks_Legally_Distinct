@@ -24,8 +24,6 @@ public class MyDatabaseConnector {
         String user = databaseProperties.getProperty("User");
         String password = databaseProperties.getProperty("Password");
 
-
-
         dataSource = new SQLServerDataSource();
         dataSource.setServerName(server);
         dataSource.setDatabaseName(database);
@@ -33,15 +31,6 @@ public class MyDatabaseConnector {
         dataSource.setPassword(password);
         dataSource.setTrustServerCertificate(true);
 
-
-        /**
-        dataSource = new SQLServerDataSource();
-        dataSource.setServerName("10.176.111.31");
-        dataSource.setDatabaseName("Netflicks");
-        dataSource.setUser("CSe22A_27");
-        dataSource.setPassword("CSe22A_27");
-        dataSource.setTrustServerCertificate(true);
-         */
     }
 
     public Connection getConnection() throws SQLServerException {

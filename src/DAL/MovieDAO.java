@@ -114,7 +114,6 @@ public class MovieDAO implements IMovieDAO {
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-
             //Bind parameters to the SQL statement.
             stmt.setString(1, movie.getTitle());
             stmt.setInt(2, movie.getYear());
@@ -124,18 +123,6 @@ public class MovieDAO implements IMovieDAO {
             stmt.setString(6, movie.getPathToFile());
             stmt.setInt(7, movie.getId());
 
-
-                        /**
-            //Bind parameters to the SQL statement.
-            stmt.setString(1, movie.getTitle());
-            stmt.setInt(2, movie.getYear());
-            stmt.setDouble(3, movie.getImdbRating());
-            stmt.setInt(4, movie.getPersonalRating());
-            stmt.setDate(5, (Date) movie.getLastViewDate());
-            stmt.setString(6, movie.getPathToFile());
-            stmt.setInt(7, movie.getId());
-            System.out.println(movie);
-             */
             //Execute the update into the DB
             stmt.executeUpdate();
         }

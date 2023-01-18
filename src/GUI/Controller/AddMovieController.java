@@ -278,7 +278,6 @@ public class AddMovieController extends BaseController implements Initializable{
         Category category = new Category(categoryDropDown.getSelectionModel().getSelectedItem().toString());
         ObservableList<Category> categoryObservableList = categoryTable.getItems();
         categoryObservableList.add(category);
-        System.out.println("All the categories to the movie: " + categoryObservableList);
         categoryDropDown.setValue(1);
         categoryTable.setItems(categoryObservableList);
     }

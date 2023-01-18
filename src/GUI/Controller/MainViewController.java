@@ -333,6 +333,7 @@ public class MainViewController extends BaseController implements Initializable 
         try {
             movieModel.updateMovie(movie);
             movieTable.setItems(movieModel.getAllMovies());
+            updateCategories();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -351,12 +352,12 @@ public class MainViewController extends BaseController implements Initializable 
      */
     public void handleSavePR() {
         int personalRating = (int) sliderPR.getValue();
-        System.out.println(personalRating);
         Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         movie.setPersonalRating(personalRating);
         try {
             movieModel.updateMovie(movie);
             movieTable.setItems(movieModel.getAllMovies());
+            updateCategories();
         } catch (Exception e) {
             e.printStackTrace();
         }

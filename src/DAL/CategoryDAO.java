@@ -60,7 +60,6 @@ public class CategoryDAO implements ICategoryDAO {
         }
     }
 
-
     /**
      *
      * @param categoryName
@@ -232,7 +231,6 @@ public class CategoryDAO implements ICategoryDAO {
         try (Connection conn = databaseConnector.getConnection()) {
 
             //Statement is a prepared SQL statement
-            System.out.println(sql + c);
             PreparedStatement ps = conn.prepareStatement(sql + c);
             //Execute Update
             ps.executeUpdate();
@@ -257,7 +255,6 @@ public class CategoryDAO implements ICategoryDAO {
         sql = sql.replaceAll("]", "");
         try (Connection conn = databaseConnector.getConnection()) {
             //Statement is a prepared SQL statement
-            System.out.println(sql);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -267,8 +264,6 @@ public class CategoryDAO implements ICategoryDAO {
                 Category category = new Category(id, catName);;
                 categories1.add(category);
             }
-
-
 
         } catch (SQLException ex) {
             ex.printStackTrace();
