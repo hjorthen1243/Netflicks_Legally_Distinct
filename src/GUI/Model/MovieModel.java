@@ -49,10 +49,51 @@ public class MovieModel {
         moviesToBeViewed.addAll(searchResults);
 
     }
-    public void imdbSearch(String imdbQuery) throws Exception {
-        List<Movie> imdbSearchResult = movieManager.imdbSearch(imdbQuery);
+    public ObservableList<Movie> imdbSearchMin(String imdbQuery, ObservableList<Movie> movies) throws Exception {
+        ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
+        List<Movie> movies1 = movies.subList(0,movies.size());
+        List<Movie> imdbSearchResult = movieManager.imdbSearchMin(imdbQuery, movies1);
         moviesToBeViewed.clear();
         moviesToBeViewed.addAll(imdbSearchResult);
+        return moviesToBeViewed;
+    }
+    public ObservableList<Movie> imdbSearchMax(String imdbQuery, ObservableList<Movie> movies) throws Exception {
+        ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
+        List<Movie> movies1 = movies.subList(0,movies.size());
+        List<Movie> imdbSearchResult = movieManager.imdbSearchMax(imdbQuery, movies1);
+        moviesToBeViewed.clear();
+        moviesToBeViewed.addAll(imdbSearchResult);
+        return moviesToBeViewed;
+    }
+    public ObservableList imdbSearchMinAndMax(String imdbMinStr, String imdbMaxStr) throws Exception {
+        ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
+        List<Movie> imdbSearchResult = movieManager.imdbSearchMinAndMax(imdbMinStr, imdbMaxStr);
+        moviesToBeViewed.clear();
+        moviesToBeViewed.addAll(imdbSearchResult);
+        return moviesToBeViewed;
+    }
+    public ObservableList pRateSearchMin(String pRateQuery, ObservableList<Movie> movies) {
+        ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
+        List<Movie> movies1 = movies.subList(0,movies.size());
+        List<Movie> pRateSearchResult = movieManager.pRateSearchMin(pRateQuery, movies1);
+        moviesToBeViewed.clear();
+        moviesToBeViewed.addAll(pRateSearchResult);
+        return moviesToBeViewed;
+    }
+    public ObservableList pRateSearchMax(String pRateQuery, ObservableList<Movie> movies) {
+        ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
+        List<Movie> movies1 = movies.subList(0,movies.size());
+        List<Movie> pRateSearchResult = movieManager.pRateSearchMax(pRateQuery, movies1);
+        moviesToBeViewed.clear();
+        moviesToBeViewed.addAll(pRateSearchResult);
+        return moviesToBeViewed;
+    }
+    public ObservableList pRateSearchMinAndMax(String pRateMinStr, String pRateMaxStr) throws Exception {
+        ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
+        List<Movie> pRateSearchResult = movieManager.pRateSearchMinAndMax(pRateMinStr, pRateMaxStr);
+        moviesToBeViewed.clear();
+        moviesToBeViewed.addAll(pRateSearchResult);
+        return moviesToBeViewed;
     }
 
     public Movie addNewMovie (String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile) throws Exception{

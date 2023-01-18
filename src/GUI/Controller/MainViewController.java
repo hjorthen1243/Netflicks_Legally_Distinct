@@ -7,6 +7,7 @@ import BE.Movie;
 import GUI.Controller.Methods.Methods;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -50,6 +51,10 @@ public class MainViewController extends BaseController implements Initializable 
     private RemoveMovieController delController;
     private EditViewController editController;
     private boolean programStarted = true;
+    private String imdbMinStr;
+    private String imdbMaxStr;
+    private String pRateMinStr;
+    private String pRateMaxStr;
 
     /**
      * setup runs one time, when the program starts up
@@ -156,24 +161,97 @@ public class MainViewController extends BaseController implements Initializable 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
         try{
             movieModel.searchMovie(newValue);
+            updateCategories();
         }
         catch (Exception e){
             throw new RuntimeException(e);
         }});
-        imdbMin.textProperty().addListener((observable, oldValue, newValue) -> {
-            try{
-                    movieModel.imdbSearch(newValue);
+
+            imdbMin.textProperty().addListener((observable, oldValue, newValue) -> {
+                try {
+                    if (!newValue.isEmpty()) {
+                        ObservableList<Movie> movies = movieTable.getItems();
+                        movieTable.setItems(movieModel.imdbSearchMin(newValue, movies));
+                        updateCategories();
+                        imdbMinStr = newValue;
+                    } else {
+                        updateMovieList();
+                        updateCategories();
+                        imdbMax.setText("");
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            imdbMax.textProperty().addListener((observable, oldValue, newValue) -> {
+                try {
+                    if(!newValue.isEmpty()) {
+                        ObservableList<Movie> movies = movieTable.getItems();
+                        movieTable.setItems(movieModel.imdbSearchMax(newValue, movies));
+                        updateCategories();
+                        imdbMaxStr = newValue;
+                    }
+                    else{
+                    updateMovieList();
+                    updateCategories();
+                    imdbMin.setText("");
+                    }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
-        imdbMax.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(imdbMaxStr != null && imdbMinStr != null){
+                try{
+                    movieTable.setItems(movieModel.imdbSearchMinAndMax(imdbMinStr, imdbMaxStr));
+                    updateCategories();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        pRatingMin.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                movieModel.imdbSearch(newValue);
+                if (!newValue.isEmpty()) {
+                    ObservableList<Movie> movies = movieTable.getItems();
+                    movieTable.setItems(movieModel.pRateSearchMin(newValue, movies));
+                    updateCategories();
+                    pRateMinStr = newValue;
+                } else {
+                    updateMovieList();
+                    updateCategories();
+                    pRatingMax.setText("");
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
+        pRatingMax.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                if(!newValue.isEmpty()) {
+                    ObservableList<Movie> movies = movieTable.getItems();
+                    movieTable.setItems(movieModel.pRateSearchMax(newValue, movies));
+                    updateCategories();
+                    pRateMaxStr = newValue;
+                }
+                else{
+                    updateMovieList();
+                    updateCategories();
+                    pRatingMin.setText("");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        if(pRateMaxStr != null && pRateMinStr != null){
+            try{
+                movieTable.setItems(movieModel.pRateSearchMinAndMax(pRateMinStr, pRateMaxStr));
+                updateCategories();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
     }
 
     /**
