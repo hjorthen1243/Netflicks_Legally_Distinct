@@ -46,6 +46,14 @@ public class MovieModel {
         return movies;
     }
 
+    /**
+     *
+     * Creates list of movies called searchResults and sets the values of the list to be the result of the method searchMovies
+     * in the MovieManager class when given the query.
+     * Removes all movies from the moviesToBeViewed list.
+     * Adds all movies from the imdbSearchResult list in the moviesToBeViewed list.
+     * @throws Exception
+     */
     public void searchMovie(String query) throws Exception {
         List<Movie> searchResults = movieManager.searchMovies(query);
         moviesToBeViewed.clear();
@@ -53,6 +61,16 @@ public class MovieModel {
 
     }
 
+    /**
+     * Makes the list moviesToBeViewed into an observable list.
+     * Creates list of movies called movies1 by making the substitute of the observable list called movies into a list.
+     * Creates list of movies called imdbSearchResult and sets the values of the list to be the result of the method
+     * imdbSearchMin in the MovieManager class when given the string imdbQuery and the list movies1.
+     * Removes all movies from the moviesToBeViewed list.
+     * Adds all movies from the imdbSearchResult list in the moviesToBeViewed list.
+     * returns moviesToBeViewed list.
+     * @throws Exception
+     */
     public ObservableList<Movie> imdbSearchMin(String imdbQuery, ObservableList<Movie> movies) throws Exception {
         ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
         List<Movie> movies1 = movies.subList(0, movies.size());
@@ -62,6 +80,16 @@ public class MovieModel {
         return moviesToBeViewed;
     }
 
+    /**
+     * Makes the list moviesToBeViewed into an observable list.
+     * Creates list of movies called movies1 by making the substitute of the observable list called movies into a list.
+     * Creates list of movies called imdbSearchResult and sets the values of the list to be the result of the method
+     * imdbSearchMax in the MovieManager class when given the string imdbQuery and the list movies1.
+     * Removes all movies from the moviesToBeViewed list.
+     * Adds all movies from the imdbSearchResult list in the moviesToBeViewed list.
+     * Returns moviesToBeViewed list.
+     * @throws Exception
+     */
     public ObservableList<Movie> imdbSearchMax(String imdbQuery, ObservableList<Movie> movies) throws Exception {
         ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
         List<Movie> movies1 = movies.subList(0, movies.size());
@@ -70,7 +98,15 @@ public class MovieModel {
         moviesToBeViewed.addAll(imdbSearchResult);
         return moviesToBeViewed;
     }
-
+    /**
+     * Makes moviesToBeViewed list into an observable list.
+     * Creates list called imdbSearchResult and sets the values of the list to be the result of the method
+     * imdbSearchMinAndMax when given the string imdbMinStr and the string imdbMaxStr.
+     * Removes all movies from the moviesToBeViewed list.
+     * Adds all movies from the pRateSearchResult list in the moviesToBeViewed list.
+     * returns moviesToBeViewed list.
+     * @throws Exception
+     */
     public ObservableList imdbSearchMinAndMax(String imdbMinStr, String imdbMaxStr) throws Exception {
         ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
         List<Movie> imdbSearchResult = movieManager.imdbSearchMinAndMax(imdbMinStr, imdbMaxStr);
@@ -78,7 +114,16 @@ public class MovieModel {
         moviesToBeViewed.addAll(imdbSearchResult);
         return moviesToBeViewed;
     }
-
+    /**
+     * Makes the list moviesToBeViewed into an observable list.
+     * Creates list of movies called movies1 by making the substitute of the observable list called movies into a list.
+     * Creates list of movies called pRateSearchResult and sets the values of the list to be the result of the method
+     * pRateSearchMin in the MovieManager class when given the string pRateQuery and the list movies1.
+     * Removes all movies from the moviesToBeViewed list.
+     * Adds all movies from the pRateSearchResult list in the moviesToBeViewed list.
+     * returns moviesToBeViewed list.
+     * @throws Exception
+     */
     public ObservableList pRateSearchMin(String pRateQuery, ObservableList<Movie> movies) {
         ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
         List<Movie> movies1 = movies.subList(0, movies.size());
@@ -87,7 +132,16 @@ public class MovieModel {
         moviesToBeViewed.addAll(pRateSearchResult);
         return moviesToBeViewed;
     }
-
+    /**
+     * Makes the list moviesToBeViewed into an observable list.
+     * Creates list of movies called movies1 by making the substitute of the observable list called movies into a list.
+     * Creates list of movies called pRateSearchResult and sets the values of the list to be the result of the method
+     * pRateSearchMax in the MovieManager class when given the string pRateQuery and the list movies1.
+     * Removes all movies from the moviesToBeViewed list.
+     * Adds all movies from the pRateSearchResult list in the moviesToBeViewed list.
+     * returns moviesToBeViewed list.
+     * @throws Exception
+     */
     public ObservableList pRateSearchMax(String pRateQuery, ObservableList<Movie> movies) {
         ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
         List<Movie> movies1 = movies.subList(0, movies.size());
@@ -97,6 +151,15 @@ public class MovieModel {
         return moviesToBeViewed;
     }
 
+    /**
+     * Makes moviesToBeViewed list into an observable list.
+     * Creates list called pRateSearchResult and sets the values of the list to be the result of the method
+     * pRateSearchMinAndMax when given the string pRateMinStr and the string pRateMaxStr.
+     * Removes all movies from the moviesToBeViewed list.
+     * Adds all movies from the pRateSearchResult list in the moviesToBeViewed list.
+     * returns moviesToBeViewed list.
+     * @throws Exception
+     */
     public ObservableList pRateSearchMinAndMax(String pRateMinStr, String pRateMaxStr) throws Exception {
         ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
         List<Movie> pRateSearchResult = movieManager.pRateSearchMinAndMax(pRateMinStr, pRateMaxStr);
