@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="882f0cca-fb46-470b-8725-238ffaa7c2de" name="Changes" comment="">
+    <list default="true" id="0e08b885-4271-4be3-bc5b-96b3f05dba7b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/Methods/Methods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/Methods/Methods.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +68,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="882f0cca-fb46-470b-8725-238ffaa7c2de" name="Changes" comment="" />
+      <changelist id="0e08b885-4271-4be3-bc5b-96b3f05dba7b" name="Changes" comment="" />
       <created>1672738436512</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -90,7 +93,7 @@
       <workItem from="1673943081537" duration="3865000" />
       <workItem from="1673939114680" duration="249000" />
       <workItem from="1674014185508" duration="5169000" />
-      <workItem from="1674116272191" duration="4189000" />
+      <workItem from="1674112181505" duration="5840000" />
     </task>
     <servers />
   </component>
@@ -107,20 +110,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/GUI/Controller/MainViewController.java</url>
-          <line>159</line>
-          <properties class="GUI.Controller.MainViewController" method="searchHandle">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

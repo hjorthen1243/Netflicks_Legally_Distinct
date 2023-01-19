@@ -67,7 +67,6 @@ public class MainViewController extends BaseController implements Initializable 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
