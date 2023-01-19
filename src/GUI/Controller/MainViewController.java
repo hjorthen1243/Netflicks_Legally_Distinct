@@ -225,7 +225,7 @@ public class MainViewController extends BaseController implements Initializable 
         for (int i = 0; i < movieTable.getItems().size(); i++) {
             Movie m = (Movie) movieTable.getItems().get(i);
             int mID = m.getId();
-            if (categoriesAttachedToMovies.containsKey(mID)) { //If the movies from the movietable have a matching ID in  the categoriesAttachedToMovies list, we can get the attached catagories.
+            if (categoriesAttachedToMovies.containsKey(mID)) { //If the movies from the movieTable have a matching ID in  the categoriesAttachedToMovies list, we can get the attached catagories.
                 for (int j = 0; j < categoriesAttachedToMovies.get(mID).size(); j++) {
                     c.append(categoriesAttachedToMovies.get(mID).get(j)).append(", ");
                 }

@@ -1,5 +1,3 @@
-//TODO Add functionality to this class
-
 package GUI.Controller;
 
 import BE.Category;
@@ -10,6 +8,7 @@ import GUI.Model.MovieModel;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -21,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static javax.swing.JOptionPane.showMessageDialog;
-
 public class EditViewController extends BaseController implements Initializable {
     @FXML
     private Text lAddCategoryToMovie, lRemoveCatFromMovie;
@@ -31,7 +28,11 @@ public class EditViewController extends BaseController implements Initializable 
     @FXML
     private Button btnAddCatDb, btnSaveChanges, btnRemoveCatDb, btnAddCatMovie, btnRemoveCatMovie;
     @FXML
-    private ComboBox comboBoxRemoveCatDb, comboBoxRemoveCatMovie, comboBoxAddCatMovie;
+    private ComboBox<java.lang.constant.Constable> comboBoxRemoveCatDb;
+    @FXML
+    private ComboBox<Object> comboBoxRemoveCatMovie;
+    @FXML
+    private ComboBox<Object> comboBoxAddCatMovie;
     private CategoryModel categoryModel;
     private Movie chosen;
 
@@ -53,7 +54,7 @@ public class EditViewController extends BaseController implements Initializable 
             chosen = MainViewController.chosenMovie;
 
             if (chosen == null){
-                isMovieEmpty(chosen == null);
+                isMovieEmpty(true);
             } else {
                 Methods.addAllCategoriesToComboBox(comboBoxAddCatMovie);
                 MovieIsChosen();
@@ -69,14 +70,11 @@ public class EditViewController extends BaseController implements Initializable 
     private void MovieIsChosen() {
         //removes the unnecessary categories from add categories to movie and remove category from movie
         comboBoxAddCatMovie.getItems().remove(0);
+
         String[] categories = chosen.getCategories().split(", ");
-        ObservableList allCategories = comboBoxAddCatMovie.getItems();
+        ObservableList<Object> allCategories = comboBoxAddCatMovie.getItems();
 
-        for (String alreadyInMovie : categories) {
-            Category category = new Category(alreadyInMovie);
-            comboBoxRemoveCatMovie.getItems().add(category);
-        }
-
+        //For adding
         for (String alreadyInMovie : categories) {
             for (Object category : allCategories) {
                 if (alreadyInMovie.equals(category.toString())) {
@@ -84,6 +82,12 @@ public class EditViewController extends BaseController implements Initializable 
                     break;
                 }
             }
+        }
+
+        //For removing
+        for (String alreadyInMovie : categories) {
+            Category category = new Category(alreadyInMovie);
+            comboBoxRemoveCatMovie.getItems().add(category);
         }
         btnAddCatMovie.setDisable(true);
         btnRemoveCatMovie.setDisable(true);
@@ -93,7 +97,7 @@ public class EditViewController extends BaseController implements Initializable 
         ArrayList <Button> buttons = new ArrayList<>();
         buttons.add(btnAddCatMovie);
         buttons.add(btnRemoveCatMovie);
-        ArrayList<ComboBox> comboBoxes = new ArrayList<>();
+        ArrayList<ComboBox<Object>> comboBoxes = new ArrayList<>();
         comboBoxes.add(comboBoxAddCatMovie);
         comboBoxes.add(comboBoxRemoveCatMovie);
 
@@ -101,26 +105,12 @@ public class EditViewController extends BaseController implements Initializable 
             button.setDisable(bool);
             button.setVisible(!bool);
         }
-        for (ComboBox comboBox: comboBoxes){
+        for (ComboBox<Object> comboBox: comboBoxes){
             comboBox.setDisable(bool);
             comboBox.setVisible(!bool);
         }
         lAddCategoryToMovie.setVisible(!bool);
         lRemoveCatFromMovie.setVisible(!bool);
-        /**
-
-        btnAddCatMovie.setDisable(bool);
-        btnAddCatMovie.setVisible(!bool);
-
-        btnRemoveCatMovie.setDisable(bool);
-        btnRemoveCatMovie.setVisible(!bool);
-
-        comboBoxAddCatMovie.setDisable(bool);
-        comboBoxAddCatMovie.setVisible(!bool);
-
-        comboBoxRemoveCatMovie.setDisable(bool);
-        comboBoxRemoveCatMovie.setVisible(!bool);
-         */
     }
 
     /**
@@ -128,6 +118,7 @@ public class EditViewController extends BaseController implements Initializable 
      */
     private void addRemovableCategories() {
         try {
+            comboBoxRemoveCatDb.getItems().clear();
             categoryModel = new CategoryModel();
             ArrayList<Category> allCategories = categoryModel.getAllCategories();
             for (Category category : allCategories) {
@@ -158,8 +149,9 @@ public class EditViewController extends BaseController implements Initializable 
             categoryModel.createNewCategory(category);
             txtFieldAddCatDb.setText("");
             //shows a message, like the alert boxes
-            showMessageDialog(null, "The new category: "
+            Alert alert = new Alert(Alert.AlertType.INFORMATION,"The new category: "
                     + category + " has been added to the database");
+            alert.showAndWait();
             btnAddCatDb.setDisable(true);
             addRemovableCategories();
             Methods.addAllCategoriesToComboBox(comboBoxAddCatMovie);
@@ -167,7 +159,6 @@ public class EditViewController extends BaseController implements Initializable 
             e.printStackTrace();
         }
     }
-
 
     /**
      * listens to, when the input of the box for removable items has changed
@@ -187,8 +178,9 @@ public class EditViewController extends BaseController implements Initializable 
                 if (category.getCategory().equals(comboBoxRemoveCatDb.getSelectionModel().getSelectedItem().toString())) {
                     categoryModel.removeCategory(category);
                     //shows a message, like the alert boxes
-                    showMessageDialog(null, "The category: "
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "The category: "
                             + category.getCategory() + " has been removed from the database");
+                    alert.showAndWait();
                     comboBoxRemoveCatDb.getItems().remove(comboBoxRemoveCatDb.getSelectionModel().getSelectedItem());
                     comboBoxRemoveCatDb.setValue(1);
                     btnRemoveCatDb.setDisable(true);
@@ -211,7 +203,8 @@ public class EditViewController extends BaseController implements Initializable 
      * Button action for adding a category to the movie
      */
     public void addCatMovie() {
-        //Gets all the categories that are alrady in the list, and puts it into the List
+        //Gets all the categories that are
+        // already in the list, and puts it into the List
         String[] alreadyInMovie = chosen.getCategories().split(", ");
         Category newCategory = new Category(comboBoxAddCatMovie.getSelectionModel().getSelectedItem().toString());
         List<Category> movieCategories = new ArrayList<>();
@@ -221,7 +214,7 @@ public class EditViewController extends BaseController implements Initializable 
         }
         movieCategories.add(newCategory);   //Adds the new Category
 
-        //Goes to DAL and gets all the Categories and the Id's
+        //Goes to DAL and gets all the Categories and the id's
         List<Category> updatedCategories = categoryModel.getUpdatedCategories(movieCategories);
         int mID = chosen.getId();
         //Adds the link between category and movie
@@ -233,8 +226,10 @@ public class EditViewController extends BaseController implements Initializable 
         comboBoxRemoveCatMovie.getItems().add(newCategory);
         btnAddCatMovie.setDisable(true);
         //shows a message, like the alert boxes
-        showMessageDialog(null, "The category: "
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "The category: "
                 + newCategory.getCategory() + " has been added to the movie: " + chosen.getTitle());
+        alert.showAndWait();
     }
 
 
@@ -269,9 +264,10 @@ public class EditViewController extends BaseController implements Initializable 
         comboBoxRemoveCatMovie.setValue(0);
         comboBoxRemoveCatMovie.getItems().remove(category);
         comboBoxAddCatMovie.getItems().add(category);
-        //shows a message, like the alert boxes
-        showMessageDialog(null, "The category: "
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "The category: "
                 + category.getCategory() + " has been removed from the movie: " + chosen.getTitle());
+        alert.showAndWait();
     }
 
     /**
