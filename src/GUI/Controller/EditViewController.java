@@ -252,15 +252,26 @@ public class EditViewController extends BaseController implements Initializable 
      * Button action for removing the category from the movie
      */
     public void removeCatMovieHandle() {
+        Category category = new Category(comboBoxRemoveCatMovie.getSelectionModel().getSelectedItem().toString());
+
         try {
             MovieModel movieModel = new MovieModel();
-            Category category = new Category(comboBoxRemoveCatMovie.getSelectionModel().getSelectedItem().toString())
-            movieModel.removeCategoryFromMovie(chosen.getId(), category.getId());
+            //Creates a list to send to DAL, to get id of the category
+            List<Category> catToDelete = new ArrayList<>();
+            catToDelete.add(category);
+            List<Category> updatedCategories = categoryModel.getUpdatedCategories(catToDelete);
+            Category category1 = updatedCategories.get(0);
+            movieModel.removeCategoryFromMovie(chosen.getId(), category1.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
+        btnRemoveCatMovie.setDisable(true);
+        comboBoxRemoveCatMovie.setValue(0);
+        comboBoxRemoveCatMovie.getItems().remove(category);
+        comboBoxAddCatMovie.getItems().add(category);
+        //shows a message, like the alert boxes
+        showMessageDialog(null, "The category: "
+                + category.getCategory() + " has been removed from the movie: " + chosen.getTitle());
     }
 
     /**
