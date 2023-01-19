@@ -251,6 +251,7 @@ public class MainViewController extends BaseController implements Initializable 
                 alert.show();
             }
             btnSearch.setText("Clear");
+            categoryDropDown.setValue("");
         }
     }
 
@@ -344,6 +345,12 @@ public class MainViewController extends BaseController implements Initializable 
                         movieTable.getItems().clear();
                         movieTable.setItems(movieModel.getObservableMoviesCategory(category));
                         updateCategories();
+                        searchField.setText("");
+                        imdbMin.setText("");
+                        imdbMax.setText("");
+                        pRatingMax.setText("");
+                        pRatingMin.setText("");
+                        btnSearch.setText("Search");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
