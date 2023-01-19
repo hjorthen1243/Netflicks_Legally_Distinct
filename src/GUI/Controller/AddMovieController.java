@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 
-public class AddMovieController extends BaseController implements Initializable{
+public class AddMovieController extends BaseController implements Initializable {
     @FXML
     private DatePicker datePickerLastSeen;
     @FXML
@@ -39,7 +39,7 @@ public class AddMovieController extends BaseController implements Initializable{
     @FXML
     private TableColumn titleColumn, yearColumn, categoryColumn;
     @FXML
-    private TextField txtFieldSearch, txtFieldIMDBRating,  txtFieldPersonalRating, txtFieldMovieTitle, txtFiledMovieFile, txtFieldMovieCategories, txtFieldYear;
+    private TextField txtFieldSearch, txtFieldIMDBRating, txtFieldPersonalRating, txtFieldMovieTitle, txtFiledMovieFile, txtFieldMovieCategories, txtFieldYear;
     @FXML
     private Button btnInsertFile, btnSearchMovie, btnAddMovie, btnRemoveCategory, btnAddCategory;
 
@@ -108,13 +108,12 @@ public class AddMovieController extends BaseController implements Initializable{
     @FXML
     private void shouldNotDisable() {
 
-        for (TextField textfield: allTextiles) {
-            if(textfield.getText().equals("") || textfield.getText() == null){
+        for (TextField textfield : allTextiles) {
+            if (textfield.getText().equals("") || textfield.getText() == null) {
                 return;
             }
         }
         btnAddMovie.setDisable(false);
-
     }
 
     /**
@@ -142,18 +141,18 @@ public class AddMovieController extends BaseController implements Initializable{
             movieModel = new MovieModel();
             categoryModel = new CategoryModel();
             // Gets the values
-            String  title           = txtFieldMovieTitle.getText();
-            int     year            = Integer.parseInt(txtFieldYear.getText());
-            double  imdbRating      = Double.parseDouble(txtFieldIMDBRating.getText());
-            int     personalRating  = Integer.parseInt(txtFieldPersonalRating.getText());
-            String  filePath        = txtFiledMovieFile.getText();
-            String  length          = "0";
+            String title = txtFieldMovieTitle.getText();
+            int year = Integer.parseInt(txtFieldYear.getText());
+            double imdbRating = Double.parseDouble(txtFieldIMDBRating.getText());
+            int personalRating = Integer.parseInt(txtFieldPersonalRating.getText());
+            String filePath = txtFiledMovieFile.getText();
+            String length = "0";
 
             try {
                 Movie movie = new Movie(title, year, length, imdbRating, personalRating, filePath);
                 File file = new File(movie.getPathToFile());
                 //check if Desktop is supported by Platform or not
-                if (!Desktop.isDesktopSupported()){
+                if (!Desktop.isDesktopSupported()) {
                     return;
                 }
                 Desktop desktop = Desktop.getDesktop();
@@ -169,21 +168,18 @@ public class AddMovieController extends BaseController implements Initializable{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-                IContainer container = IContainer.make();
-                int result = container.open(filePath, IContainer.Type.READ, null);
-                length = String.valueOf(container.getDuration() / 1000000);
+            IContainer container = IContainer.make();
+            int result = container.open(filePath, IContainer.Type.READ, null);
+            length = String.valueOf(container.getDuration() / 1000000);
 
             if (personalRating > 10 || personalRating < 0) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Personal Rating should be between 0 and 10");
                 alert.showAndWait();
 
-            }
-            else if (imdbRating > 10 || imdbRating < 0)
-                {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "IMDB Rating should be between 0 and 10");
-                    alert.showAndWait();
-                }
-            else if (year < 1895) {
+            } else if (imdbRating > 10 || imdbRating < 0) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "IMDB Rating should be between 0 and 10");
+                alert.showAndWait();
+            } else if (year < 1895) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "The first movie came out in 1895, so I don't think so smartass!");
                 alert.showAndWait();
             } else {
@@ -227,9 +223,10 @@ public class AddMovieController extends BaseController implements Initializable{
 
     /**
      * Looks at the movie table, with new movies and sets the values in the text-fields
+     *
      * @throws Exception
      */
-    private void clicks(){
+    private void clicks() {
         try {
             tableViewSearchMovie.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
                 //If something is selected, set the data from the selected property into the text fields
@@ -241,8 +238,7 @@ public class AddMovieController extends BaseController implements Initializable{
                         txtFieldYear.setText(selectedMovie.getYearString());
                         txtFieldIMDBRating.setText(String.valueOf(m.getImdbRating()));
                         addCategoriesToChosenMovie();
-                    }
-                    else {
+                    } else {
                         categoriesInAddMovie.clear();
                         selectedMovie = (Movie) tableViewSearchMovie.getSelectionModel().getSelectedItem();
                         Movie m = movieModel.searchSelectedMovie(selectedMovie.getImdbID());
@@ -254,8 +250,7 @@ public class AddMovieController extends BaseController implements Initializable{
 
                 }
             });
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -287,12 +282,11 @@ public class AddMovieController extends BaseController implements Initializable{
 
     /**
      * Closes the window
-     *
      */
     public void closeWindow() {
         Stage stage = (Stage) btnAddMovie.getScene().getWindow();
         stage.close();
-        }
+    }
 
     /**
      * When a category is chosen this method looks at what has been chosen, and if the category is already
@@ -305,12 +299,12 @@ public class AddMovieController extends BaseController implements Initializable{
             btnAddCategory.setDisable(false);
         }
     }
+
     public void handleAddCategory() {
         if (txtFieldMovieTitle.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "You need to add a title before you add Categories");
             alert.showAndWait();
-        }
-        else {
+        } else {
             Category category = new Category(categoryDropDown.getSelectionModel().getSelectedItem().toString());
             categoriesInAddMovie = categoryTable.getItems();
             categoriesInAddMovie.add(category);
