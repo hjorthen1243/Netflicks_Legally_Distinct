@@ -5,11 +5,13 @@ import BE.Movie;
 import GUI.Controller.Methods.Methods;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
+import com.xuggle.xuggler.IContainer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.media.VideoTrack;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -19,6 +21,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
+
 
 public class AddMovieController extends BaseController implements Initializable{
     @FXML
@@ -138,9 +142,13 @@ public class AddMovieController extends BaseController implements Initializable{
             int     personalRating  = Integer.parseInt(txtFieldPersonalRating.getText());
             String  filePath        = txtFiledMovieFile.getText();
 
+            IContainer container = IContainer.make();
+            int result = container.open(filePath, IContainer.Type.READ, null);
+            String  length          = String.valueOf(container.getDuration()/1000000);
+
             List<Category> categories = categoryTable.getItems().subList(0,categoryTable.getItems().size());
             List<Category> updatedCategories = categoryModel.getUpdatedCategories(categories);
-            Movie movie = movieModel.addNewMovie(title, year, null, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath);
+            Movie movie = movieModel.addNewMovie(title, year, length, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath);
             int mID = movie.getId();
             categoryModel.addCategoriesToMovie(mID,updatedCategories);
             closeWindow();
@@ -184,12 +192,24 @@ public class AddMovieController extends BaseController implements Initializable{
             tableViewSearchMovie.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
                 //If something is selected, set the data from the selected property into the text fields
                 if (newValue != null) {
-                    selectedMovie = (Movie) tableViewSearchMovie.getSelectionModel().getSelectedItem();
-                    Movie m = movieModel.searchSelectedMovie(selectedMovie.getImdbID());
-                    txtFieldMovieTitle.setText(selectedMovie.getTitle());
-                    txtFieldYear.setText(selectedMovie.getYearString());
-                    txtFieldIMDBRating.setText(String.valueOf(m.getImdbRating()));
-                    addCategoriesToChosenMovie();
+                    if (categoriesInAddMovie == null) {
+                        selectedMovie = (Movie) tableViewSearchMovie.getSelectionModel().getSelectedItem();
+                        Movie m = movieModel.searchSelectedMovie(selectedMovie.getImdbID());
+                        txtFieldMovieTitle.setText(selectedMovie.getTitle());
+                        txtFieldYear.setText(selectedMovie.getYearString());
+                        txtFieldIMDBRating.setText(String.valueOf(m.getImdbRating()));
+                        addCategoriesToChosenMovie();
+                    }
+                    else {
+                        categoriesInAddMovie.clear();
+                        selectedMovie = (Movie) tableViewSearchMovie.getSelectionModel().getSelectedItem();
+                        Movie m = movieModel.searchSelectedMovie(selectedMovie.getImdbID());
+                        txtFieldMovieTitle.setText(selectedMovie.getTitle());
+                        txtFieldYear.setText(selectedMovie.getYearString());
+                        txtFieldIMDBRating.setText(String.valueOf(m.getImdbRating()));
+                        addCategoriesToChosenMovie();
+                    }
+
                 }
             });
         }
