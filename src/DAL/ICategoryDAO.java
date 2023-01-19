@@ -3,6 +3,7 @@ package DAL;
 import BE.Category;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,4 +23,6 @@ public interface ICategoryDAO {
     void addCategoriesToMovie(int mID, List<Category> categories);
 
     List<Category> getUpdatedCategories(List<Category> categories);
+
+    ArrayList<Category> getAllCategoriesArray() throws Exception;
 }

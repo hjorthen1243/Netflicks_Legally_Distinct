@@ -20,7 +20,6 @@ public class MovieManager {
         movieDAO = new MovieDAO();
     }
 
-
     public List<Movie> getAllMoviesCategory(Category category) throws Exception {
         return movieDAO.getMoviesWithCategory(category);
     }
@@ -74,7 +73,6 @@ public class MovieManager {
     public void deleteMovie(Movie m) throws Exception {
         movieDAO.deleteMovie(m);
     }
-
 
     public void updateMovie(Movie updatedMovie) throws Exception {
         movieDAO.editUpdateMovie(updatedMovie);

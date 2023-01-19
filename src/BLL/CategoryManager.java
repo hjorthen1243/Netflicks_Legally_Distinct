@@ -11,18 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class manages the categories and works as a link between DAL and GUI
+ */
 public class CategoryManager {
     ICategoryDAO categoryDAO;
-    CategoryDAO categoryDAONew;
-    public CategoryManager() throws IOException {categoryDAO = new CategoryDAO();
+    public CategoryManager() throws IOException {
+        categoryDAO = new CategoryDAO();
     }
     public List<Category> getAllCategories() throws Exception {
         return categoryDAO.getAllCategories();
     }
 
     public ArrayList<Category> getAllCategoriesArray() throws Exception {
-        categoryDAONew = new CategoryDAO();
-        return categoryDAONew.getAllCategoriesArray();
+        return categoryDAO.getAllCategoriesArray();
     }
 
     public void removeCategory(Category removeCategory) throws Exception {
@@ -42,7 +44,6 @@ public class CategoryManager {
         return categoryDAO.getCategoriesAttachedToMovies();
     }
 
-
     public List<Category> getMovieCategories() {
         return categoryDAO.getMovieCategories();
     }
@@ -53,6 +54,5 @@ public class CategoryManager {
 
     public List<Category> getUpdatedCategories(List<Category> categories) {
         return categoryDAO.getUpdatedCategories(categories);
-
     }
 }

@@ -2,7 +2,6 @@ package DAL;
 
 import BE.Category;
 import BE.Movie;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.sql.*;
@@ -15,6 +14,7 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class MovieDAO implements IMovieDAO {
 
+    //getting the database connectors
     MyDatabaseConnector myDatabaseConnector;
     MyOMDBConnector myOMDBConnector;
 
@@ -22,6 +22,12 @@ public class MovieDAO implements IMovieDAO {
         myDatabaseConnector = new MyDatabaseConnector();
         myOMDBConnector = new MyOMDBConnector();
     }
+
+    /**
+     * Gets all the movies from the database
+     * @return List of movies
+     * @throws Exception SQLException
+     */
 
     @Override
     public List<Movie> getAllMovies() throws Exception {
@@ -65,6 +71,18 @@ public class MovieDAO implements IMovieDAO {
         }
     }
 
+    /**
+     * Add a new movie to the database
+     * @param title         String
+     * @param year          int
+     * @param length        String
+     * @param imdbRating    double
+     * @param personalRating int
+     * @param lastViewed    Date
+     * @param pathToFile    String
+     * @return              Movie
+     * @throws Exception    SQL
+     */
     @Override
     public Movie addMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastViewed, String pathToFile) throws Exception {
 
@@ -102,15 +120,17 @@ public class MovieDAO implements IMovieDAO {
         return new Movie(id, title, year, length, imdbRating, personalRating, lastViewed, pathToFile);
     }
 
+    /**
+     * Change values in the specific movie.
+     * @param movie the updated movie, with the same id as the last movie
+     */
     @Override
-    public void editUpdateMovie(Movie movie) throws Exception {
+    public void editUpdateMovie(Movie movie) {
 
         //Try with resources on the databaseConnector
         try (Connection conn = myDatabaseConnector.getConnection()) {
 
             //SQL Statement and initializing id variable.
-            //String sql = "UPDATE Movie SET Title=?, Year=?, IMDBRating=?, personalRating=?, LastView=?, PathToFile=?" +
-            //        "WHERE Id = ?;";
             String sql = "UPDATE Movie SET Title=?, Year=?, IMDBRating=?, personalRating=?, LastView=?, PathToFile=? WHERE Id = ?;";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -131,11 +151,16 @@ public class MovieDAO implements IMovieDAO {
         }
     }
 
+    /**
+     * Deletes the movie, and the connection between categories and movies
+     * @param m movie
+     * @throws Exception ex
+     */
     @Override
     public void deleteMovie(Movie m) throws Exception {
         //Get the id of the chosen movie
         int mID = m.getId();
-        //SQL String which deletes the movie from all moview in the DB
+        //SQL String which deletes the movie from all movie in the DB
         String sql = "DELETE FROM Movie WHERE Id = " + mID + ";";
 
         //SQL String which deletes the link between the movie and the category
@@ -154,76 +179,12 @@ public class MovieDAO implements IMovieDAO {
         }
     }
 
-    @Override
-    public List<Category> getAllCategories() throws Exception {
-        //Make a list to return
-        ArrayList<Category> allCategories = new ArrayList<>();
-
-        //Try with resources on the databaseConnector
-        try (Connection conn = myDatabaseConnector.getConnection()) {
-
-            //SQL String which gets all categories form the DB
-            String sql = "SELECT * FROM Category;";
-
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-
-            //Loop through rows from the database result set
-            while (rs.next()) {
-                //Map DB row to Category Object
-                int id = rs.getInt("id");
-                String name = rs.getString("Category");
-
-                Category category = new Category(id, name);
-                allCategories.add(category);
-            }
-            return allCategories; //Return categories to be fed to the observable list
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new Exception("Could not get categories from database");
-        }
-    }
-
-    @Override
-    public Category createCategory(String name) throws Exception {
-
-        String sql = "INSERT INTO CatMovie (Category) VALUES (?);";
-        int id = 0;
-
-        //Try with resources on the databaseConnector
-        try (Connection conn = myDatabaseConnector.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, RETURN_GENERATED_KEYS)) {
-
-            //Bind parameters to the SQL statement.
-            stmt.setString(1, name);
-            //Execute the update into the DB
-            stmt.executeUpdate();
-
-            //Get the new ID from DB.
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()) {
-                id = rs.getInt(1);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return new Category(id, name);
-    }
-
-    @Override
-    public void deleteCategory(Category category) throws Exception {
-        int id = category.getId(); //Get the id of the category the user has chosen
-        //SQL String which deletes the category with the chosen id from the DB
-        String sql = "DELETE FROM Category WHERE Id = " + id + ";";
-        //Try with resources on the databaseConnector
-        try (Connection conn = myDatabaseConnector.getConnection()) {
-            //Statement is a prepared SQL statements
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.executeUpdate(); //Execute the update in the DB
-        }
-    }
-
+    /**
+     * Gets all the movie, with a specific category
+     * @param category the specific category
+     * @return list of movies,with the specific categories
+     * @throws Exception SQL
+     */
     @Override
     public List<Movie> getMoviesWithCategory(Category category) throws Exception {
         //Make a list to return
@@ -258,13 +219,13 @@ public class MovieDAO implements IMovieDAO {
         }
     }
 
+    /**
+     * Removes the link between a specific movie and a category.
+     * @param movieId id on movie
+     * @param categoryId id on category
+     */
     @Override
-    public void addCategoryToMovie(int movieId, int categoryId) {
-
-    }
-
-    @Override
-    public void removeCategoryFromMovie(int movieId, int categoryId) throws SQLServerException {
+    public void removeCategoryFromMovie(int movieId, int categoryId) {
         //SQL String which deletes the link between category & movie from the DB
         String sql = "DELETE FROM CatMovie WHERE CategoryID =" + categoryId + " AND MovieID = " + movieId + ";";
         //Try with resources on the databaseConnector
@@ -277,6 +238,7 @@ public class MovieDAO implements IMovieDAO {
         }
     }
 
+    //TODO do not understand
     @Override
     public List<Movie> searchAddMovie(String text) {
         return myOMDBConnector.searchQuery(text);
