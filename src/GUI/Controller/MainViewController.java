@@ -58,7 +58,7 @@ public class MainViewController extends BaseController implements Initializable 
     public void setup() {
         try {
             updateMovieList();
-            Methods.addAllCategoriesToComboBox(categoryDropDown);
+            categoryModel.addAllCategoriesToComboBox(categoryDropDown);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,14 +79,26 @@ public class MainViewController extends BaseController implements Initializable 
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sliderPR.setMajorTickUnit(1);
-        eventHandler();
-        disableEnableComponents(true);
-        addListenerMovieTable();
-        Methods.addListenersToNumFields(imdbMax);
-        Methods.addListenersToNumFields(imdbMin);
-        Methods.addListenersToNumFields(pRatingMax);
-        Methods.addListenersToNumFields(pRatingMin);
+        try {
+            categoryModel = new CategoryModel();
+            sliderPR.setMajorTickUnit(1);
+            eventHandler();
+            disableEnableComponents(true);
+            addListenerMovieTable();
+
+            ArrayList<TextField> ratings = new ArrayList<>();
+            ratings.add(imdbMax);
+            ratings.add(imdbMin);
+            ratings.add(imdbMax);
+            ratings.add(pRatingMin);
+            for (TextField txtF: ratings) {
+                categoryModel.addListenersToNumFields(txtF);
+            }
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -110,7 +122,7 @@ public class MainViewController extends BaseController implements Initializable 
     public void startRemoveMovie() {
         delController = new RemoveMovieController();
         delController.setup();
-        Methods.openNewView("RemoveMovie.fxml", "Remove old movies");
+        categoryModel.openNewView("RemoveMovie.fxml", "Remove old movies");
         updateMovieTableAndCategories();
     }
 
@@ -119,9 +131,9 @@ public class MainViewController extends BaseController implements Initializable 
      * After something is added, it tries to update the movie table
      */
     public void addMovieHandle() {
-        addController = new  AddMovieController();
+        addController = new AddMovieController();
         addController.setup();
-        Methods.openNewView("AddMovie.fxml", "Add a movie");
+        categoryModel.openNewView("AddMovie.fxml", "Add a movie");
         updateMovieTableAndCategories();
     }
 
@@ -181,10 +193,10 @@ public class MainViewController extends BaseController implements Initializable 
         movieModel = getModel().getMovieModel();
         try {
             if (programStarted) {
-                Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
+                categoryModel.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
                 categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Categories"));
                 //sets the cellValueFactory to all the entities, that a movie has
-                Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
+                categoryModel.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
                 categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Categories"));
 
 
@@ -343,10 +355,10 @@ public class MainViewController extends BaseController implements Initializable 
         EditViewController editViewController = new EditViewController();
 
         if (chosenMovie!= null) {
-            Methods.openNewView("EditView.fxml", "Edit:  " + chosenMovie.getTitle());
+            categoryModel.openNewView("EditView.fxml", "Edit:  " + chosenMovie.getTitle());
         }
         else {
-            Methods.openNewView("EditView.fxml", "Edit categories");
+            categoryModel.openNewView("EditView.fxml", "Edit categories");
         }
         //Update movieTable and categories
         updateMovieTableAndCategories();

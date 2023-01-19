@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.Movie;
 import GUI.Controller.Methods.Methods;
+import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -109,6 +110,7 @@ public class RemoveMovieController extends BaseController implements Initializab
     public void updateMovieList() {
         try {
             if(isStarting) {
+                CategoryModel categoryModel = new CategoryModel();
                 isStarting = false;
                 movies = new ArrayList<>();
                 moviesToDelete = new ArrayList<>();
@@ -125,8 +127,7 @@ public class RemoveMovieController extends BaseController implements Initializab
                     if (diff > biggestDiff && movie.getPersonalRating() < 6) {
                         observableMovies.add(movie);
                         moviesToDelete.add(movie);
-
-                        Methods.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
+                        categoryModel.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
                     }
                 }
             }

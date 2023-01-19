@@ -56,7 +56,7 @@ public class EditViewController extends BaseController implements Initializable 
             if (chosen == null){
                 isMovieEmpty(true);
             } else {
-                Methods.addAllCategoriesToComboBox(comboBoxAddCatMovie);
+                addAllCategoriesToComboBox();
                 MovieIsChosen();
             }
             addRemovableCategories();
@@ -66,6 +66,15 @@ public class EditViewController extends BaseController implements Initializable 
             e.printStackTrace();
         }
     }
+
+    private void addAllCategoriesToComboBox() {
+        try {
+            categoryModel.addAllCategoriesToComboBox(comboBoxAddCatMovie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void MovieIsChosen() {
         //removes the unnecessary categories from add categories to movie and remove category from movie
@@ -154,7 +163,7 @@ public class EditViewController extends BaseController implements Initializable 
             alert.showAndWait();
             btnAddCatDb.setDisable(true);
             addRemovableCategories();
-            Methods.addAllCategoriesToComboBox(comboBoxAddCatMovie);
+            addAllCategoriesToComboBox();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -184,7 +193,7 @@ public class EditViewController extends BaseController implements Initializable 
                     comboBoxRemoveCatDb.getItems().remove(comboBoxRemoveCatDb.getSelectionModel().getSelectedItem());
                     comboBoxRemoveCatDb.setValue(1);
                     btnRemoveCatDb.setDisable(true);
-                    Methods.addAllCategoriesToComboBox(comboBoxAddCatMovie);
+                    addAllCategoriesToComboBox();
                 }
             }
         } catch (Exception e) {

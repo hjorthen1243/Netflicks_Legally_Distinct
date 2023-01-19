@@ -60,13 +60,24 @@ public class AddMovieController extends BaseController implements Initializable{
         }
     }
 
+    /**
+     * When loading the window it disables
+     * @param location
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resources
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             makeList();
-            Methods.addAllCategoriesToComboBox(categoryDropDown);
-            Methods.addListenersToNumFields(txtFieldYear);
-            Methods.addListenersToNumFields(txtFieldPersonalRating);
+            categoryModel = new CategoryModel();
+            categoryModel.addAllCategoriesToComboBox(categoryDropDown);
+            categoryModel.addListenersToNumFields(txtFieldYear);
+            categoryModel.addListenersToNumFields(txtFieldPersonalRating);
 
             btnAddMovie.setDisable(true);
             btnRemoveCategory.setDisable(true);
@@ -240,7 +251,7 @@ public class AddMovieController extends BaseController implements Initializable{
      */
     public void handleCategoriesClick() {
         editController = new EditViewController();
-        Methods.openNewView("EditView.fxml", "Edit");
+        categoryModel.openNewView("EditView.fxml", "Edit");
     }
 
     /**
