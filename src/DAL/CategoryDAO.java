@@ -205,7 +205,7 @@ public class CategoryDAO implements ICategoryDAO {
         String[] c = movieCategories.split(", ");
         ArrayList<Category> categories = new ArrayList<>();
         String sql =
-        "SELECT * FROM Categories WHERE";
+                "SELECT * FROM Categories WHERE";
         for (int i = 0; i < c.length; i++) {
             sql = sql + " Category = '" + c[i] + "'" + " OR";
         }
@@ -221,7 +221,7 @@ public class CategoryDAO implements ICategoryDAO {
                 categories.add(category);
             }
 
-    } catch (SQLServerException e) {
+        } catch (SQLServerException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -295,4 +295,3 @@ public class CategoryDAO implements ICategoryDAO {
         return categories1;
     }
 }
-

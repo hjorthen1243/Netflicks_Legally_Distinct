@@ -4,9 +4,10 @@ package GUI.Controller;
 
 import BE.Category;
 import BE.Movie;
-import GUI.Controller.Methods.Methods;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,12 +29,11 @@ import java.util.concurrent.TimeUnit;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class MainViewController extends BaseController implements Initializable {
-
     public static Movie chosenMovie;
     @FXML
     private Slider sliderPR;
     @FXML
-    private Button btnSavePR, btnSaveLastSeen, btnRemoveMovie, btnEditCategories;
+    private Button btnSavePR, btnSaveLastSeen, btnRemoveMovie, btnEditCategories, btnSearch;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -62,43 +62,39 @@ public class MainViewController extends BaseController implements Initializable 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        searchHandle();
 
     }
 
     /**
      * When the program is loading, the slider is set to only be able to hit integers.
      * Listeners are added to the different components.
-     * @param location
-     * The location used to resolve relative paths for the root object, or
-     * {@code null} if the location is not known.
      *
-     * @param resources
-     * The resources used to localize the root object, or {@code null} if
-     * the root object was not localized.
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  {@code null} if the location is not known.
+     * @param resources The resources used to localize the root object, or {@code null} if
+     *                  the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        CategoryModel categoryModel = null;
         try {
             categoryModel = new CategoryModel();
-            sliderPR.setMajorTickUnit(1);
-            eventHandler();
-            disableEnableComponents(true);
-            addListenerMovieTable();
-
-            ArrayList<TextField> ratings = new ArrayList<>();
-            ratings.add(imdbMax);
-            ratings.add(imdbMin);
-            ratings.add(imdbMax);
-            ratings.add(pRatingMin);
-            for (TextField txtF: ratings) {
-                categoryModel.addListenersToNumFields(txtF);
-            }
-
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        sliderPR.setMajorTickUnit(1);
+        eventHandler();
+        disableEnableComponents(true);
+        addListenerMovieTable();
+
+        ArrayList<TextField> ratings = new ArrayList<>();
+        ratings.add(imdbMax);
+        ratings.add(imdbMin);
+        ratings.add(imdbMax);
+        ratings.add(pRatingMin);
+        for (TextField txtF: ratings) {
+            categoryModel.addListenersToNumFields(txtF);
+    }
     }
 
     /**
@@ -124,17 +120,19 @@ public class MainViewController extends BaseController implements Initializable 
         delController.setup();
         categoryModel.openNewView("RemoveMovie.fxml", "Remove old movies");
         updateMovieTableAndCategories();
-    }
+        }
+
 
     /**
      * Adds a movie to the db by opening the "AddMovie" window
      * After something is added, it tries to update the movie table
      */
     public void addMovieHandle() {
-        addController = new AddMovieController();
-        addController.setup();
-        categoryModel.openNewView("AddMovie.fxml", "Add a movie");
-        updateMovieTableAndCategories();
+            addController = new AddMovieController();
+            addController.setup();
+            categoryModel.openNewView("AddMovie.fxml", "Add a movie");
+            updateMovieTableAndCategories();
+
     }
 
     /**
@@ -154,34 +152,126 @@ public class MainViewController extends BaseController implements Initializable 
         }
     }
 
-    //TODO describe searchHandle();
-    public void searchHandle() {
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-        try{
-            movieModel.searchMovie(newValue);
-            updateCategories();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }});
-        imdbMin.textProperty().addListener((observable, oldValue, newValue) -> {
-            try{
-                System.out.println(newValue);
-                movieModel.imdbSearch(newValue);
-                updateCategories();
-            } catch (Exception e) {
-                System.out.println("No sucess");
-                throw new RuntimeException(e);
-            }
-        });
-        imdbMax.textProperty().addListener((observable, oldValue, newValue) -> {
+    /**
+     * Handles the searches for the title, year imdb scores and personal scores
+     */
+
+    public void searchHandle(ActionEvent event) {
+        // Checks if the Search button has the text Clear
+        if (btnSearch.getText().equals("Clear")) {
+            //If Search button text is clear it resets all values and gets list of all movies
             try {
-                movieModel.imdbSearch(newValue);
+                searchField.setText("");
+                imdbMin.setText("");
+                imdbMax.setText("");
+                pRatingMin.setText("");
+                pRatingMax.setText("");
+                categoryDropDown.setValue("");
+                updateMovieList();
                 updateCategories();
+                //Sets the Search button text to Search
+                btnSearch.setText("Search");
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
-        });
+        } else {
+            //Checks if the searchField is empty or not
+            if (!searchField.getText().isEmpty()) {
+                try {
+                    //Sets query to be the user input
+                    String query = searchField.getText();
+                    //Gets the searchMovie method from MovieModel class and sends the query through it
+                    ObservableList<Movie> movies = movieTable.getItems();
+                    movieModel.searchMovie(query);
+                    updateCategories();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //Checks if imdbMin is empty or not
+            } else if (!imdbMin.getText().isEmpty() && imdbMax.getText().isEmpty()) {
+                //Sets query to be the user input
+                String query = imdbMin.getText();
+                try {
+
+                    //Creates Observable list called movies and sets value to the values in movieTable
+                    ObservableList<Movie> movies = movieTable.getItems();
+                    //Sets the values in movieTable to  the result of imdbSearchMin after sending the query and the Observable list of movies through
+                    movieTable.setItems(movieModel.imdbSearchMin(query, movies));
+                    updateCategories();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //Checks if imdbMax is empty or not
+            } else if (!imdbMax.getText().isEmpty() && imdbMin.getText().isEmpty()) {
+                //Sets query to be the user input
+                String query = imdbMax.getText();
+                try {
+                    //Creates Observable list called movies and sets value to the values in movieTable
+                    ObservableList<Movie> movies = movieTable.getItems();
+                    //Sets the values in movieTable to  the result of imdbSearchMax after sending the query and the Observable list of movies through
+                    movieTable.setItems(movieModel.imdbSearchMax(query, movies));
+                    updateCategories();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //Checks if imdbMax and imdbMin is empty or not
+            } else if (!imdbMax.getText().isEmpty() && !imdbMin.getText().isEmpty()) {
+                try {
+                    //Sets the values in movieTable to the result of imdbSearchMinAndMax after sending the user input from imdbMax and imdbMin through
+                    movieTable.setItems(movieModel.imdbSearchMinAndMax(imdbMin.getText(), imdbMax.getText()));
+                    updateCategories();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            //Checks if pRatingMin is empty or not
+            else if (!pRatingMin.getText().isEmpty() && pRatingMax.getText().isEmpty()) {
+                //Sets query to be the user input
+                String query = pRatingMin.getText();
+                try {
+                    //Creates Observable list called movies and sets value to the values in movieTable
+                    ObservableList<Movie> movies = movieTable.getItems();
+                    //Sets the values in movieTable to  the result of pRatingSearchMin after sending the query and the Observable list of movies through
+                    movieTable.setItems(movieModel.pRateSearchMin(query, movies));
+                    updateCategories();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            //Checks if pRatingMax is empty or not
+            else if (!pRatingMax.getText().isEmpty() && pRatingMin.getText().isEmpty()) {
+                //Sets query to be the user input
+                String query = pRatingMax.getText();
+                try {
+                    //Creates Observable list called movies and sets value to the values in movieTable
+                    ObservableList<Movie> movies = movieTable.getItems();
+                    //Sets the values in movieTable to  the result of pRatingSearchMax after sending the query and the Observable list of movies through
+                    movieTable.setItems(movieModel.pRateSearchMax(query, movies));
+                    updateCategories();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            //Checks if pRatingMax and pRatingMin is empty or not
+            else if (!pRatingMax.getText().isEmpty() && !pRatingMin.getText().isEmpty()) {
+                try {
+                    //Sets the values in movieTable to the result of pRatingSearchMinAndMax after sending the user input from pRatingMax and pRatingMin through
+                    movieTable.setItems(movieModel.pRateSearchMinAndMax(pRatingMin.getText(), pRatingMax.getText()));
+                    updateCategories();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            //If all the textFields are empty it sends an alert
+            else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "All search fields are empty");
+                alert.show();
+            }
+            btnSearch.setText("Clear");
+            categoryDropDown.setValue("");
+        }
     }
 
     /**
@@ -227,7 +317,6 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     /**
-     *
      * @throws Exception
      */
     private void updateCategories() throws Exception {
@@ -237,15 +326,15 @@ public class MainViewController extends BaseController implements Initializable 
         for (int i = 0; i < movieTable.getItems().size(); i++) {
             Movie m = (Movie) movieTable.getItems().get(i);
             int mID = m.getId();
-            if (categoriesAttachedToMovies.containsKey(mID)) { //If the movies from the movieTable have a matching ID in  the categoriesAttachedToMovies list, we can get the attached catagories.
+            if (categoriesAttachedToMovies.containsKey(mID)) { //If the movies from the movieTable have a matching ID in  the categoriesAttachedToMovies list, we can get the attached categories.
                 for (int j = 0; j < categoriesAttachedToMovies.get(mID).size(); j++) {
                     c.append(categoriesAttachedToMovies.get(mID).get(j)).append(", ");
                 }
-                c = c.replace(c.length()-2, c.length(), ""); //Remove the last comma
+                c = c.replace(c.length() - 2, c.length(), ""); //Remove the last comma
                 m.setCategories(c.toString()); //Set the categories in the movie Object
                 c = new StringBuilder(); //Clear the contents of the old String builder
             }
-       }
+        }
 
     }
 
@@ -259,15 +348,27 @@ public class MainViewController extends BaseController implements Initializable 
         ArrayList<Category> allCategories;
         allCategories = categoryModel.getAllCategories();
         if (categoryChosen.equals("All")) {
-            updateMovieTableAndCategories();
-        }
-        else {
+            movieTable.setItems(movieModel.getAllMovies());
+            try {
+                updateCategories();
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        } else {
             for (Category category : allCategories) {
                 if (category.getCategory().equals(categoryChosen)) {
+
                     try {
                         movieTable.getItems().clear();
                         movieTable.setItems(movieModel.getObservableMoviesCategory(category));
                         updateCategories();
+                        searchField.setText("");
+                        imdbMin.setText("");
+                        imdbMax.setText("");
+                        pRatingMax.setText("");
+                        pRatingMin.setText("");
+                        btnSearch.setText("Search");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -287,9 +388,17 @@ public class MainViewController extends BaseController implements Initializable 
             return row;
         });
     }
-
+    private void updateMovieTableAndCategories() {
+        try {
+            movieTable.setItems(movieModel.getAllMovies());
+            updateCategories();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     /**
      * Handles the mouse button clicks in the movie table
+     *
      * @param event mouse button events, specifically double clicks
      */
     private void clicks(MouseEvent event) {
@@ -312,7 +421,7 @@ public class MainViewController extends BaseController implements Initializable 
 
             File file = new File(movie.getPathToFile());
             //check if Desktop is supported by Platform or not
-            if (!Desktop.isDesktopSupported()){
+            if (!Desktop.isDesktopSupported()) {
                 System.out.println("not supported");
                 return;
             }
@@ -337,9 +446,10 @@ public class MainViewController extends BaseController implements Initializable 
         LocalDate lastSeen = datePicker.getValue();
         Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         movie.setLastViewDate(java.sql.Date.valueOf(lastSeen));
-        updateMovieTableAndCategories();
         try {
             movieModel.updateMovie(movie);
+            movieTable.setItems(movieModel.getAllMovies());
+            updateCategories();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -351,9 +461,9 @@ public class MainViewController extends BaseController implements Initializable 
     public void handleEditCategories() {
         editController = new EditViewController();
         editController.setup();
+        Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         chosenMovie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         EditViewController editViewController = new EditViewController();
-
         if (chosenMovie!= null) {
             categoryModel.openNewView("EditView.fxml", "Edit:  " + chosenMovie.getTitle());
         }
@@ -371,22 +481,14 @@ public class MainViewController extends BaseController implements Initializable 
         int personalRating = (int) sliderPR.getValue();
         Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         movie.setPersonalRating(personalRating);
-        updateMovieTableAndCategories();
         try {
             movieModel.updateMovie(movie);
+            movieTable.setItems(movieModel.getAllMovies());
+            updateCategories();
         } catch (Exception e) {
             e.printStackTrace();
         }
         movie.setPersonalRating(personalRating);
-    }
-
-    private void updateMovieTableAndCategories() {
-        try {
-            movieTable.setItems(movieModel.getAllMovies());
-            updateCategories();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -398,6 +500,7 @@ public class MainViewController extends BaseController implements Initializable 
             disableEnableComponents(newValue == null);
         });
     }
+
     private ArrayList<Movie> iMDbRateSearch() {
         ArrayList<Movie> minValue = new ArrayList<Movie>();
         for (int i = 0; i < movieTable.getHeight(); i++) {

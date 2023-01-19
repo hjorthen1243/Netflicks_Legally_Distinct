@@ -18,7 +18,7 @@ public class MovieDAO implements IMovieDAO {
     MyDatabaseConnector myDatabaseConnector;
     MyOMDBConnector myOMDBConnector;
 
-    public MovieDAO () throws IOException {
+    public MovieDAO() throws IOException {
         myDatabaseConnector = new MyDatabaseConnector();
         myOMDBConnector = new MyOMDBConnector();
     }
@@ -53,7 +53,7 @@ public class MovieDAO implements IMovieDAO {
                 String pathToFile = rs.getString("PathToFile");
 
                 //Add Movie to list allMovies
-                Movie movie = new Movie(id, title, year, length, imdbRating, pRating , lastView, pathToFile);
+                Movie movie = new Movie(id, title, year, length, imdbRating, pRating, lastView, pathToFile);
                 allMovies.add(movie);
 
             }
@@ -106,7 +106,7 @@ public class MovieDAO implements IMovieDAO {
     public void editUpdateMovie(Movie movie) throws Exception {
 
         //Try with resources on the databaseConnector
-        try (Connection conn = myDatabaseConnector.getConnection()){
+        try (Connection conn = myDatabaseConnector.getConnection()) {
 
             //SQL Statement and initializing id variable.
             //String sql = "UPDATE Movie SET Title=?, Year=?, IMDBRating=?, personalRating=?, LastView=?, PathToFile=?" +
@@ -126,8 +126,7 @@ public class MovieDAO implements IMovieDAO {
 
             //Execute the update into the DB
             stmt.executeUpdate();
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -246,8 +245,8 @@ public class MovieDAO implements IMovieDAO {
                 int id = rs.getInt("MovieID");
 
                 List<Movie> allMovies = getAllMovies();
-                for(Movie movie: allMovies){
-                    if(movie.getId() == id){
+                for (Movie movie : allMovies) {
+                    if (movie.getId() == id) {
                         allMoviesWithCategory.add(movie);
                     }
                 }
@@ -287,7 +286,4 @@ public class MovieDAO implements IMovieDAO {
     public Movie searchSelectedMovie(String imdbID) {
         return myOMDBConnector.chosenMovieMoreInfo(imdbID);
     }
-
-
-
 }

@@ -2,7 +2,6 @@ package GUI.Controller;
 
 import BE.Category;
 import BE.Movie;
-import GUI.Controller.Methods.Methods;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
 import javafx.collections.ObservableList;

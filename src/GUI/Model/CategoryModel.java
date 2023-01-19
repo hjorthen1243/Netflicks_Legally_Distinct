@@ -2,7 +2,6 @@ package GUI.Model;
 
 import BE.Category;
 import BLL.CategoryManager;
-import GUI.Controller.Methods.Methods;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
