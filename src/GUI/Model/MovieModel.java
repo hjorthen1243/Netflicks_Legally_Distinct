@@ -106,7 +106,7 @@ public class MovieModel {
         return moviesToBeViewed;
     }
 
-    public Movie addNewMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile) throws Exception {
+    public Movie addNewMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile) throws SQLException {
         Movie movie = movieManager.createNewMovie(title, year, length, imdbRating, personalRating, lastViewDate, pathToFile);
         moviesToBeViewed.add(movie);
         return movie;

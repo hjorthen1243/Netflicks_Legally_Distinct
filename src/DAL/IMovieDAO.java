@@ -10,15 +10,15 @@ import java.util.List;
 
 public interface IMovieDAO {
 
-    List<Movie> getAllMovies() throws Exception;
+    List<Movie> getAllMovies() throws SQLException;
 
-    Movie addMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastViewed, String pathToFile) throws Exception;
+    Movie addMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastViewed, String pathToFile) throws SQLException;
 
-    void editUpdateMovie(Movie movie) throws Exception;
+    void editUpdateMovie(Movie movie) throws SQLException;
 
-    void deleteMovie(Movie m) throws Exception;
+    void deleteMovie(Movie m) throws SQLException;
 
-    List<Movie> getMoviesWithCategory(Category category) throws Exception;
+    List<Movie> getMoviesWithCategory(Category category) throws SQLException;
 
     void removeCategoryFromMovie(int movieId, int categoryId) throws SQLException;
 

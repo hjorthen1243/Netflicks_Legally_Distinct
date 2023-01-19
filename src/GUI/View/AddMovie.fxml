@@ -30,7 +30,7 @@
             </columns>
         </TableView>
         <Button fx:id="btnSearchMovie" layoutX="376.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleSearchMovie" prefHeight="25.0" prefWidth="79.0" text="Search" />
-        <ComboBox fx:id="categoryDropDown" layoutX="100.0" layoutY="200.0" onAction="#categoryChosen" prefWidth="150.0" />
+        <ComboBox fx:id="categoryDropDown" layoutX="100.0" layoutY="200.0" prefWidth="150.0" />
         <TableView fx:id="categoryTable" layoutX="340.0" layoutY="159.0" prefHeight="194.0" prefWidth="114.0">
             <columns>
                 <TableColumn fx:id="categoryColumn" prefWidth="113.6" text="Categories" />

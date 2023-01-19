@@ -22,11 +22,11 @@ public class MovieManager {
     }
 
 
-    public List<Movie> getAllMoviesCategory(Category category) throws Exception {
+    public List<Movie> getAllMoviesCategory(Category category) throws SQLException {
         return movieDAO.getMoviesWithCategory(category);
     }
 
-    public List<Movie> getAllMovies() throws Exception {
+    public List<Movie> getAllMovies() throws SQLException {
         return movieDAO.getAllMovies();
     }
 
@@ -68,16 +68,16 @@ public class MovieManager {
         return pRateSearchResult;
     }
 
-    public Movie createNewMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastView, String pathToFile) throws Exception {
+    public Movie createNewMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastView, String pathToFile) throws SQLException {
         return movieDAO.addMovie(title, year, length, imdbRating, personalRating, lastView, pathToFile);
     }
 
-    public void deleteMovie(Movie m) throws Exception {
+    public void deleteMovie(Movie m) throws SQLException {
         movieDAO.deleteMovie(m);
     }
 
 
-    public void updateMovie(Movie updatedMovie) throws Exception {
+    public void updateMovie(Movie updatedMovie) throws SQLException {
         movieDAO.editUpdateMovie(updatedMovie);
     }
 
