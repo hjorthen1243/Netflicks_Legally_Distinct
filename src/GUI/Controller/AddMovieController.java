@@ -6,6 +6,7 @@ import GUI.Controller.Methods.Methods;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
 import com.xuggle.xuggler.IContainer;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +18,9 @@ import javafx.scene.media.VideoTrack;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
@@ -61,6 +64,7 @@ public class AddMovieController extends BaseController implements Initializable 
     public void setup() {
         try {
             movieModel = new MovieModel();
+            categoryModel = new CategoryModel();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,6 +85,7 @@ public class AddMovieController extends BaseController implements Initializable 
             addListenerCategoryTable();
             categoryDropDown.getItems().remove(0);
             clicks();
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,8 +128,7 @@ public class AddMovieController extends BaseController implements Initializable 
     public void handleInsertFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select movie");
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Files", "*.mp4"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Files", "*.mp4"));
         Stage stage = (Stage) btnInsertFile.getScene().getWindow();
         File selectedFile = fileChooser.showOpenDialog(stage);
         if (selectedFile != null) {
@@ -238,6 +242,7 @@ public class AddMovieController extends BaseController implements Initializable 
                         txtFieldYear.setText(selectedMovie.getYearString());
                         txtFieldIMDBRating.setText(String.valueOf(m.getImdbRating()));
                         addCategoriesToChosenMovie();
+                        removeAddedCategories();
                     } else {
                         categoriesInAddMovie.clear();
                         selectedMovie = (Movie) tableViewSearchMovie.getSelectionModel().getSelectedItem();
@@ -246,8 +251,8 @@ public class AddMovieController extends BaseController implements Initializable 
                         txtFieldYear.setText(selectedMovie.getYearString());
                         txtFieldIMDBRating.setText(String.valueOf(m.getImdbRating()));
                         addCategoriesToChosenMovie();
+                        removeAddedCategories();
                     }
-
                 }
             });
         } catch (Exception e) {
@@ -304,17 +309,17 @@ public class AddMovieController extends BaseController implements Initializable 
         if (txtFieldMovieTitle.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "You need to add a title before you add Categories");
             alert.showAndWait();
-        } else {
+        } else { //Else Add the category to the category table.
             Category category = new Category(categoryDropDown.getSelectionModel().getSelectedItem().toString());
             categoriesInAddMovie = categoryTable.getItems();
             categoriesInAddMovie.add(category);
-            categoryDropDown.setValue(1);
             categoryTable.setItems(categoriesInAddMovie);
             categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Category"));
             categoryTable.getColumns().addAll();
         }
-
+        categoryDropDown.setValue("");
     }
+
 
     /**
      * Looks after, if anything is selected in the categoryTable
@@ -337,6 +342,29 @@ public class AddMovieController extends BaseController implements Initializable 
         Category category = (Category) categoryTable.getSelectionModel().getSelectedItem();
         categoriesInAddMovie.remove(category);
         categoryTable.setItems(categoriesInAddMovie);
+        removeAddedCategories();
+    }
+
+    private void removeAddedCategories() {
+        ObservableList cT = categoryTable.getItems();
+        List<Category> cTL = cT.subList(0, cT.size());
+        ArrayList<Category> allCategories = categoryModel.getAllCategories();
+        ObservableList<Category> cD = FXCollections.observableArrayList();
+        cD.addAll(allCategories);
+        for (Category category : cTL) {
+            for (Object c : cD) {
+                if (c instanceof Category) {
+                    String catTemp = ((Category) c).getCategory();
+                    if (category.getCategory().equals(catTemp)) {
+                        cD.remove(c);
+                        break;
+                    }
+                }
+            }
+        }
+        categoryDropDown.setItems(cD);
     }
 }
+
+
 
