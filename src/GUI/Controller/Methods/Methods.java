@@ -88,6 +88,5 @@ public class Methods {
         for (Category category : allCategories) {
             categoryDropDown.getItems().add(category.getCategory());
         }
-        categoryDropDown.getItems().remove(0);
     }
 }
