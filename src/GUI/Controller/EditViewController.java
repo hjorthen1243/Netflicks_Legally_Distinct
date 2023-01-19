@@ -69,6 +69,7 @@ public class EditViewController extends BaseController implements Initializable 
 
     private void addAllCategoriesToComboBox() {
         try {
+            categoryModel = new CategoryModel();
             categoryModel.addAllCategoriesToComboBox(comboBoxAddCatMovie);
         } catch (Exception e) {
             e.printStackTrace();

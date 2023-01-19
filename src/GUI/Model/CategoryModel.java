@@ -161,7 +161,7 @@ public class CategoryModel {
     public void openNewView(String fxmlName, String displayName) {
         try{
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Methods.class.getResource("/GUI/View/" + fxmlName));
+            loader.setLocation(CategoryModel.class.getResource("/GUI/View/" + fxmlName));
             AnchorPane pane = loader.load();
             //controller.setModel(super.getModel());
             //controller.setup();
