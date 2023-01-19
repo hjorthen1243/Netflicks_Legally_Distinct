@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,7 +135,7 @@ public class MovieModel {
         return movieResults;
     }
 
-    public void removeCategoryFromMovie(int movieId, int categoryId) throws SQLServerException {
+    public void removeCategoryFromMovie(int movieId, int categoryId) throws SQLException {
         movieManager.removeCategoryFromMovie(movieId, categoryId);
     }
 

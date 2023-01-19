@@ -1,18 +1,11 @@
 package DAL;
 
-import BE.Category;
 import BE.Movie;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -45,7 +38,7 @@ public class MyOMDBConnector {
                 //Close the scanner
                 scanner.close();
             }
-        } catch (IOException /** | ParseException */e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

@@ -9,6 +9,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 
 public class MovieManager {
@@ -83,9 +84,11 @@ public class MovieManager {
     public List<Movie> searchAddMovie(String text) {
         return movieDAO.searchAddMovie(text);
     }
-    public void removeCategoryFromMovie(int movieId, int categoryId) throws SQLServerException {
+
+    public void removeCategoryFromMovie(int movieId, int categoryId) throws SQLException {
         movieDAO.removeCategoryFromMovie(movieId, categoryId);
     }
+
     public Movie searchSelectedMovie(String imdbID) {
         return movieDAO.searchSelectedMovie(imdbID);
     }
