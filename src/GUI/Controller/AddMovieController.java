@@ -2,7 +2,6 @@ package GUI.Controller;
 
 import BE.Category;
 import BE.Movie;
-import GUI.Controller.Methods.Methods;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
 import com.xuggle.xuggler.IContainer;
@@ -74,9 +73,11 @@ public class AddMovieController extends BaseController implements Initializable 
     public void initialize(URL location, ResourceBundle resources) {
         try {
             makeList();
-            Methods.addAllCategoriesToComboBox(categoryDropDown);
-            Methods.addListenersToNumFields(txtFieldYear);
-            Methods.addListenersToNumFields(txtFieldPersonalRating);
+            categoryModel = new CategoryModel();
+            categoryModel.addAllCategoriesToComboBox(categoryDropDown);
+            categoryModel.addListenersToNumFields(txtFieldYear);
+            categoryModel.addListenersToNumFields(txtFieldPersonalRating);
+
 
             btnAddMovie.setDisable(true);
             btnRemoveCategory.setDisable(true);
@@ -282,7 +283,7 @@ public class AddMovieController extends BaseController implements Initializable 
      */
     public void handleCategoriesClick() {
         editController = new EditViewController();
-        Methods.openNewView("EditView.fxml", "Edit");
+        categoryModel.openNewView("EditView.fxml", "Edit");
     }
 
     /**

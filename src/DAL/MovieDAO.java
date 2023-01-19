@@ -2,6 +2,7 @@ package DAL;
 
 import BE.Category;
 import BE.Movie;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.sql.*;
@@ -17,7 +18,7 @@ public class MovieDAO implements IMovieDAO {
     MyDatabaseConnector myDatabaseConnector;
     MyOMDBConnector myOMDBConnector;
 
-    public MovieDAO () throws IOException {
+    public MovieDAO() throws IOException {
         myDatabaseConnector = new MyDatabaseConnector();
         myOMDBConnector = new MyOMDBConnector();
     }
@@ -52,7 +53,7 @@ public class MovieDAO implements IMovieDAO {
                 String pathToFile = rs.getString("PathToFile");
 
                 //Add Movie to list allMovies
-                Movie movie = new Movie(id, title, year, length, imdbRating, pRating , lastView, pathToFile);
+                Movie movie = new Movie(id, title, year, length, imdbRating, pRating, lastView, pathToFile);
                 allMovies.add(movie);
 
             }
@@ -105,7 +106,7 @@ public class MovieDAO implements IMovieDAO {
     public void editUpdateMovie(Movie movie) throws Exception {
 
         //Try with resources on the databaseConnector
-        try (Connection conn = myDatabaseConnector.getConnection()){
+        try (Connection conn = myDatabaseConnector.getConnection()) {
 
             //SQL Statement and initializing id variable.
             //String sql = "UPDATE Movie SET Title=?, Year=?, IMDBRating=?, personalRating=?, LastView=?, PathToFile=?" +
@@ -125,8 +126,7 @@ public class MovieDAO implements IMovieDAO {
 
             //Execute the update into the DB
             stmt.executeUpdate();
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -245,8 +245,8 @@ public class MovieDAO implements IMovieDAO {
                 int id = rs.getInt("MovieID");
 
                 List<Movie> allMovies = getAllMovies();
-                for(Movie movie: allMovies){
-                    if(movie.getId() == id){
+                for (Movie movie : allMovies) {
+                    if (movie.getId() == id) {
                         allMoviesWithCategory.add(movie);
                     }
                 }
@@ -264,8 +264,17 @@ public class MovieDAO implements IMovieDAO {
     }
 
     @Override
-    public void removeCategoryFromMovie(int movieId, int categoryId) {
-
+    public void removeCategoryFromMovie(int movieId, int categoryId) throws SQLServerException {
+        //SQL String which deletes the link between category & movie from the DB
+        String sql = "DELETE FROM CatMovie WHERE CategoryID =" + categoryId + " AND MovieID = " + movieId + ";";
+        //Try with resources on the databaseConnector
+        try (Connection conn = myDatabaseConnector.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            //Execute the update
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -277,7 +286,4 @@ public class MovieDAO implements IMovieDAO {
     public Movie searchSelectedMovie(String imdbID) {
         return myOMDBConnector.chosenMovieMoreInfo(imdbID);
     }
-
-
-
 }

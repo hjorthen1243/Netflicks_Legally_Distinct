@@ -5,6 +5,7 @@ import BE.Movie;
 import DAL.CategoryDAO;
 import DAL.IMovieDAO;
 import DAL.MovieDAO;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -33,27 +34,33 @@ public class MovieManager {
         List<Movie> searchResult = movieSearcher.search(allMovies, query);
         return searchResult;
     }
-    public  List<Movie> imdbSearchMin(String imdbQuery, List<Movie> movies) {
+
+    public List<Movie> imdbSearchMin(String imdbQuery, List<Movie> movies) {
         List<Movie> imdbSearchResult = movieSearcher.searchImdbMin(movies, imdbQuery);
         return imdbSearchResult;
     }
-    public  List<Movie> imdbSearchMax(String imdbQuery, List<Movie> movies) {
+
+    public List<Movie> imdbSearchMax(String imdbQuery, List<Movie> movies) {
         List<Movie> imdbSearchResult = movieSearcher.searchImdbMax(movies, imdbQuery);
         return imdbSearchResult;
     }
+
     public List<Movie> imdbSearchMinAndMax(String imdbMinStr, String imdbMaxStr) throws Exception {
         List<Movie> allMovies = getAllMovies();
         List<Movie> imdbSearchResult = movieSearcher.searchImdbMinAndMax(allMovies, imdbMinStr, imdbMaxStr);
         return imdbSearchResult;
     }
+
     public List<Movie> pRateSearchMin(String pRateQuery, List<Movie> movies) {
         List<Movie> pRateSearchResult = movieSearcher.searchPRateMin(movies, pRateQuery);
         return pRateSearchResult;
     }
+
     public List<Movie> pRateSearchMax(String pRateQuery, List<Movie> movies) {
         List<Movie> pRateSearchResult = movieSearcher.searchPRateMax(movies, pRateQuery);
         return pRateSearchResult;
     }
+
     public List<Movie> pRateSearchMinAndMax(String pRateMinStr, String pRateMaxStr) throws Exception {
         List<Movie> allMovies = getAllMovies();
         List<Movie> pRateSearchResult = movieSearcher.searchPRateMinAndMax(allMovies, pRateMinStr, pRateMaxStr);
@@ -72,10 +79,13 @@ public class MovieManager {
     public void updateMovie(Movie updatedMovie) throws Exception {
         movieDAO.editUpdateMovie(updatedMovie);
     }
+
     public List<Movie> searchAddMovie(String text) {
         return movieDAO.searchAddMovie(text);
     }
-
+    public void removeCategoryFromMovie(int movieId, int categoryId) throws SQLServerException {
+        movieDAO.removeCategoryFromMovie(movieId, categoryId);
+    }
     public Movie searchSelectedMovie(String imdbID) {
         return movieDAO.searchSelectedMovie(imdbID);
     }
