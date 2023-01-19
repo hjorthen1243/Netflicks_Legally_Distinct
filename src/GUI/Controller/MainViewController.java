@@ -62,8 +62,6 @@ public class MainViewController extends BaseController implements Initializable 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        searchHandle();
-
     }
 
     /**
@@ -87,6 +85,7 @@ public class MainViewController extends BaseController implements Initializable 
         Methods.addListenersToNumFields(imdbMin);
         Methods.addListenersToNumFields(pRatingMax);
         Methods.addListenersToNumFields(pRatingMin);
+        searchHandle();
     }
 
     /**
@@ -164,7 +163,6 @@ public class MainViewController extends BaseController implements Initializable 
         }});
         imdbMin.textProperty().addListener((observable, oldValue, newValue) -> {
             try{
-                System.out.println(newValue);
                 movieModel.imdbSearch(newValue);
                 updateCategories();
             } catch (Exception e) {

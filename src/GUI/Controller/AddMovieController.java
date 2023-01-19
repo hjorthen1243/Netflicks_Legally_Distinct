@@ -146,12 +146,26 @@ public class AddMovieController extends BaseController implements Initializable{
             int result = container.open(filePath, IContainer.Type.READ, null);
             String  length          = String.valueOf(container.getDuration()/1000000);
 
-            List<Category> categories = categoryTable.getItems().subList(0,categoryTable.getItems().size());
-            List<Category> updatedCategories = categoryModel.getUpdatedCategories(categories);
-            Movie movie = movieModel.addNewMovie(title, year, length, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath);
-            int mID = movie.getId();
-            categoryModel.addCategoriesToMovie(mID,updatedCategories);
-            closeWindow();
+            if (personalRating > 10 || personalRating < 0) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Personal Rating should be between 0 and 10");
+                alert.showAndWait();
+            }
+            else if (imdbRating > 10 || imdbRating < 0)
+                {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "IMDB Rating should be between 0 and 10");
+                    alert.showAndWait();
+                }
+            else if (year < 1895) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "The first movie came out in 1895, so I don't think so smartass!");
+                alert.showAndWait();
+            } else {
+                List<Category> categories = categoryTable.getItems().subList(0, categoryTable.getItems().size());
+                List<Category> updatedCategories = categoryModel.getUpdatedCategories(categories);
+                Movie movie = movieModel.addNewMovie(title, year, length, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath);
+                int mID = movie.getId();
+                categoryModel.addCategoriesToMovie(mID, updatedCategories);
+                closeWindow();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -264,11 +278,20 @@ public class AddMovieController extends BaseController implements Initializable{
         }
     }
     public void handleAddCategory() {
-        Category category = new Category(categoryDropDown.getSelectionModel().getSelectedItem().toString());
-        ObservableList<Category> categoryObservableList = categoryTable.getItems();
-        categoryObservableList.add(category);
-        categoryDropDown.setValue(1);
-        categoryTable.setItems(categoryObservableList);
+        if (txtFieldMovieTitle.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "You need to add a title before you add Categories");
+            alert.showAndWait();
+        }
+        else {
+            Category category = new Category(categoryDropDown.getSelectionModel().getSelectedItem().toString());
+            categoriesInAddMovie = categoryTable.getItems();
+            categoriesInAddMovie.add(category);
+            categoryDropDown.setValue(1);
+            categoryTable.setItems(categoriesInAddMovie);
+            categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Category"));
+            categoryTable.getColumns().addAll();
+        }
+
     }
 
     /**
@@ -278,6 +301,10 @@ public class AddMovieController extends BaseController implements Initializable{
         categoryTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             //If something is selected, the button will be enabled, else it will be disabled
             btnRemoveCategory.setDisable(newValue == null);
+        });
+        categoryDropDown.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //If something is selected, the button will be enabled, else it will be disabled
+            btnAddCategory.setDisable(newValue == null);
         });
     }
 
@@ -289,6 +316,5 @@ public class AddMovieController extends BaseController implements Initializable{
         categoriesInAddMovie.remove(category);
         categoryTable.setItems(categoriesInAddMovie);
     }
-
 }
 
