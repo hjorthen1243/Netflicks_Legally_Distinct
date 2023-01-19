@@ -6,19 +6,19 @@
 
 <AnchorPane maxHeight="450.0" maxWidth="485.0" minHeight="450.0" minWidth="485.0" prefHeight="450.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.AddMovieController">
    <children>
-      <TextField fx:id="txtFiledMovieFile" layoutX="100.0" layoutY="411.0" onKeyPressed="#shouldNotDisable" onMouseExited="#shouldNotDisable" promptText="Insert File" />
       <TextField fx:id="txtFieldSearch" layoutX="131.0" layoutY="18.0" prefHeight="25.0" prefWidth="246.0" promptText="Search for movie here" />
       <TextField fx:id="txtFieldMovieTitle" layoutX="100.0" layoutY="159.0" onKeyPressed="#shouldNotDisable" promptText="Insert title" />
       <TextField fx:id="txtFieldYear" layoutX="100.0" layoutY="244.0" onKeyPressed="#shouldNotDisable" promptText="Year" />
       <TextField fx:id="txtFieldIMDBRating" layoutX="100.0" layoutY="285.0" onKeyPressed="#shouldNotDisable" onMouseExited="#shouldNotDisable" promptText="IMDb rating" />
       <TextField fx:id="txtFieldPersonalRating" layoutX="100.0" layoutY="329.0" onKeyPressed="#shouldNotDisable" onMouseExited="#shouldNotDisable" promptText="Personal rating" />
+      <DatePicker fx:id="datePickerLastSeen" layoutX="100.0" layoutY="371.0" onAction="#datePicked" onKeyPressed="#shouldNotDisable" promptText="YYYY/MM/DD" />
+      <TextField fx:id="txtFiledMovieFile" layoutX="100.0" layoutY="411.0" onKeyPressed="#shouldNotDisable" onMouseExited="#shouldNotDisable" promptText="Insert File" />
       <Text layoutX="30.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search for movie" />
       <Text layoutX="19.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie title" />
       <Text layoutX="23.0" layoutY="217.0" onMouseClicked="#handleCategoriesClick" strokeType="OUTSIDE" strokeWidth="0.0" text="Category" underline="true" />
       <Text layoutX="35.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year" />
       <Text layoutX="16.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IMDb rating" />
       <Text layoutX="8.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal rating" />
-      <DatePicker fx:id="datePickerLastSeen" layoutX="100.0" layoutY="371.0" onAction="#datePicked" onKeyPressed="#shouldNotDisable" promptText="YYYY/MM/DD" />
       <Text layoutX="24.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last seen" />
       <Text layoutX="20.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie File" />
       <Button fx:id="btnInsertFile" layoutX="249.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleInsertFile" text="..." />
@@ -33,7 +33,7 @@
       <ComboBox fx:id="categoryDropDown" layoutX="100.0" layoutY="200.0" onAction="#categoryChosen" prefWidth="150.0" />
       <TableView fx:id="categoryTable" layoutX="340.0" layoutY="159.0" prefHeight="194.0" prefWidth="114.0">
         <columns>
-          <TableColumn fx:id="categoryColumn" prefWidth="113.5999755859375" text="Categories" />
+          <TableColumn fx:id="categoryColumn" prefWidth="113.6" text="Categories" />
         </columns>
       </TableView>
       <Button fx:id="btnAddCategory" layoutX="305.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleAddCategory" prefHeight="17.0" prefWidth="25.0" text="+" />

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<AnchorPane fx:id="editView" prefHeight="283.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.EditViewController">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="editView" prefHeight="283.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.EditViewController">
    <children>
-      <ComboBox fx:id="comboBoxRemoveCatDb" layoutX="214.0" layoutY="84.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboBoxRemoveCatDb" layoutX="214.0" layoutY="84.0" onAction="#listenerRemoveFromDB" prefWidth="150.0" />
       <Text layoutX="23.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove category from database" />
       <Button fx:id="btnAddCatDb" layoutX="363.0" layoutY="44.0" mnemonicParsing="false" onAction="#addCatDbHandle" prefHeight="25.0" prefWidth="25.0" text="+" />
       <Button fx:id="btnAddCatMovie" layoutX="364.0" layoutY="129.0" mnemonicParsing="false" onAction="#addCatMovieHandle" prefHeight="25.0" prefWidth="25.0" text="+" />
@@ -13,7 +16,7 @@
       <Button fx:id="btnSaveChanges" layoutX="182.0" layoutY="236.0" mnemonicParsing="false" onAction="#saveChangesHandle" text="Save changes" />
       <Button fx:id="btnRemoveCatDb" layoutX="364.0" layoutY="84.0" mnemonicParsing="false" onAction="#removeCatDbHandle" prefHeight="25.0" prefWidth="25.0" text="-" />
       <Button fx:id="btnRemoveCatMovie" layoutX="364.0" layoutY="171.0" mnemonicParsing="false" onAction="#removeCatMovieHandle" prefHeight="25.0" prefWidth="25.0" text="-" />
-      <TextField fx:id="txtFieldAddCatDb" layoutX="214.0" layoutY="44.0" promptText="Add category in database" />
+      <TextField fx:id="txtFieldAddCatDb" layoutX="214.0" layoutY="44.0" onKeyReleased="#listenerToTxtField" promptText="Add category in database" />
       <ComboBox fx:id="comboBoxRemoveCatMovie" layoutX="214.0" layoutY="171.0" onAction="#removeCatInMovieSelectedHandle" prefWidth="150.0" />
       <Text layoutX="56.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add category to movie" />
       <Text layoutX="38.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove category from movie" />

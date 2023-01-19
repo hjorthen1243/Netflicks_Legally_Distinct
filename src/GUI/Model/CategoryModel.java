@@ -63,8 +63,8 @@ public class CategoryModel {
      * @param deletedCategory category to delete
      * @throws Exception
      */
-    public void deleteCategory(Category deletedCategory) throws Exception {
-        categoryManager.deletedCategory(deletedCategory);
+    public void removeCategory(Category deletedCategory) throws Exception {
+        categoryManager.removeCategory(deletedCategory);
         categoriesToBeViewed.remove(deletedCategory);
     }
 
