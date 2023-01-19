@@ -127,14 +127,11 @@ public class CategoryModel {
         //force the field to be numeric only
         editfield.textProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue.matches(".")){
-                System.out.println("inserted a .");
             }
             else if (!newValue.matches("\\d*")) {
                 editfield.setText(newValue.replaceAll("\\D", ""));
-                System.out.println("inserted a not-number");
             }
             else {
-                System.out.println("inserted ?????");
             }
         });
     }
