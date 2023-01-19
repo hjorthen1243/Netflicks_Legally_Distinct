@@ -10,11 +10,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.media.VideoTrack;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
@@ -22,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 
 public class AddMovieController extends BaseController implements Initializable{
@@ -74,6 +79,7 @@ public class AddMovieController extends BaseController implements Initializable{
             btnAddCategory.setDisable(true);
 
             addListenerCategoryTable();
+            categoryDropDown.getItems().remove(0);
             clicks();
 
         } catch (Exception e) {
@@ -141,14 +147,36 @@ public class AddMovieController extends BaseController implements Initializable{
             double  imdbRating      = Double.parseDouble(txtFieldIMDBRating.getText());
             int     personalRating  = Integer.parseInt(txtFieldPersonalRating.getText());
             String  filePath        = txtFiledMovieFile.getText();
+            String  length          = "0";
 
-            IContainer container = IContainer.make();
-            int result = container.open(filePath, IContainer.Type.READ, null);
-            String  length          = String.valueOf(container.getDuration()/1000000);
+            try {
+                Movie movie = new Movie(title, year, length, imdbRating, personalRating, filePath);
+                File file = new File(movie.getPathToFile());
+                //check if Desktop is supported by Platform or not
+                if (!Desktop.isDesktopSupported()){
+                    return;
+                }
+                Desktop desktop = Desktop.getDesktop();
+                //checks file exists or not
+                if (file.exists()) {
+                    desktop.open(file);              //opens the specified file
+                } else {
+                    //shows a message, like the alert boxes
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "This movie does not exist on the given filepath");
+                    alert.showAndWait();
+                    return;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+                IContainer container = IContainer.make();
+                int result = container.open(filePath, IContainer.Type.READ, null);
+                length = String.valueOf(container.getDuration() / 1000000);
 
             if (personalRating > 10 || personalRating < 0) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Personal Rating should be between 0 and 10");
                 alert.showAndWait();
+
             }
             else if (imdbRating > 10 || imdbRating < 0)
                 {

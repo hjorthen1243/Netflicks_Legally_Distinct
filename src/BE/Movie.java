@@ -39,6 +39,15 @@ public class Movie {
         this.imdbRating = imdbRating;
     }
 
+    public Movie(String title, int year, String length, double imdbRating, int personalRating, String pathToFile) {
+        this.title = title;
+        this.year = year;
+        this.length = length;
+        this.imdbRating = imdbRating;
+        this.personalRating = personalRating;
+        this.pathToFile = pathToFile;
+    }
+
 
     public int getId() {
         return id;
