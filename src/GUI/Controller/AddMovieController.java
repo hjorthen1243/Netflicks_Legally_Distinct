@@ -163,7 +163,8 @@ public class AddMovieController extends BaseController implements Initializable 
                     return;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                alert.showAndWait();
             }
             IContainer container = IContainer.make(); //The IContainer is used to retrieve the length of the Movie file chosen.
             int result = container.open(filePath, IContainer.Type.READ, null);
@@ -190,7 +191,8 @@ public class AddMovieController extends BaseController implements Initializable 
                 closeWindow();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 

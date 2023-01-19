@@ -112,7 +112,7 @@ public class MovieDAO implements IMovieDAO {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-            throw new SQLException("Could not add movie" + ex);
+            throw new SQLException("Could not add movie " + ex);
         }
 
         //Generating and returning the new movie to be fed into the observable list
