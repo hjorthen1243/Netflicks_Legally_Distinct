@@ -34,7 +34,7 @@ public class MainViewController extends BaseController implements Initializable 
     @FXML
     private Slider sliderPR;
     @FXML
-    private Button btnSavePR, btnSaveLastSeen, btnRemoveMovie, btnEditCategories;
+    private Button btnSavePR, btnSaveLastSeen, btnRemoveMovie, btnEditCategories, btnSearch;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -67,7 +67,6 @@ public class MainViewController extends BaseController implements Initializable 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        searchHandle();
 
     }
 
@@ -158,101 +157,83 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     //TODO describe searchHandle();
-    public void searchHandle() {
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-        try{
-            movieModel.searchMovie(newValue);
-            updateCategories();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }});
-
-        imdbMin.textProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                if (!newValue.isEmpty()) {
-                    ObservableList<Movie> movies = movieTable.getItems();
-                    movieTable.setItems(movieModel.imdbSearchMin(newValue, movies));
-                    updateCategories();
-                    imdbMinStr = newValue;
-                } else {
-                    updateMovieList();
-                    updateCategories();
-                    imdbMax.setText("");
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-        imdbMax.textProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                if(!newValue.isEmpty()) {
-                    ObservableList<Movie> movies = movieTable.getItems();
-                    movieTable.setItems(movieModel.imdbSearchMax(newValue, movies));
-                    updateCategories();
-                    imdbMaxStr = newValue;
-                }
-                else{
-                    updateMovieList();
-                    updateCategories();
-                    imdbMin.setText("");
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-            if(imdbMaxStr != null && imdbMinStr != null){
-                try{
-                    movieTable.setItems(movieModel.imdbSearchMinAndMax(imdbMinStr, imdbMaxStr));
-                    updateCategories();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
-        pRatingMin.textProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                if (!newValue.isEmpty()) {
-                    ObservableList<Movie> movies = movieTable.getItems();
-                    movieTable.setItems(movieModel.pRateSearchMin(newValue, movies));
-                    updateCategories();
-                    pRateMinStr = newValue;
-                } else {
-                    updateMovieList();
-                    updateCategories();
-                    pRatingMax.setText("");
-                }
-                updateMovieList();
-                updateCategories();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-        pRatingMax.textProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                if(!newValue.isEmpty()) {
-                    ObservableList<Movie> movies = movieTable.getItems();
-                    movieTable.setItems(movieModel.pRateSearchMax(newValue, movies));
-                    updateCategories();
-                    pRateMaxStr = newValue;
-                }
-                else{
-                    updateMovieList();
-                    updateCategories();
-                    pRatingMin.setText("");
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-        if(pRateMaxStr != null && pRateMinStr != null){
+    public void searchHandle(ActionEvent event) {
+        if(!searchField.getText().isEmpty()){
             try{
-                movieTable.setItems(movieModel.pRateSearchMinAndMax(pRateMinStr, pRateMaxStr));
+                String query = searchField.getText();
+                movieModel.searchMovie(query);
                 updateCategories();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        }
 
+        else if(!imdbMin.getText().isEmpty() && imdbMax.getText().isEmpty()){
+            try {
+                String query = imdbMin.getText();
+                    ObservableList<Movie> movies = movieTable.getItems();
+                    movieTable.setItems(movieModel.imdbSearchMin(query, movies));
+                    updateCategories();
+                }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else if (!imdbMax.getText().isEmpty() && imdbMin.getText().isEmpty()) {
+            String query = imdbMax.getText();
+            try {
+                    ObservableList<Movie> movies = movieTable.getItems();
+                    movieTable.setItems(movieModel.imdbSearchMax(query, movies));
+                    updateCategories();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else if(!imdbMax.getText().isEmpty() && !imdbMin.getText().isEmpty()){
+            try{
+                movieTable.setItems(movieModel.imdbSearchMinAndMax(imdbMin.getText(), imdbMax.getText()));
+                updateCategories();
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        else if(!pRatingMin.getText().isEmpty() && pRatingMax.getText().isEmpty()){
+            String query =  pRatingMin.getText();
+            try {
+                ObservableList<Movie> movies = movieTable.getItems();
+                movieTable.setItems(movieModel.pRateSearchMin(query, movies));
+                updateCategories();
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else if (!pRatingMax.getText().isEmpty() && pRatingMin.getText().isEmpty()){
+            String query = pRatingMax.getText();
+            try {
+                    ObservableList<Movie> movies = movieTable.getItems();
+                    movieTable.setItems(movieModel.pRateSearchMax(query, movies));
+                    updateCategories();
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else if(!pRatingMax.getText().isEmpty() && !pRatingMin.getText().isEmpty()){
+            try{
+                movieTable.setItems(movieModel.pRateSearchMinAndMax(pRatingMin.getText(), pRatingMax.getText()));
+                updateCategories();
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING, "All search fields are empty");
+            alert.show();
         }
 
     }
