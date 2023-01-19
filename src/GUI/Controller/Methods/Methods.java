@@ -69,10 +69,17 @@ public class Methods {
      */
     public static void addListenersToNumFields(TextField editfield) {
 
-        // force the field to be numeric only
+        //force the field to be numeric only
         editfield.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
+            if(!newValue.matches(".")){
+                System.out.println("inserted a .");
+            }
+            else if (!newValue.matches("\\d*")) {
                 editfield.setText(newValue.replaceAll("\\D", ""));
+                System.out.println("inserted a not-number");
+            }
+            else {
+                System.out.println("inserted ?????");
             }
         });
     }

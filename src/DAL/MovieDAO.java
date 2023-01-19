@@ -2,6 +2,7 @@ package DAL;
 
 import BE.Category;
 import BE.Movie;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.sql.*;
@@ -264,8 +265,17 @@ public class MovieDAO implements IMovieDAO {
     }
 
     @Override
-    public void removeCategoryFromMovie(int movieId, int categoryId) {
-
+    public void removeCategoryFromMovie(int movieId, int categoryId) throws SQLServerException {
+        //SQL String which deletes the link between category & movie from the DB
+        String sql = "DELETE FROM CatMovie WHERE CategoryID =" + categoryId + " AND MovieID = " + movieId + ";";
+        //Try with resources on the databaseConnector
+        try (Connection conn = myDatabaseConnector.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            //Execute the update
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package GUI.Model;
 import BE.Category;
 import BE.Movie;
 import BLL.MovieManager;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -82,6 +83,9 @@ public class MovieModel {
         return movieResults;
     }
 
+    public void removeCategoryFromMovie(int movieId, int categoryId) throws SQLServerException {
+        movieManager.removeCategoryFromMovie(movieId, categoryId);
+    }
     public Movie searchSelectedMovie(String imdbID) {
         return movieManager.searchSelectedMovie(imdbID);
     }

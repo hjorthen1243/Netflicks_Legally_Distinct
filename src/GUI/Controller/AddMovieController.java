@@ -141,11 +141,12 @@ public class AddMovieController extends BaseController implements Initializable{
             double  imdbRating      = Double.parseDouble(txtFieldIMDBRating.getText());
             int     personalRating  = Integer.parseInt(txtFieldPersonalRating.getText());
             String  filePath        = txtFiledMovieFile.getText();
-
+            //gets the duration of given file
             IContainer container = IContainer.make();
             int result = container.open(filePath, IContainer.Type.READ, null);
             String  length          = String.valueOf(container.getDuration()/1000000);
 
+            //Takes all the categories from the table
             List<Category> categories = categoryTable.getItems().subList(0,categoryTable.getItems().size());
             List<Category> updatedCategories = categoryModel.getUpdatedCategories(categories);
             Movie movie = movieModel.addNewMovie(title, year, length, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath);

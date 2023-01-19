@@ -2,6 +2,8 @@ package DAL;
 
 import BE.Category;
 import BE.Movie;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public interface IMovieDAO {
 
     void addCategoryToMovie(int movieId, int categoryId);
 
-    void removeCategoryFromMovie(int movieId, int categoryId);
+    void removeCategoryFromMovie(int movieId, int categoryId) throws SQLServerException;
 
     List<Movie> searchAddMovie(String text);
 

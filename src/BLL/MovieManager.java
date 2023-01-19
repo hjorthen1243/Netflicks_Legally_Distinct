@@ -5,6 +5,7 @@ import BE.Movie;
 import DAL.CategoryDAO;
 import DAL.IMovieDAO;
 import DAL.MovieDAO;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -54,7 +55,9 @@ public class MovieManager {
     public List<Movie> searchAddMovie(String text) {
         return movieDAO.searchAddMovie(text);
     }
-
+    public void removeCategoryFromMovie(int movieId, int categoryId) throws SQLServerException{
+        movieDAO.removeCategoryFromMovie(movieId, categoryId);
+    }
     public Movie searchSelectedMovie(String imdbID) {
         return movieDAO.searchSelectedMovie(imdbID);
     }

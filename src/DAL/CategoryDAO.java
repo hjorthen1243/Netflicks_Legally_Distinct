@@ -149,6 +149,7 @@ public class CategoryDAO implements ICategoryDAO {
         }
     }
 
+
     //TODO get Ane to understand how to join
     //Gets all the categories, that has a movie linked to it
     @Override
@@ -257,18 +258,21 @@ public class CategoryDAO implements ICategoryDAO {
     }
 
     /**
-     *
+     * Gets all the categories equal to the ones that is put into it
      * @param categories
      * @return
      */
     @Override
     public List<Category> getUpdatedCategories(List<Category> categories) {
+        //The list that is returned, when the list is
         List<Category>  categories1 = new ArrayList<>();
+        //Takes the categories, where name is equal to X OR X OR X OR X.....X OR;
         String[] c = categories.toString().split(", ");
         String sql = "SELECT * FROM Categories WHERE";
         for (int i = 0; i < c.length; i++) {
             sql = sql + " Category = '" + c[i] + "'" + " OR";
         }
+        //Removes the last .... X" OR" and puts in an ";"
         sql = sql.substring(0,sql.length()-3) + ";";
         sql = sql.replaceAll("\\[", "");
         sql = sql.replaceAll("]", "");
@@ -277,6 +281,7 @@ public class CategoryDAO implements ICategoryDAO {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
+            //Puts the resultSet into the return set
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String catName = rs.getString("Category");

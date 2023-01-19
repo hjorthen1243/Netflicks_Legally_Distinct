@@ -7,7 +7,6 @@ import BE.Movie;
 import GUI.Controller.Methods.Methods;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +29,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 public class MainViewController extends BaseController implements Initializable {
 
+    public static Movie chosenMovie;
     @FXML
     private Slider sliderPR;
     @FXML
@@ -111,11 +111,7 @@ public class MainViewController extends BaseController implements Initializable 
         delController = new RemoveMovieController();
         delController.setup();
         Methods.openNewView("RemoveMovie.fxml", "Remove old movies");
-        try {
-            movieTable.setItems(movieModel.getAllMovies());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        updateMovieTableAndCategories();
     }
 
     /**
@@ -123,16 +119,10 @@ public class MainViewController extends BaseController implements Initializable 
      * After something is added, it tries to update the movie table
      */
     public void addMovieHandle() {
-        try {
-            addController = new  AddMovieController();
-            addController.setup();
-            Methods.openNewView("AddMovie.fxml", "Add a movie");
-
-            movieTable.setItems(movieModel.getAllMovies());
-            updateCategories();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        addController = new  AddMovieController();
+        addController.setup();
+        Methods.openNewView("AddMovie.fxml", "Add a movie");
+        updateMovieTableAndCategories();
     }
 
     /**
@@ -257,17 +247,11 @@ public class MainViewController extends BaseController implements Initializable 
         ArrayList<Category> allCategories;
         allCategories = categoryModel.getAllCategories();
         if (categoryChosen.equals("All")) {
-            movieTable.setItems(movieModel.getAllMovies());
-            try {
-                updateCategories();
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            }}
-            else {
+            updateMovieTableAndCategories();
+        }
+        else {
             for (Category category : allCategories) {
                 if (category.getCategory().equals(categoryChosen)) {
-
                     try {
                         movieTable.getItems().clear();
                         movieTable.setItems(movieModel.getObservableMoviesCategory(category));
@@ -341,10 +325,9 @@ public class MainViewController extends BaseController implements Initializable 
         LocalDate lastSeen = datePicker.getValue();
         Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         movie.setLastViewDate(java.sql.Date.valueOf(lastSeen));
+        updateMovieTableAndCategories();
         try {
             movieModel.updateMovie(movie);
-            movieTable.setItems(movieModel.getAllMovies());
-            updateCategories();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -356,13 +339,17 @@ public class MainViewController extends BaseController implements Initializable 
     public void handleEditCategories() {
         editController = new EditViewController();
         editController.setup();
-        Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
-        if (movie!= null) {
-            Methods.openNewView("EditView.fxml", "Edit:  " + movie.getTitle());
+        chosenMovie = (Movie) movieTable.getSelectionModel().getSelectedItem();
+        EditViewController editViewController = new EditViewController();
+
+        if (chosenMovie!= null) {
+            Methods.openNewView("EditView.fxml", "Edit:  " + chosenMovie.getTitle());
         }
         else {
             Methods.openNewView("EditView.fxml", "Edit categories");
         }
+        //Update movieTable and categories
+        updateMovieTableAndCategories();
     }
 
     /**
@@ -372,14 +359,22 @@ public class MainViewController extends BaseController implements Initializable 
         int personalRating = (int) sliderPR.getValue();
         Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         movie.setPersonalRating(personalRating);
+        updateMovieTableAndCategories();
         try {
             movieModel.updateMovie(movie);
-            movieTable.setItems(movieModel.getAllMovies());
-            updateCategories();
         } catch (Exception e) {
             e.printStackTrace();
         }
         movie.setPersonalRating(personalRating);
+    }
+
+    private void updateMovieTableAndCategories() {
+        try {
+            movieTable.setItems(movieModel.getAllMovies());
+            updateCategories();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
