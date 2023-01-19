@@ -12,8 +12,6 @@ public interface ICategoryDAO {
 
     Category createNewCategory(String newCategoryName) throws Exception;
 
-    Category editUpdateCategory(String oldCategoryName, Category newCategoryName) throws Exception;
-
     void removeCategory(Category categoryName) throws Exception;
 
     Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException;

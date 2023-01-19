@@ -19,6 +19,7 @@ public class CategoryManager {
     public CategoryManager() throws IOException {
         categoryDAO = new CategoryDAO();
     }
+
     public List<Category> getAllCategories() throws Exception {
         return categoryDAO.getAllCategories();
     }
@@ -29,10 +30,6 @@ public class CategoryManager {
 
     public void removeCategory(Category removeCategory) throws Exception {
         categoryDAO.removeCategory(removeCategory);
-    }
-
-    public void editUpdateCategory(String oldCategoryName, Category newCategoryName) throws Exception {
-        categoryDAO.editUpdateCategory(oldCategoryName, newCategoryName);
     }
 
     public Category createNewCategory(String genre) throws Exception {

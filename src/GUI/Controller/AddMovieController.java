@@ -38,7 +38,6 @@ public class AddMovieController extends BaseController implements Initializable 
     private TextField txtFieldSearch, txtFieldIMDBRating, txtFieldPersonalRating, txtFieldMovieTitle, txtFiledMovieFile, txtFieldMovieCategories, txtFieldYear;
     @FXML
     private Button btnInsertFile, btnSearchMovie, btnAddMovie, btnRemoveCategory, btnAddCategory;
-
     ArrayList<TextField> allTextiles;
     public EditViewController editController;
     private Movie selectedMovie;
@@ -107,7 +106,6 @@ public class AddMovieController extends BaseController implements Initializable 
      */
     @FXML
     private void shouldNotDisable() {
-
         for (TextField textfield : allTextiles) {
             if (textfield.getText().equals("") || textfield.getText() == null) {
                 return;
@@ -165,32 +163,36 @@ public class AddMovieController extends BaseController implements Initializable 
                     return;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                alert.showAndWait();
             }
-            IContainer container = IContainer.make();
+            IContainer container = IContainer.make(); //The IContainer is used to retrieve the length of the Movie file chosen.
             int result = container.open(filePath, IContainer.Type.READ, null);
-            length = String.valueOf(container.getDuration() / 1000000);
+            length = String.valueOf(container.getDuration() / 1000000); //The information we receive is in nanoseconds, so we devide by a million to get actual seconds.
 
-            if (personalRating > 10 || personalRating < 0) {
+            if (personalRating > 10 || personalRating < 0) { //Checks the value of the personal rating to see if it is valid
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Personal Rating should be between 0 and 10");
                 alert.showAndWait();
 
-            } else if (imdbRating > 10 || imdbRating < 0) {
+            } else if (imdbRating > 10 || imdbRating < 0) { //Checks the value of the IMDB rating to see if it is valid
                 Alert alert = new Alert(Alert.AlertType.WARNING, "IMDB Rating should be between 0 and 10");
                 alert.showAndWait();
-            } else if (year < 1895) {
+
+            } else if (year < 1895) { //Checks the value of the year to see if it is valid
                 Alert alert = new Alert(Alert.AlertType.WARNING, "The first movie came out in 1895, so I don't think so smartass!");
                 alert.showAndWait();
+
             } else {
                 List<Category> categories = categoryTable.getItems().subList(0, categoryTable.getItems().size());
                 List<Category> updatedCategories = categoryModel.getUpdatedCategories(categories);
-                Movie movie = movieModel.addNewMovie(title, year, length, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath);
-                int mID = movie.getId();
-                categoryModel.addCategoriesToMovie(mID, updatedCategories);
+                Movie movie = movieModel.addNewMovie(title, year, length, imdbRating, personalRating, java.sql.Date.valueOf(localDate), filePath); //Adds the movie to the DB
+                int mID = movie.getId(); //Retrieves the newly created  ID from the DB
+                categoryModel.addCategoriesToMovie(mID, updatedCategories); //Adds both movie and categories to the DB
                 closeWindow();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -203,7 +205,7 @@ public class AddMovieController extends BaseController implements Initializable 
     }
 
     /**
-     * Looks at the movie the user searched for.
+     * Looks at the movie the user searched for and displays the results in the tableview below
      */
     @FXML
     private void handleSearchMovie() {
@@ -221,7 +223,7 @@ public class AddMovieController extends BaseController implements Initializable 
 
 
     /**
-     * Looks at the movie table, with new movies and sets the values in the text-fields
+     * When the user chooses a Movie from the tableview, it's information is automatically filled out in the text fields.
      *
      * @throws Exception
      */
@@ -236,8 +238,6 @@ public class AddMovieController extends BaseController implements Initializable 
                         txtFieldMovieTitle.setText(selectedMovie.getTitle());
                         txtFieldYear.setText(selectedMovie.getYearString());
                         txtFieldIMDBRating.setText(String.valueOf(m.getImdbRating()));
-                        addCategoriesToChosenMovie();
-                        removeAddedCategories();
                     } else {
                         categoriesInAddMovie.clear();
                         selectedMovie = (Movie) tableViewSearchMovie.getSelectionModel().getSelectedItem();
@@ -245,9 +245,9 @@ public class AddMovieController extends BaseController implements Initializable 
                         txtFieldMovieTitle.setText(selectedMovie.getTitle());
                         txtFieldYear.setText(selectedMovie.getYearString());
                         txtFieldIMDBRating.setText(String.valueOf(m.getImdbRating()));
-                        addCategoriesToChosenMovie();
-                        removeAddedCategories();
                     }
+                    addCategoriesToChosenMovie();
+                    removeAddedCategories();
                 }
             });
         } catch (Exception e) {
@@ -256,7 +256,7 @@ public class AddMovieController extends BaseController implements Initializable 
     }
 
     /**
-     * Updates the categoryTable over the different categories linked to the chosen movie
+     * Updates the categoryTable with the categories linked to the chosen movie
      */
     private void addCategoriesToChosenMovie() {
         try {
@@ -272,8 +272,8 @@ public class AddMovieController extends BaseController implements Initializable 
     }
 
     /**
-     * when categories is clicked, it opens the EditView Window. there the user can do the
-     * deleted and create/add-functions to categorize
+     * When categories is clicked, it opens the EditView Window.
+     * There the user can delete and add categories
      */
     public void handleCategoriesClick() {
         editController = new EditViewController();
@@ -289,30 +289,27 @@ public class AddMovieController extends BaseController implements Initializable 
     }
 
     /**
-     * When a category is chosen this method looks at what has been chosen, and if the category is already
-     * linked to the movie
+     * When the user wishes to add additional categories to the Movie.
      */
-    public void categoryChosen() {
-        Category category = new Category(categoryDropDown.getSelectionModel().getSelectedItem().toString());
-        //checks if the category already is linked to the movie
-        if (!categoryTable.toString().contains(category.getCategory())) {
-            btnAddCategory.setDisable(false);
-        }
-    }
-
     public void handleAddCategory() {
-        if (txtFieldMovieTitle.getText().isEmpty()) {
+        if (txtFieldMovieTitle.getText().isEmpty()) { //The user needs to input a title before adding Categories
             Alert alert = new Alert(Alert.AlertType.WARNING, "You need to add a title before you add Categories");
             alert.showAndWait();
-        } else { //Else Add the category to the category table.
+            return;
+        } else if (categoryDropDown.getSelectionModel().getSelectedItem().equals("")) { //The user needs to choose a Category from the dropdown before he can add it
+            Alert alert = new Alert(Alert.AlertType.WARNING, "You need to choose a Category before you can add it");
+            alert.showAndWait();
+            return;
+        } else { //Adds the category to the category table.
             Category category = new Category(categoryDropDown.getSelectionModel().getSelectedItem().toString());
             categoriesInAddMovie = categoryTable.getItems();
             categoriesInAddMovie.add(category);
             categoryTable.setItems(categoriesInAddMovie);
             categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Category"));
             categoryTable.getColumns().addAll();
+            removeAddedCategories(); //Removes the Category from the dropdown so the user can't add the same Category twice
         }
-        categoryDropDown.setValue("");
+        categoryDropDown.setValue(""); //Resets the dropdown menu to blank
     }
 
 
@@ -331,7 +328,7 @@ public class AddMovieController extends BaseController implements Initializable 
     }
 
     /**
-     * When button is clicked, it removes the specific category from the movie.
+     * When the button is clicked, it removes the specific category from the movie.
      */
     public void handleRemoveCategory() {
         Category category = (Category) categoryTable.getSelectionModel().getSelectedItem();
@@ -340,17 +337,21 @@ public class AddMovieController extends BaseController implements Initializable 
         removeAddedCategories();
     }
 
+    /**
+     * This removes the Categories in the dropdown table which are already in the Category tableview
+     */
     private void removeAddedCategories() {
-        ObservableList cT = categoryTable.getItems();
+        ObservableList cT = categoryTable.getItems(); //Gets the Categories in the tableview
         List<Category> cTL = cT.subList(0, cT.size());
-        ArrayList<Category> allCategories = categoryModel.getAllCategories();
+        ArrayList<Category> allCategories = categoryModel.getAllCategories();  //Gets all categories
+        allCategories.remove(0); //Removes the "All" Category since that should never be able to be added to a movie
         ObservableList<Category> cD = FXCollections.observableArrayList();
         cD.addAll(allCategories);
-        for (Category category : cTL) {
-            for (Object c : cD) {
+        for (Category category : cTL) { //Loops through all Categories in the tableview
+            for (Object c : cD) { //Loops through all the Categories in the dropdown
                 if (c instanceof Category) {
                     String catTemp = ((Category) c).getCategory();
-                    if (category.getCategory().equals(catTemp)) {
+                    if (category.getCategory().equals(catTemp)) { //If they match, remove the Category from the dropdown
                         cD.remove(c);
                         break;
                     }
@@ -360,6 +361,3 @@ public class AddMovieController extends BaseController implements Initializable 
         categoryDropDown.setItems(cD);
     }
 }
-
-
-

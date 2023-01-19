@@ -1,6 +1,7 @@
 package DAL;
 
 import BE.Category;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.sql.*;
@@ -14,12 +15,13 @@ public class CategoryDAO implements ICategoryDAO {
 
     //constructor
     public CategoryDAO() throws IOException {
-        databaseConnector =new MyDatabaseConnector();
+        databaseConnector = new MyDatabaseConnector();
         myOMDBConnector = new MyOMDBConnector();
     }
 
     /**
      * Return all the categories there is, even if there are no movies added to it
+     *
      * @return List<Category> allCategoryList
      * @throws Exception Exception
      */
@@ -30,14 +32,24 @@ public class CategoryDAO implements ICategoryDAO {
         return allCategoryList; //Return the full set of categories
     }
 
-    //Gets all the different categories
+    /**
+     * Returns all Categories as an ArrayList
+     *
+     * @return ArrayList<Category>
+     * @throws Exception
+     */
     public ArrayList<Category> getAllCategoriesArray() throws Exception {
         ArrayList<Category> allCategoryList = new ArrayList<>();
         getCategories(allCategoryList);
         return allCategoryList; //Return the full set of categories
     }
 
-    //Gets all the categories from the db
+    /**
+     * Queries the DB for all categories
+     *
+     * @param categoryLists
+     * @throws Exception
+     */
     public void getCategories(List<Category> categoryLists) throws Exception {
         try (Connection conn = databaseConnector.getConnection()) {
             //SQL String which gets all Categories
@@ -46,6 +58,7 @@ public class CategoryDAO implements ICategoryDAO {
             ArrayList<Category> categories = (ArrayList<Category>) categoryLists;
             //Execute the SQL statement
             executeStatements(categories, sql, conn);
+
         } catch (Exception exception) {
             exception.printStackTrace();
             throw new Exception("Was not able to get all categories");
@@ -53,9 +66,10 @@ public class CategoryDAO implements ICategoryDAO {
     }
 
     /**
-     * Create a new category
-     * @param categoryName Sting
-     * @return Specific category
+     * Creates a new category and pushes it into the DB
+     *
+     * @param categoryName
+     * @returnSpecific category
      * @throws Exception Exception
      */
     @Override
@@ -77,7 +91,7 @@ public class CategoryDAO implements ICategoryDAO {
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
-            //Gets the next key on the column index 1(id for playlists) sets id to the new value
+            //Gets the next key on the column index 1(id for categories) sets id to the new value
             if (rs.next()) {
                 id = rs.getInt(1);
             }
@@ -90,36 +104,10 @@ public class CategoryDAO implements ICategoryDAO {
         return new Category(id, categoryName);
     }
 
-    //update the name of a category
-    @Override
-    public Category editUpdateCategory(String oldCategoryName, Category newCategory) throws Exception {
-
-        int id = newCategory.getId(); //Get the id of the playlist we have chosen to edit
-
-        //SQL String where we update the title of the playlist with the id we got from earlier
-        String sql = "UPDATE Categories SET categoryName = (?) WHERE id =" + id + ";";
-
-        //Try with resources on the databaseConnector
-        try (Connection conn = databaseConnector.getConnection()) {
-
-            //executing the prepared SQL statement
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, oldCategoryName);
-            ps.executeUpdate();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new Exception("Could not update the category" + ex);
-
-        }
-        //Return the updated playlist to be fed into the observable list
-        return new Category(id, newCategory.getCategory());
-    }
-
     // Remove a category from the db
     @Override
     public void removeCategory(Category category) throws Exception {
-        //Get id of the selected playlist
+        //Get id of the selected Category
         int id = category.getId();
 
         //SQL String which removes the category with the specific id from the DB
@@ -137,15 +125,19 @@ public class CategoryDAO implements ICategoryDAO {
         }
     }
 
-
-    //Gets all the categories, that has a movie linked to it
+    /**
+     * Queries the DB for all Movies and which Categories are attached to them.
+     *
+     * @return Returns a Map with an Integer (the MovieID) & a List of Categories which are attached to this Integer.
+     * @throws SQLServerException
+     */
     @Override
-    public Map<Integer, List<Category>> getCategoriesAttachedToMovies() {
-        Map<Integer, List<Category>> moviesWithCategories = new HashMap<>();
+    public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
+        Map<Integer, List<Category>> moviesWithCategories = new HashMap<>();  //A Map used to indicate which movies (the Integer) have which categories (the list) attached.
         ArrayList<Category> categories = new ArrayList<>();
-        //join on values
+        //SQL String that gets a list of Category & Movie ID's and how they are linked and the Category Names from the DB.
         String sql = """ 
-                SELECT DISTINCT MovieID, Movie.Title, Categories.Category, Categories.id
+                SELECT DISTINCT MovieID, Categories.Category, Categories.id
                 FROM CatMovie
                 JOIN Categories ON CatMovie.categoryID = Categories.Id
                 JOIN Movie ON CatMovie.MovieID = Movie.Id
@@ -154,44 +146,50 @@ public class CategoryDAO implements ICategoryDAO {
         try (Connection conn = databaseConnector.getConnection()) {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sql);
-            int lastID = 0;
+            int lastID = 0; //The initial LastID is set to 0;
             boolean firstLine = true;
-            String Category;
-            int CategoryID;
-            int movieID = 0;
+            String Category; //Name of the category
+            int CategoryID;  //ID of the category
+            int movieID = 0; //ID of the movie
             while (rs.next()) {
-                movieID = rs.getInt("MovieID");
+                movieID = rs.getInt("MovieID"); //Map the MovieID
                 if (firstLine) {
-                    lastID = movieID;
-                    firstLine = false;
-                } if (lastID == movieID) {
+                    lastID = movieID; //Set the lastID to be the MovieID
+                    firstLine = false; //From here the next line will never be the firstLine again.
+                }
+                if (lastID == movieID) { //If the LastID equals the movieID, then we keep mapping all categories which are connected to this movieID
+                    Category = rs.getString("Category"); //Map the name of the category
+                    CategoryID = rs.getInt("id"); //Map the ID of the category
+                    Category c = new Category(CategoryID, Category); //Create a Category Object
+                    categories.add(c); //Add the Category Object to the List
+                } else {
+                    moviesWithCategories.putIfAbsent(lastID, categories); //Place the results into the map if the lastID does not match the current movieID
+                    lastID = movieID; //Set the current movieID to the lastID, so we can run through the loop and the if/else statements.
+                    categories = new ArrayList<>(); //Make a new ArrayList so the old ones values don't come along
                     Category = rs.getString("Category");
                     CategoryID = rs.getInt("id");
                     Category c = new Category(CategoryID, Category);
-                    categories.add(c);
-                } else  {
-                    moviesWithCategories.putIfAbsent(lastID, categories);
-                    lastID = movieID;
-                    categories = new ArrayList<>();
-                    Category = rs.getString("Category");
-                    CategoryID = rs.getInt("id");
-                    Category c = new Category(CategoryID, Category);
-                    categories.add(c);
+                    categories.add(c); //Add the Category Object to the new List
                 }
             }
-            moviesWithCategories.putIfAbsent(movieID, categories);
+            moviesWithCategories.putIfAbsent(movieID, categories); //Place the final results into the map.
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return moviesWithCategories;
     }
 
-    //TODO understand
-    public List<Category> getMovieCategories(){
-        String movieCategories = myOMDBConnector.getMovieCategories();
-        String[] c = movieCategories.split(", ");
+    /**
+     * When a movie is selected in the Add Movie list, there are categories usually attached to the movie.
+     * This method takes the data from the API and converts it to readable categories which are presented to the user in the GUI.
+     *
+     * @return
+     */
+    public List<Category> getMovieCategories() {
+        String movieCategories = myOMDBConnector.getMovieCategories(); //Get data from the API
+        String[] c = movieCategories.split(", "); //Split the data into a String Array.
         ArrayList<Category> categories = new ArrayList<>();
-        String sql =
+        String sql = //SQL String which is looped with the String Array from above to make sure all relevant categories are received
                 "SELECT * FROM Categories WHERE";
         for (String s : c) {
             sql = sql + " Category = '" + s + "'" + " OR";
@@ -221,27 +219,24 @@ public class CategoryDAO implements ICategoryDAO {
 
     /**
      * Adds one or more categories to a movie.
-     * @param mID the movie
+     *
+     * @param mID        the movie
      * @param categories List of categories
      */
     @Override
     public void addCategoriesToMovie(int mID, List<Category> categories) {
-        //SQL String which adds the categories attached to the movie
+        //SQL String which adds the categories attached to the movie, and loops through the list of categories to make sure they all are added
         String sql = "INSERT INTO CatMovie(MovieID, CategoryID) VALUES ";
         String c = "";
         for (Category category : categories) {
             c = c + "(" + mID + "," + category.getId() + "), ";
         }
-        c = c.substring(0,c.length()-2);
+        c = c.substring(0, c.length() - 2); //Trim the string
         c = c + ";";
         //Try with resources on the databaseConnector
         try (Connection conn = databaseConnector.getConnection()) {
-
-            //Statement is a prepared SQL statement
             PreparedStatement ps = conn.prepareStatement(sql + c);
-            //Execute Update
-            ps.executeUpdate();
-
+            ps.executeUpdate(); //Execute Update
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -251,6 +246,9 @@ public class CategoryDAO implements ICategoryDAO {
      * Gets all the categories equal to the ones that is put into it.
      * It is primarily used to get an id from the Categories, because
      * they are only strings in the GUI-layer
+     *
+     * When the user chooses to add a movie, the list of categories needs to match ID's with categories in the DB.
+     * This method creates an ArrayList of categories where the ID of the category is the index of the ArrayList
      * @param categories list of categories
      * @return Categories and their id's
      */
@@ -259,15 +257,15 @@ public class CategoryDAO implements ICategoryDAO {
         //The list that is returned, when the list is
         ArrayList<Category> categories1 = new ArrayList<>();
         //Takes the categories, where name is equal to X OR X OR X OR X.....X OR;
-        String[] c = categories.toString().split(", ");
+
+        String[] c = categories.toString().split(", "); //A String Array is made with all the categories the user has chosen
         String sql = "SELECT * FROM Categories WHERE";
-        for (String s : c) {
-            sql = sql + " Category = '" + s + "'" + " OR";
+        for (int i = 0; i < c.length; i++) { //The loop goes through the Array and adds all categories to the SQL statement
+            sql = sql + " Category = '" + c[i] + "'" + " OR";
         }
-        //Removes the last .... X" OR" and puts in an ";"
-        sql = sql.substring(0,sql.length()-3) + ";";
-        sql = sql.replaceAll("\\[", "");
-        sql = sql.replaceAll("]", "");
+        sql = sql.substring(0, sql.length() - 3) + ";"; //This trims the last "OR" away.
+        sql = sql.replaceAll("\\[", ""); //This trims any unwanted "[" away.
+        sql = sql.replaceAll("]", ""); //This trims any unwanted  "]" away.
         try (Connection conn = databaseConnector.getConnection()) {
             //Statement is a prepared SQL statement
             executeStatements(categories1, sql, conn);

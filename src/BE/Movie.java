@@ -18,7 +18,7 @@ public class Movie {
     private String categories;
 
 
-    public Movie(int id, String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile){
+    public Movie(int id, String title, int year, String length, double imdbRating, int personalRating, Date lastViewDate, String pathToFile) {
         this.id = id;
         this.title = title;
         this.year = year;
@@ -29,15 +29,17 @@ public class Movie {
         this.pathToFile = pathToFile;
     }
 
-    public Movie(String title, int year, String imdbID){
+    public Movie(String title, int year, String imdbID) {
         this.title = title;
         this.year = year;
         this.imdbID = imdbID;
     }
-    public Movie(String length, double imdbRating){
+
+    public Movie(String length, double imdbRating) {
         this.length = length;
         this.imdbRating = imdbRating;
     }
+
     public Movie(String title, int year, String length, double imdbRating, int personalRating, String pathToFile) {
         this.title = title;
         this.year = year;
@@ -58,7 +60,10 @@ public class Movie {
     public void setImdbRating(double imdbRating) {
         this.imdbRating = imdbRating;
     }
-    public String getImdbRatingString(){return String.valueOf(imdbRating);}
+
+    public String getImdbRatingString() {
+        return String.valueOf(imdbRating);
+    }
 
     public int getPersonalRating() {
         return personalRating;
@@ -87,10 +92,14 @@ public class Movie {
     public int getYear() {
         return year;
     }
+
     public void setYear(int year) {
         this.year = year;
     }
-    public String getYearString() {return String.valueOf(year);}
+
+    public String getYearString() {
+        return String.valueOf(year);
+    }
 
     public Date getLastViewDate() {
         return lastViewDate;
@@ -120,10 +129,12 @@ public class Movie {
                 "id: " + id +
                 "\t title='" + title;
     }
+
     public String getCategories() {
         return categories;
     }
-    public void setCategories(String categories){
+
+    public void setCategories(String categories) {
         this.categories = categories;
     }
 }
