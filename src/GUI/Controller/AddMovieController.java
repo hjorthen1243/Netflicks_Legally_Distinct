@@ -35,10 +35,10 @@ public class AddMovieController extends BaseController implements Initializable 
     @FXML
     private TableColumn titleColumn, yearColumn, categoryColumn;
     @FXML
-    private TextField txtFieldSearch, txtFieldIMDBRating, txtFieldPersonalRating, txtFieldMovieTitle, txtFiledMovieFile, txtFieldMovieCategories, txtFieldYear;
+    private TextField txtFieldSearch, txtFieldIMDBRating, txtFieldPersonalRating, txtFieldMovieTitle, txtFiledMovieFile, txtFieldYear;
     @FXML
-    private Button btnInsertFile, btnSearchMovie, btnAddMovie, btnRemoveCategory, btnAddCategory;
-    ArrayList<TextField> allTextiles;
+    private Button btnInsertFile, btnAddMovie, btnRemoveCategory, btnAddCategory;
+    ArrayList<TextField> allTextTiles;
     public EditViewController editController;
     private Movie selectedMovie;
     private LocalDate localDate;
@@ -94,12 +94,12 @@ public class AddMovieController extends BaseController implements Initializable 
      */
     private void makeList() {
         //All the values needed to create a new movie
-        allTextiles = new ArrayList<>();
-        allTextiles.add(txtFieldMovieTitle);
-        allTextiles.add(txtFieldYear);
-        allTextiles.add(txtFieldIMDBRating);
-        allTextiles.add(txtFieldPersonalRating);
-        allTextiles.add(txtFiledMovieFile);
+        allTextTiles = new ArrayList<>();
+        allTextTiles.add(txtFieldMovieTitle);
+        allTextTiles.add(txtFieldYear);
+        allTextTiles.add(txtFieldIMDBRating);
+        allTextTiles.add(txtFieldPersonalRating);
+        allTextTiles.add(txtFiledMovieFile);
     }
 
 
@@ -108,7 +108,7 @@ public class AddMovieController extends BaseController implements Initializable 
      */
     @FXML
     private void shouldNotDisable() {
-        for (TextField textfield : allTextiles) {
+        for (TextField textfield : allTextTiles) {
             if (textfield.getText().equals("") || textfield.getText() == null) {
                 return;
             }
@@ -154,9 +154,7 @@ public class AddMovieController extends BaseController implements Initializable 
                 if (!Desktop.isDesktopSupported()) {
                     return;
                 }
-                Desktop desktop = Desktop.getDesktop();
-                //checks file exists or not
-                if (!file.exists()) {
+                if (!file.exists()) { //checks file exists or not
                     //shows a message, like the alert boxes
                     Alert alert = new Alert(Alert.AlertType.ERROR, "This movie does not exist on the given filepath");
                     alert.showAndWait();
@@ -168,7 +166,7 @@ public class AddMovieController extends BaseController implements Initializable 
             }
             IContainer container = IContainer.make(); //The IContainer is used to retrieve the length of the Movie file chosen.
             int result = container.open(filePath, IContainer.Type.READ, null);
-            length = String.valueOf(container.getDuration() / 1000000); //The information we receive is in nanoseconds, so we devide by a million to get actual seconds.
+            length = String.valueOf(container.getDuration() / 1000000); //The information we receive is in nanoseconds, so we divide by a million to get actual seconds.
 
             if (personalRating > 10 || personalRating < 0) { //Checks the value of the personal rating to see if it is valid
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Personal Rating should be between 0 and 10");
@@ -226,7 +224,6 @@ public class AddMovieController extends BaseController implements Initializable 
     /**
      * When the user chooses a Movie from the tableview, it's information is automatically filled out in the text fields.
      *
-     * @throws Exception
      */
     private void clicks() {
         try {

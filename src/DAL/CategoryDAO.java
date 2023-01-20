@@ -1,8 +1,6 @@
 package DAL;
 
 import BE.Category;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
@@ -47,7 +45,7 @@ public class CategoryDAO implements ICategoryDAO {
     /**
      * Queries the DB for all categories
      *
-     * @param categoryLists
+     * @param categoryLists gets all categories
      * @throws Exception
      */
     public void getCategories(List<Category> categoryLists) throws Exception {
@@ -68,8 +66,8 @@ public class CategoryDAO implements ICategoryDAO {
     /**
      * Creates a new category and pushes it into the DB
      *
-     * @param categoryName
-     * @returnSpecific category
+     * @param categoryName the new name of the category
+     * @return The new Category with an ID attached.
      * @throws Exception Exception
      */
     @Override
@@ -129,10 +127,10 @@ public class CategoryDAO implements ICategoryDAO {
      * Queries the DB for all Movies and which Categories are attached to them.
      *
      * @return Returns a Map with an Integer (the MovieID) & a List of Categories which are attached to this Integer.
-     * @throws SQLServerException
+     * @throws RuntimeException
      */
     @Override
-    public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws SQLServerException {
+    public Map<Integer, List<Category>> getCategoriesAttachedToMovies() throws RuntimeException {
         Map<Integer, List<Category>> moviesWithCategories = new HashMap<>();  //A Map used to indicate which movies (the Integer) have which categories (the list) attached.
         ArrayList<Category> categories = new ArrayList<>();
         //SQL String that gets a list of Category & Movie ID's and how they are linked and the Category Names from the DB.
@@ -183,17 +181,18 @@ public class CategoryDAO implements ICategoryDAO {
      * When a movie is selected in the Add Movie list, there are categories usually attached to the movie.
      * This method takes the data from the API and converts it to readable categories which are presented to the user in the GUI.
      *
-     * @return
+     * @return List of all categories attached to a movie
      */
     public List<Category> getMovieCategories() {
         String movieCategories = myOMDBConnector.getMovieCategories(); //Get data from the API
         String[] c = movieCategories.split(", "); //Split the data into a String Array.
         ArrayList<Category> categories = new ArrayList<>();
-        String sql = //SQL String which is looped with the String Array from above to make sure all relevant categories are received
-                "SELECT * FROM Categories WHERE";
+        StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM Categories WHERE");//SQL String which is looped with the String Array from above to make sure all relevant categories are received
         for (String s : c) {
-            sql = sql + " Category = '" + s + "'" + " OR";
+            sqlBuilder.append(" Category = '").append(s).append("'").append(" OR");
         }
+        String sql = //SQL String which is looped with the String Array from above to make sure all relevant categories are received
+                sqlBuilder.toString();
         sql = sql.substring(0,sql.length()-3) + ";";
 
         try (Connection conn = databaseConnector.getConnection()) {
@@ -227,12 +226,12 @@ public class CategoryDAO implements ICategoryDAO {
     public void addCategoriesToMovie(int mID, List<Category> categories) {
         //SQL String which adds the categories attached to the movie, and loops through the list of categories to make sure they all are added
         String sql = "INSERT INTO CatMovie(MovieID, CategoryID) VALUES ";
-        String c = "";
+        StringBuilder c = new StringBuilder();
         for (Category category : categories) {
-            c = c + "(" + mID + "," + category.getId() + "), ";
+            c.append("(").append(mID).append(",").append(category.getId()).append("), ");
         }
-        c = c.substring(0, c.length() - 2); //Trim the string
-        c = c + ";";
+        c = new StringBuilder(c.substring(0, c.length() - 2)); //Trim the string
+        c.append(";");
         //Try with resources on the databaseConnector
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql + c);
@@ -243,10 +242,6 @@ public class CategoryDAO implements ICategoryDAO {
     }
 
     /**
-     * Gets all the categories equal to the ones that is put into it.
-     * It is primarily used to get an id from the Categories, because
-     * they are only strings in the GUI-layer
-     *
      * When the user chooses to add a movie, the list of categories needs to match ID's with categories in the DB.
      * This method creates an ArrayList of categories where the ID of the category is the index of the ArrayList
      * @param categories list of categories
@@ -254,21 +249,18 @@ public class CategoryDAO implements ICategoryDAO {
      */
     @Override
     public List<Category> getUpdatedCategories(List<Category> categories) {
-        //The list that is returned, when the list is
         ArrayList<Category> categories1 = new ArrayList<>();
-        //Takes the categories, where name is equal to X OR X OR X OR X.....X OR;
-
         String[] c = categories.toString().split(", "); //A String Array is made with all the categories the user has chosen
-        String sql = "SELECT * FROM Categories WHERE";
-        for (int i = 0; i < c.length; i++) { //The loop goes through the Array and adds all categories to the SQL statement
-            sql = sql + " Category = '" + c[i] + "'" + " OR";
+        StringBuilder sql = new StringBuilder("SELECT * FROM Categories WHERE");
+        for (String s : c) { //The loop goes through the Array and adds all categories to the SQL statement
+            sql.append(" Category = '").append(s).append("'").append(" OR");
         }
-        sql = sql.substring(0, sql.length() - 3) + ";"; //This trims the last "OR" away.
-        sql = sql.replaceAll("\\[", ""); //This trims any unwanted "[" away.
-        sql = sql.replaceAll("]", ""); //This trims any unwanted  "]" away.
+        sql = new StringBuilder(sql.substring(0, sql.length() - 3) + ";"); //This trims the last "OR" away.
+        sql = new StringBuilder(sql.toString().replaceAll("\\[", "")); //This trims any unwanted "[" away.
+        sql = new StringBuilder(sql.toString().replaceAll("]", "")); //This trims any unwanted  "]" away.
         try (Connection conn = databaseConnector.getConnection()) {
             //Statement is a prepared SQL statement
-            executeStatements(categories1, sql, conn);
+            executeStatements(categories1, sql.toString(), conn);
 
         } catch (SQLException ex) {
             ex.printStackTrace();

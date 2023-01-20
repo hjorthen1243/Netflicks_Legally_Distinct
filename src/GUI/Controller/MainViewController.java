@@ -31,7 +31,7 @@ public class MainViewController extends BaseController implements Initializable 
     @FXML
     private Slider sliderPR;
     @FXML
-    private Button btnSavePR, btnSaveLastSeen, btnRemoveMovie, btnEditCategories, btnSearch;
+    private Button btnSavePR, btnSaveLastSeen, btnRemoveMovie, btnSearch;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -77,7 +77,7 @@ public class MainViewController extends BaseController implements Initializable 
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        CategoryModel categoryModel = null;
+        CategoryModel categoryModel;
         try {
             categoryModel = new CategoryModel();
         } catch (Exception e) {
@@ -183,7 +183,6 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets query to be the user input
                     String query = searchField.getText();
                     //Gets the searchMovie method from MovieModel class and sends the query through it
-                    ObservableList<Movie> movies = movieTable.getItems();
                     movieModel.searchMovie(query);
                     updateCategories();
                     btnSearch.setText("Clear");
@@ -231,7 +230,7 @@ public class MainViewController extends BaseController implements Initializable 
                     btnSearch.setText("Clear");
                 } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
-                    alert.showAndWait();;
+                    alert.showAndWait();
                 }
             }
             //Checks if pRatingMin is empty or not
@@ -264,7 +263,7 @@ public class MainViewController extends BaseController implements Initializable 
                     btnSearch.setText("Clear");
                 } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
-                    alert.showAndWait();;
+                    alert.showAndWait();
                 }
             }
             //Checks if pRatingMax and pRatingMin is empty or not
@@ -276,7 +275,7 @@ public class MainViewController extends BaseController implements Initializable 
                     btnSearch.setText("Clear");
                 } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
-                    alert.showAndWait();;
+                    alert.showAndWait();
                 }
 
             }
@@ -322,7 +321,7 @@ public class MainViewController extends BaseController implements Initializable 
             }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
-            alert.showAndWait();;
+            alert.showAndWait();
         }
         movieTable.setItems(movieModel.getObservableMovies());
         try {
@@ -345,7 +344,7 @@ public class MainViewController extends BaseController implements Initializable 
                 for (int j = 0; j < categoriesAttachedToMovies.get(mID).size(); j++) {
                     c.append(categoriesAttachedToMovies.get(mID).get(j)).append(", ");
                 }
-                c = c.replace(c.length() - 2, c.length(), ""); //Remove the last comma
+                c.replace(c.length() - 2, c.length(), "");//Remove the last comma
                 m.setCategories(c.toString()); //Set the categories in the movie Object
                 c = new StringBuilder(); //Clear the contents of the old String builder
             }
@@ -367,7 +366,7 @@ public class MainViewController extends BaseController implements Initializable 
                 updateCategories();
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
-                alert.showAndWait();;
+                alert.showAndWait();
 
             }
         } else {
@@ -386,7 +385,7 @@ public class MainViewController extends BaseController implements Initializable 
                         btnSearch.setText("Search");
                     } catch (Exception e) {
                         Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
-                        alert.showAndWait();;
+                        alert.showAndWait();
                     }
                 }
             }
@@ -411,7 +410,7 @@ public class MainViewController extends BaseController implements Initializable 
             updateCategories();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
-            alert.showAndWait();;
+            alert.showAndWait();
         }
     }
 
@@ -454,7 +453,7 @@ public class MainViewController extends BaseController implements Initializable 
             }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
-            alert.showAndWait();;
+            alert.showAndWait();
         }
     }
 
@@ -473,7 +472,7 @@ public class MainViewController extends BaseController implements Initializable 
             updateCategories();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
-            alert.showAndWait();;
+            alert.showAndWait();
         }
         }
     }
@@ -485,7 +484,6 @@ public class MainViewController extends BaseController implements Initializable 
         editController = new EditViewController();
         editController.setup();
         chosenMovie = (Movie) movieTable.getSelectionModel().getSelectedItem();
-        EditViewController editViewController = new EditViewController();
         if (chosenMovie != null) {
             categoryModel.openNewView("EditView.fxml", "Edit:  " + chosenMovie.getTitle());
         } else {
@@ -508,7 +506,7 @@ public class MainViewController extends BaseController implements Initializable 
             updateCategories();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
-            alert.showAndWait();;
+            alert.showAndWait();
         }
         movie.setPersonalRating(personalRating);
     }

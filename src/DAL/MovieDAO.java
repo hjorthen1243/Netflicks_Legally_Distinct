@@ -80,7 +80,7 @@ public class MovieDAO implements IMovieDAO {
      * @param lastViewed    Date
      * @param pathToFile    String
      * @return              Movie
-     * @throws Exception    SQL
+     * @throws SQLException SQL
      */
     @Override
     public Movie addMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastViewed, String pathToFile) throws SQLException {
@@ -236,8 +236,8 @@ public class MovieDAO implements IMovieDAO {
     /**
      * When the user uses the search function in the add movie window,
      * this method sends the query to the OMDBConnector
-     * @param text
-     * @return
+     * @param text the query the user has input
+     * @return A list of Movies to be fed to an observable list higher in the layers
      */
     @Override
     public List<Movie> searchAddMovie(String text) {
@@ -247,8 +247,8 @@ public class MovieDAO implements IMovieDAO {
     /**
      * When the user chooses from the list of matching Movies in the add movie window,
      * this method returns additional information about the movie which is then displayed to the user.
-     * @param imdbID
-     * @return
+     * @param imdbID the imdbID of the chosen Movie
+     * @return the specific Movie with year, IMDB Rating and Categories attached
      */
     @Override
     public Movie searchSelectedMovie(String imdbID) {

@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import net.sourceforge.jeuclid.elements.presentation.token.Mo;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,9 +17,9 @@ import java.util.concurrent.TimeUnit;
 
 public class RemoveMovieController extends BaseController implements Initializable {
     @FXML
-    private TableColumn titleColumn, yearColumn, lengthColumn, categoryColumn, ratingColumn, pRatingColumn, lastViewColumn;
+    private TableColumn titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn;
     @FXML
-    private Button btnRemoveMovie, btnRemoveAll;
+    private Button btnRemoveMovie;
     @FXML
     private TableView movieTable;
     private MovieModel movieModel;
@@ -127,9 +126,9 @@ public class RemoveMovieController extends BaseController implements Initializab
 
                 //Adds movies to the tableView
                 for (Movie movie : movies) {
-                    Date moviedate = movie.getLastViewDate();
-                    long diffInMillies = Math.abs(currentDate.getTime() - moviedate.getTime());
-                    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                    Date movieDate = movie.getLastViewDate();
+                    long diffInMillis = Math.abs(currentDate.getTime() - movieDate.getTime());
+                    long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
                     long biggestDiff = 730;
                     if (diff > biggestDiff && movie.getPersonalRating() < 6) {
                         observableMovies.add(movie);

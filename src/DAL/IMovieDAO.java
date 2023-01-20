@@ -2,7 +2,6 @@ package DAL;
 
 import BE.Category;
 import BE.Movie;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.sql.Date;
 import java.sql.SQLException;
