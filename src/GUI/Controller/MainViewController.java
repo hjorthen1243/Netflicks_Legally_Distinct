@@ -153,9 +153,8 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     /**
-     * Handles the searches for the title, year imdb scores and personal scores
+     * Handles the searches for the title, year imdb scores and personal scores.
      */
-
     public void searchHandle(ActionEvent event) {
         // Checks if the Search button has the text Clear
         if (btnSearch.getText().equals("Clear")) {
