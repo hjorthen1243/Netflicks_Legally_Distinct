@@ -461,7 +461,6 @@ public class MainViewController extends BaseController implements Initializable 
     public void handleEditCategories() {
         editController = new EditViewController();
         editController.setup();
-        Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         chosenMovie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         EditViewController editViewController = new EditViewController();
         if (chosenMovie!= null) {

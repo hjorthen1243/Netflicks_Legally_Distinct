@@ -33,7 +33,7 @@ public class MovieSearcher {
     public List<Movie> searchImdbMin(List<Movie> imdbSearchBase, String imdbQuery) {
         List<Movie> imdbSearchResult = new ArrayList<>();
 
-        for(Movie movie : imdbSearchBase){
+        for (Movie movie : imdbSearchBase) {
             if (compareIMDbRatingMin(imdbQuery, movie)) {
                 imdbSearchResult.add(movie);
             }
@@ -86,7 +86,7 @@ public class MovieSearcher {
     public List<Movie> searchPRateMin(List<Movie> pRateSearchBase, String pRateQuery) {
         List<Movie> pRateSearchResult = new ArrayList<>();
 
-        for(Movie movie : pRateSearchBase){
+        for (Movie movie : pRateSearchBase) {
             if (comparePRatingMin(pRateQuery, movie)) {
                 pRateSearchResult.add(movie);
             }
@@ -103,7 +103,7 @@ public class MovieSearcher {
     public List<Movie> searchPRateMax(List<Movie> pRateSearchBase, String pRateQuery) {
         List<Movie> pRateSearchResult = new ArrayList<>();
 
-        for(Movie movie : pRateSearchBase){
+        for (Movie movie : pRateSearchBase) {
             if (comparePRatingMax(pRateQuery, movie)) {
                 pRateSearchResult.add(movie);
             }

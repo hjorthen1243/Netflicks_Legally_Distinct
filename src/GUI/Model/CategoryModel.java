@@ -79,18 +79,6 @@ public class CategoryModel {
     }
 
     /**
-     * Updates a specific category
-     * @param oldCategoryName String
-     * @param newCategoryName Category
-     * @throws Exception
-     */
-    public void updatedCategory(String oldCategoryName, Category newCategoryName) throws Exception {
-        categoryManager.editUpdateCategory(oldCategoryName, newCategoryName);
-        categoriesToBeViewed.clear();
-        categoriesToBeViewed.addAll(categoryManager.getAllCategories());
-    }
-
-    /**
      * Creates a new category from a string and adds the category to categories to be viewed
      * @param newcategory String on new name
      * @throws Exception
@@ -139,14 +127,11 @@ public class CategoryModel {
         //force the field to be numeric only
         editfield.textProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue.matches(".")){
-                System.out.println("inserted a .");
             }
             else if (!newValue.matches("\\d*")) {
                 editfield.setText(newValue.replaceAll("\\D", ""));
-                System.out.println("inserted a not-number");
             }
             else {
-                System.out.println("inserted ?????");
             }
         });
     }
