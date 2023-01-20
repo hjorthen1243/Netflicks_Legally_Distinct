@@ -133,7 +133,7 @@ public class MovieSearcher {
      * Checks if the user input matches any of the movies titles
      */
     private boolean compareToMovieTitle(String query, Movie movie) {
-        return movie.getTitle().contains(query);
+        return movie.getTitle().toLowerCase().contains(query.toLowerCase());
     }
 
     /**
