@@ -149,7 +149,7 @@ public class MainViewController extends BaseController implements Initializable 
 
         try {
             Movie m = (Movie) movieTable.getSelectionModel().getSelectedItem();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Remove; " + m.getTitle() + " - " + m.getYearString() + "?", ButtonType.YES, ButtonType.NO);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Remove: " + m.getTitle() + " - " + m.getYearString() + "?", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
                 movieModel.deleteMovie(m);
