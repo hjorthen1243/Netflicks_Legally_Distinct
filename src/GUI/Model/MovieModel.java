@@ -3,7 +3,6 @@ package GUI.Model;
 import BE.Category;
 import BE.Movie;
 import BLL.MovieManager;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -70,9 +69,8 @@ public class MovieModel {
      * Removes all movies from the moviesToBeViewed list.
      * Adds all movies from the imdbSearchResult list in the moviesToBeViewed list.
      * returns moviesToBeViewed list.
-     * @throws Exception
      */
-    public ObservableList<Movie> imdbSearchMin(String imdbQuery, ObservableList<Movie> movies) throws Exception {
+    public ObservableList<Movie> imdbSearchMin(String imdbQuery, ObservableList<Movie> movies) {
         ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
         List<Movie> movies1 = movies.subList(0, movies.size());
         List<Movie> imdbSearchResult = movieManager.imdbSearchMin(imdbQuery, movies1);
@@ -89,9 +87,8 @@ public class MovieModel {
      * Removes all movies from the moviesToBeViewed list.
      * Adds all movies from the imdbSearchResult list in the moviesToBeViewed list.
      * Returns moviesToBeViewed list.
-     * @throws Exception
      */
-    public ObservableList<Movie> imdbSearchMax(String imdbQuery, ObservableList<Movie> movies) throws Exception {
+    public ObservableList<Movie> imdbSearchMax(String imdbQuery, ObservableList<Movie> movies){
         ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
         List<Movie> movies1 = movies.subList(0, movies.size());
         List<Movie> imdbSearchResult = movieManager.imdbSearchMax(imdbQuery, movies1);
@@ -123,7 +120,6 @@ public class MovieModel {
      * Removes all movies from the moviesToBeViewed list.
      * Adds all movies from the pRateSearchResult list in the moviesToBeViewed list.
      * returns moviesToBeViewed list.
-     * @throws Exception
      */
     public ObservableList pRateSearchMin(String pRateQuery, ObservableList<Movie> movies) {
         ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
@@ -141,7 +137,6 @@ public class MovieModel {
      * Removes all movies from the moviesToBeViewed list.
      * Adds all movies from the pRateSearchResult list in the moviesToBeViewed list.
      * returns moviesToBeViewed list.
-     * @throws Exception
      */
     public ObservableList pRateSearchMax(String pRateQuery, ObservableList<Movie> movies) {
         ObservableList<Movie> moviesToBeViewed = FXCollections.observableArrayList();
@@ -178,14 +173,6 @@ public class MovieModel {
     public void deleteMovie(Movie m) throws Exception {
         movieManager.deleteMovie(m);
         moviesToBeViewed.remove(m);
-    }
-
-    public Movie getSelectedMovie() {
-        return selectedMovie;
-    }
-
-    public void setSelectedMovie(Movie selectedMovie) {
-        this.selectedMovie = selectedMovie;
     }
 
     public void updateMovie(Movie updatedMovie) throws Exception {

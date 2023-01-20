@@ -14,8 +14,8 @@ public class MyOMDBConnector {
     public MyOMDBConnector() {    }
 
     /**
-     * Queries the OMDB for the specific text the person has written in the search field
-     * @param text
+     * Queries the OMDb for the specific text the person has written in the search field
+     * @param query the input the user wrote in the search field
      * @return a list of movies for the user to choose from
      */
     public List<Movie> searchQuery(String query) {
@@ -32,7 +32,7 @@ public class MyOMDBConnector {
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             } else {
                 StringBuilder informationString = new StringBuilder();
-                Scanner scanner = new Scanner(url.openStream()); //Opens up a Scanner which reads the info retrieved from OMDB
+                Scanner scanner = new Scanner(url.openStream()); //Opens up a Scanner which reads the info retrieved from OMDb
                 while (scanner.hasNext()) {
                     informationString.append(scanner.nextLine()); //Uses the StringBuilder to append all the lines from the data received
                 }
@@ -65,8 +65,8 @@ public class MyOMDBConnector {
     /**
      * When the user chooses a specific Movie from the list provided,
      * that info gets automatically placed into the text fields.
-     * @param imdbID
-     * @return
+     * @param imdbID the ID which the Movie has on IMDb
+     * @return the Movie which the user chose
      */
     public Movie chosenMovieMoreInfo(String imdbID)  {
         C1 = null;
@@ -83,7 +83,7 @@ public class MyOMDBConnector {
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             } else {
                 StringBuilder informationString = new StringBuilder();
-                Scanner scanner = new Scanner(url.openStream()); //Opens up a Scanner which reads the info retrieved from OMDB
+                Scanner scanner = new Scanner(url.openStream()); //Opens up a Scanner which reads the info retrieved from OMDb
                 while (scanner.hasNext()) {
                     informationString.append(scanner.nextLine()); //Uses the StringBuilder to append all the lines from the data received
                 }
@@ -103,8 +103,8 @@ public class MyOMDBConnector {
     }
 
     /**
-     * Returns the earlier saved string which contains all categories for the specific movie the user choose.
-     * @return
+     * Returns the earlier saved string which contains all categories for the specific movie the user chose.
+     * @return a String of categories attached to the specific Movie the user chose
      */
     public String getMovieCategories() {
         return C1;

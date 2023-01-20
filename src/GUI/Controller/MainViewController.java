@@ -31,7 +31,7 @@ public class MainViewController extends BaseController implements Initializable 
     @FXML
     private Slider sliderPR;
     @FXML
-    private Button btnSavePR, btnSaveLastSeen, btnRemoveMovie, btnEditCategories, btnSearch;
+    private Button btnSavePR, btnSaveLastSeen, btnRemoveMovie, btnSearch;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -55,10 +55,13 @@ public class MainViewController extends BaseController implements Initializable 
     @Override
     public void setup() {
         try {
+            movieModel = new MovieModel();
+            categoryModel = new CategoryModel();
             updateMovieList();
             categoryModel.addAllCategoriesToComboBox(categoryDropDown);
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
 
     }
@@ -74,7 +77,7 @@ public class MainViewController extends BaseController implements Initializable 
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        CategoryModel categoryModel = null;
+        CategoryModel categoryModel;
         try {
             categoryModel = new CategoryModel();
         } catch (Exception e) {
@@ -152,7 +155,8 @@ public class MainViewController extends BaseController implements Initializable 
                 movieModel.deleteMovie(m);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -164,18 +168,19 @@ public class MainViewController extends BaseController implements Initializable 
         if (btnSearch.getText().equals("Clear")) {
             //If Search button text is clear it resets all values and gets list of all movies
             try {
+                movieTable.setItems(movieModel.getAllMovies());
+                updateCategories();
                 searchField.setText("");
                 imdbMin.setText("");
                 imdbMax.setText("");
                 pRatingMin.setText("");
                 pRatingMax.setText("");
                 categoryDropDown.setValue("");
-                updateMovieList();
-                updateCategories();
                 //Sets the Search button text to Search
                 btnSearch.setText("Search");
             } catch (Exception e) {
-                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                alert.showAndWait();
             }
         } else {
             //Checks if the searchField is empty or not
@@ -184,11 +189,12 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets query to be the user input
                     String query = searchField.getText();
                     //Gets the searchMovie method from MovieModel class and sends the query through it
-                    ObservableList<Movie> movies = movieTable.getItems();
                     movieModel.searchMovie(query);
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();
                 }
                 //Checks if imdbMin is empty or not
             } else if (!imdbMin.getText().isEmpty() && imdbMax.getText().isEmpty()) {
@@ -201,8 +207,10 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets the values in movieTable to  the result of imdbSearchMin after sending the query and the Observable list of movies through
                     movieTable.setItems(movieModel.imdbSearchMin(query, movies));
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();
                 }
                 //Checks if imdbMax is empty or not
             } else if (!imdbMax.getText().isEmpty() && imdbMin.getText().isEmpty()) {
@@ -214,8 +222,10 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets the values in movieTable to  the result of imdbSearchMax after sending the query and the Observable list of movies through
                     movieTable.setItems(movieModel.imdbSearchMax(query, movies));
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();
                 }
                 //Checks if imdbMax and imdbMin is empty or not
             } else if (!imdbMax.getText().isEmpty() && !imdbMin.getText().isEmpty()) {
@@ -223,8 +233,10 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets the values in movieTable to the result of imdbSearchMinAndMax after sending the user input from imdbMax and imdbMin through
                     movieTable.setItems(movieModel.imdbSearchMinAndMax(imdbMin.getText(), imdbMax.getText()));
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();
                 }
             }
             //Checks if pRatingMin is empty or not
@@ -237,8 +249,10 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets the values in movieTable to  the result of pRatingSearchMin after sending the query and the Observable list of movies through
                     movieTable.setItems(movieModel.pRateSearchMin(query, movies));
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();
                 }
 
             }
@@ -252,8 +266,10 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets the values in movieTable to  the result of pRatingSearchMax after sending the query and the Observable list of movies through
                     movieTable.setItems(movieModel.pRateSearchMax(query, movies));
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();
                 }
             }
             //Checks if pRatingMax and pRatingMin is empty or not
@@ -262,8 +278,10 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets the values in movieTable to the result of pRatingSearchMinAndMax after sending the user input from pRatingMax and pRatingMin through
                     movieTable.setItems(movieModel.pRateSearchMinAndMax(pRatingMin.getText(), pRatingMax.getText()));
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();
                 }
 
             }
@@ -271,8 +289,8 @@ public class MainViewController extends BaseController implements Initializable 
             else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "All search fields are empty");
                 alert.show();
+                btnSearch.setText("Search");
             }
-            btnSearch.setText("Clear");
             categoryDropDown.setValue("");
         }
     }
@@ -283,7 +301,6 @@ public class MainViewController extends BaseController implements Initializable 
      * If necessary it opens the "RemoveMovie" window
      */
     private void updateMovieList() {
-        movieModel = getModel().getMovieModel();
         try {
             if (programStarted) {
                 categoryModel.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
@@ -309,7 +326,8 @@ public class MainViewController extends BaseController implements Initializable 
                 movieTable.setItems(movieModel.getObservableMovies());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
         movieTable.setItems(movieModel.getObservableMovies());
         try {
@@ -323,7 +341,6 @@ public class MainViewController extends BaseController implements Initializable 
      * @throws Exception
      */
     private void updateCategories() throws Exception {
-        categoryModel = new CategoryModel();
         Map<Integer, List<Category>> categoriesAttachedToMovies = categoryModel.getObservableCategories();
         StringBuilder c = new StringBuilder();
         for (int i = 0; i < movieTable.getItems().size(); i++) {
@@ -333,7 +350,7 @@ public class MainViewController extends BaseController implements Initializable 
                 for (int j = 0; j < categoriesAttachedToMovies.get(mID).size(); j++) {
                     c.append(categoriesAttachedToMovies.get(mID).get(j)).append(", ");
                 }
-                c = c.replace(c.length() - 2, c.length(), ""); //Remove the last comma
+                c.replace(c.length() - 2, c.length(), "");//Remove the last comma
                 m.setCategories(c.toString()); //Set the categories in the movie Object
                 c = new StringBuilder(); //Clear the contents of the old String builder
             }
@@ -344,7 +361,6 @@ public class MainViewController extends BaseController implements Initializable 
      * Sorts though the categories, when a category is chosen
      */
     public void categorySelected() throws Exception {
-        movieModel = getModel().getMovieModel();
         Object selectedItem = categoryDropDown.getSelectionModel().getSelectedItem();
         String categoryChosen = selectedItem.toString();
         ArrayList<Category> allCategories;
@@ -354,7 +370,8 @@ public class MainViewController extends BaseController implements Initializable 
             try {
                 updateCategories();
             } catch (Exception e) {
-                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                alert.showAndWait();
 
             }
         } else {
@@ -372,7 +389,8 @@ public class MainViewController extends BaseController implements Initializable 
                         pRatingMin.setText("");
                         btnSearch.setText("Search");
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                        alert.showAndWait();
                     }
                 }
             }
@@ -396,7 +414,8 @@ public class MainViewController extends BaseController implements Initializable 
             movieTable.setItems(movieModel.getAllMovies());
             updateCategories();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -438,7 +457,8 @@ public class MainViewController extends BaseController implements Initializable 
                 showMessageDialog(null, "This movie does not exist on the given filepath");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -447,6 +467,7 @@ public class MainViewController extends BaseController implements Initializable 
      * Saves the given value from the DatePicker, and updates the specific movie.
      */
     public void saveLastSeenHandle() {
+        if (datePicker.getValue() != null) {
         LocalDate lastSeen = datePicker.getValue();
         Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         movie.setLastViewDate(java.sql.Date.valueOf(lastSeen));
@@ -455,7 +476,9 @@ public class MainViewController extends BaseController implements Initializable 
             movieTable.setItems(movieModel.getAllMovies());
             updateCategories();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
+        }
         }
     }
 
@@ -466,7 +489,6 @@ public class MainViewController extends BaseController implements Initializable 
         editController = new EditViewController();
         editController.setup();
         chosenMovie = (Movie) movieTable.getSelectionModel().getSelectedItem();
-        EditViewController editViewController = new EditViewController();
         if (chosenMovie != null) {
             categoryModel.openNewView("EditView.fxml", "Edit:  " + chosenMovie.getTitle());
         } else {
@@ -488,7 +510,8 @@ public class MainViewController extends BaseController implements Initializable 
             movieTable.setItems(movieModel.getAllMovies());
             updateCategories();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
         movie.setPersonalRating(personalRating);
     }

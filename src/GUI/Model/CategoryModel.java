@@ -23,18 +23,7 @@ import java.util.Map;
 public class CategoryModel {
     private List<Category> categoriesToBeViewed;
     private CategoryManager categoryManager;
-    private ArrayList<Category> allCategories;
-    private Category selectedCategory;
 
-    private ObservableList<Category> categoriesAttachedToMovies;
-
-    //TODO what does this gat and set do?
-    public Category getSelectedCategory(List<Category> categories) {
-        return selectedCategory;
-    }
-    public void setSelectedCategory(Category selectedCategory) {
-        this.selectedCategory = selectedCategory;
-    }
 
     /**
      * Constructor for the categoryModel. Categories to be viewed is set to be all the categories
@@ -80,17 +69,17 @@ public class CategoryModel {
 
     /**
      * Creates a new category from a string and adds the category to categories to be viewed
-     * @param newcategory String on new name
+     * @param newCategory String on new name
      * @throws Exception
      */
-    public void createNewCategory(String newcategory) throws Exception {
-        Category category = categoryManager.createNewCategory(newcategory);
+    public void createNewCategory(String newCategory) throws Exception {
+        Category category = categoryManager.createNewCategory(newCategory);
         categoriesToBeViewed.add(category);
     }
 
     /**
-     *
-     * @return
+     * This returns all the Categories which are attached to the Movie the user chose, to be placed in the categoryTable.
+     * @return a list of all Categories attached to the Movie
      */
     public ObservableList<Category> getMovieCategories() {
         ObservableList<Category> categories = FXCollections.observableArrayList();
@@ -98,17 +87,27 @@ public class CategoryModel {
         return categories;
     }
 
+    /**
+     * Adds the Categories to be attached to the Movie in the DB
+     * @param mID the Movie ID
+     * @param categories List of Categories to be attached
+     */
     public void addCategoriesToMovie(int mID,List<Category> categories) {
         categoryManager.addCategoriesToMovie(mID,categories);
     }
 
+    /**
+     * Gets the updated list of Categories with ID's now attached
+     * @param categories A list of Categories WITHOUT ID's attached
+     * @return A list of Categories WITH ID' attached
+     */
     public List<Category> getUpdatedCategories(List<Category> categories) {
         return categoryManager.getUpdatedCategories(categories);
     }
 
     /**
-     * Adds all the categories to the given combobox
-     * @param categoryDropDown given combobox
+     * Adds all the categories to the given comboBox
+     * @param categoryDropDown given comboBox
      * @throws Exception exception thrown
      */
     public void addAllCategoriesToComboBox(ComboBox categoryDropDown) throws Exception {
@@ -166,8 +165,8 @@ public class CategoryModel {
      * @param titleColumn   title
      * @param yearColumn    year
      * @param lengthColumn  length
-     * @param ratingColumn  Imdb
-     * @param pRatingColumn persRating
+     * @param ratingColumn  Imdb Rating
+     * @param pRatingColumn personal Rating
      * @param lastViewColumn last seen
      * @param movieTable    the table
      */

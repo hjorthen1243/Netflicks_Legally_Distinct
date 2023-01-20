@@ -2,10 +2,8 @@ package BLL;
 
 import BE.Category;
 import BE.Movie;
-import DAL.CategoryDAO;
 import DAL.IMovieDAO;
 import DAL.MovieDAO;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -39,8 +37,7 @@ public class MovieManager {
      */
     public List<Movie> searchMovies(String query) throws Exception {
         List<Movie> allMovies = getAllMovies();
-        List<Movie> searchResult = movieSearcher.search(allMovies, query);
-        return searchResult;
+        return movieSearcher.search(allMovies, query);
     }
 
     /**
@@ -49,8 +46,7 @@ public class MovieManager {
      * returns imdbSearchResult.
      */
     public List<Movie> imdbSearchMin(String imdbQuery, List<Movie> movies) {
-        List<Movie> imdbSearchResult = movieSearcher.searchImdbMin(movies, imdbQuery);
-        return imdbSearchResult;
+        return movieSearcher.searchImdbMin(movies, imdbQuery);
     }
 
     /**
@@ -59,8 +55,7 @@ public class MovieManager {
      * returns imdbSearchResult.
      */
     public List<Movie> imdbSearchMax(String imdbQuery, List<Movie> movies) {
-        List<Movie> imdbSearchResult = movieSearcher.searchImdbMax(movies, imdbQuery);
-        return imdbSearchResult;
+        return movieSearcher.searchImdbMax(movies, imdbQuery);
     }
     /**
      * Creates list of movies called allMovies and sets the values in the list to be the result of the getAllMovies method.
@@ -71,8 +66,7 @@ public class MovieManager {
      */
     public List<Movie> imdbSearchMinAndMax(String imdbMinStr, String imdbMaxStr) throws Exception {
         List<Movie> allMovies = getAllMovies();
-        List<Movie> imdbSearchResult = movieSearcher.searchImdbMinAndMax(allMovies, imdbMinStr, imdbMaxStr);
-        return imdbSearchResult;
+        return movieSearcher.searchImdbMinAndMax(allMovies, imdbMinStr, imdbMaxStr);
     }
     /**
      * Creates list of movies called pRateSearchResult and sets the values to be the result of the searchPRateMin method in the MovieSearcher class
@@ -80,8 +74,7 @@ public class MovieManager {
      * returns pRateSearchResult.
      */
     public List<Movie> pRateSearchMin(String pRateQuery, List<Movie> movies) {
-        List<Movie> pRateSearchResult = movieSearcher.searchPRateMin(movies, pRateQuery);
-        return pRateSearchResult;
+        return movieSearcher.searchPRateMin(movies, pRateQuery);
     }
     /**
      * Creates list of movies called pRateSearchResult and sets the values to be the result of the searchPRateMax method in the MovieSearcher class
@@ -89,8 +82,7 @@ public class MovieManager {
      * returns pRateSearchResult.
      */
     public List<Movie> pRateSearchMax(String pRateQuery, List<Movie> movies) {
-        List<Movie> pRateSearchResult = movieSearcher.searchPRateMax(movies, pRateQuery);
-        return pRateSearchResult;
+        return movieSearcher.searchPRateMax(movies, pRateQuery);
     }
 
     /**
@@ -102,8 +94,7 @@ public class MovieManager {
      */
     public List<Movie> pRateSearchMinAndMax(String pRateMinStr, String pRateMaxStr) throws Exception {
         List<Movie> allMovies = getAllMovies();
-        List<Movie> pRateSearchResult = movieSearcher.searchPRateMinAndMax(allMovies, pRateMinStr, pRateMaxStr);
-        return pRateSearchResult;
+        return movieSearcher.searchPRateMinAndMax(allMovies, pRateMinStr, pRateMaxStr);
     }
 
     public Movie createNewMovie(String title, int year, String length, double imdbRating, int personalRating, Date lastView, String pathToFile) throws SQLException {
