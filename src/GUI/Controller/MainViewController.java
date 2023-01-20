@@ -90,9 +90,9 @@ public class MainViewController extends BaseController implements Initializable 
         ratings.add(imdbMin);
         ratings.add(imdbMax);
         ratings.add(pRatingMin);
-        for (TextField txtF: ratings) {
+        for (TextField txtF : ratings) {
             categoryModel.addListenersToNumFields(txtF);
-    }
+        }
     }
 
     /**
@@ -118,7 +118,7 @@ public class MainViewController extends BaseController implements Initializable 
         delController.setup();
         categoryModel.openNewView("RemoveMovie.fxml", "Remove old movies");
         updateMovieTableAndCategories();
-        }
+    }
 
 
     /**
@@ -126,10 +126,10 @@ public class MainViewController extends BaseController implements Initializable 
      * After something is added, it tries to update the movie table
      */
     public void addMovieHandle() {
-            addController = new AddMovieController();
-            addController.setup();
-            categoryModel.openNewView("AddMovie.fxml", "Add a movie");
-            updateMovieTableAndCategories();
+        addController = new AddMovieController();
+        addController.setup();
+        categoryModel.openNewView("AddMovie.fxml", "Add a movie");
+        updateMovieTableAndCategories();
 
     }
 
@@ -151,9 +151,8 @@ public class MainViewController extends BaseController implements Initializable 
     }
 
     /**
-     * Handles the searches for the title, year imdb scores and personal scores
+     * Handles the searches for the title, year imdb scores and personal scores.
      */
-
     public void searchHandle(ActionEvent event) {
         // Checks if the Search button has the text Clear
         if (btnSearch.getText().equals("Clear")) {
@@ -386,14 +385,16 @@ public class MainViewController extends BaseController implements Initializable 
             return row;
         });
     }
+
     private void updateMovieTableAndCategories() {
         try {
             movieTable.setItems(movieModel.getAllMovies());
             updateCategories();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     /**
      * Handles the mouse button clicks in the movie table
      *
@@ -461,10 +462,9 @@ public class MainViewController extends BaseController implements Initializable 
         editController.setup();
         chosenMovie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         EditViewController editViewController = new EditViewController();
-        if (chosenMovie!= null) {
+        if (chosenMovie != null) {
             categoryModel.openNewView("EditView.fxml", "Edit:  " + chosenMovie.getTitle());
-        }
-        else {
+        } else {
             categoryModel.openNewView("EditView.fxml", "Edit categories");
         }
         //Update movieTable and categories
