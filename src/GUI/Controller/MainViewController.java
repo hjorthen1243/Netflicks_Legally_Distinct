@@ -180,7 +180,6 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets query to be the user input
                     String query = searchField.getText();
                     //Gets the searchMovie method from MovieModel class and sends the query through it
-                    ObservableList<Movie> movies = movieTable.getItems();
                     movieModel.searchMovie(query);
                     updateCategories();
                 } catch (Exception e) {
