@@ -3,7 +3,6 @@ package GUI.Model;
 import BE.Category;
 import BE.Movie;
 import BLL.MovieManager;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
