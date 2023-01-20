@@ -158,14 +158,14 @@ public class MainViewController extends BaseController implements Initializable 
         if (btnSearch.getText().equals("Clear")) {
             //If Search button text is clear it resets all values and gets list of all movies
             try {
+                movieTable.setItems(movieModel.getAllMovies());
+                updateCategories();
                 searchField.setText("");
                 imdbMin.setText("");
                 imdbMax.setText("");
                 pRatingMin.setText("");
                 pRatingMax.setText("");
                 categoryDropDown.setValue("");
-                updateMovieList();
-                updateCategories();
                 //Sets the Search button text to Search
                 btnSearch.setText("Search");
             } catch (Exception e) {
@@ -181,6 +181,7 @@ public class MainViewController extends BaseController implements Initializable 
                     ObservableList<Movie> movies = movieTable.getItems();
                     movieModel.searchMovie(query);
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -195,6 +196,7 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets the values in movieTable to  the result of imdbSearchMin after sending the query and the Observable list of movies through
                     movieTable.setItems(movieModel.imdbSearchMin(query, movies));
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -208,6 +210,7 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets the values in movieTable to  the result of imdbSearchMax after sending the query and the Observable list of movies through
                     movieTable.setItems(movieModel.imdbSearchMax(query, movies));
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -217,6 +220,7 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets the values in movieTable to the result of imdbSearchMinAndMax after sending the user input from imdbMax and imdbMin through
                     movieTable.setItems(movieModel.imdbSearchMinAndMax(imdbMin.getText(), imdbMax.getText()));
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -231,6 +235,7 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets the values in movieTable to  the result of pRatingSearchMin after sending the query and the Observable list of movies through
                     movieTable.setItems(movieModel.pRateSearchMin(query, movies));
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -246,6 +251,7 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets the values in movieTable to  the result of pRatingSearchMax after sending the query and the Observable list of movies through
                     movieTable.setItems(movieModel.pRateSearchMax(query, movies));
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -256,6 +262,7 @@ public class MainViewController extends BaseController implements Initializable 
                     //Sets the values in movieTable to the result of pRatingSearchMinAndMax after sending the user input from pRatingMax and pRatingMin through
                     movieTable.setItems(movieModel.pRateSearchMinAndMax(pRatingMin.getText(), pRatingMax.getText()));
                     updateCategories();
+                    btnSearch.setText("Clear");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -265,8 +272,8 @@ public class MainViewController extends BaseController implements Initializable 
             else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "All search fields are empty");
                 alert.show();
+                btnSearch.setText("Search");
             }
-            btnSearch.setText("Clear");
             categoryDropDown.setValue("");
         }
     }
@@ -442,6 +449,7 @@ public class MainViewController extends BaseController implements Initializable 
      * Saves the given value from the DatePicker, and updates the specific movie.
      */
     public void saveLastSeenHandle() {
+        if (datePicker.getValue() != null) {
         LocalDate lastSeen = datePicker.getValue();
         Movie movie = (Movie) movieTable.getSelectionModel().getSelectedItem();
         movie.setLastViewDate(java.sql.Date.valueOf(lastSeen));
@@ -451,6 +459,7 @@ public class MainViewController extends BaseController implements Initializable 
             updateCategories();
         } catch (Exception e) {
             e.printStackTrace();
+        }
         }
     }
 
