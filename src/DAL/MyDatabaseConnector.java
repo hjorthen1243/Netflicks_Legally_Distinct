@@ -3,9 +3,7 @@ package DAL;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Properties;
@@ -17,7 +15,7 @@ public class MyDatabaseConnector {
     public MyDatabaseConnector() throws IOException {
 
         Properties databaseProperties = new Properties();
-        databaseProperties.load(new FileInputStream(new File(PROP_FILE)));
+        databaseProperties.load(new FileInputStream(PROP_FILE));
 
         String server = databaseProperties.getProperty("Server");
         String database = databaseProperties.getProperty("Database");

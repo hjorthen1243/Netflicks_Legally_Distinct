@@ -57,14 +57,6 @@ public class Movie {
         return imdbRating;
     }
 
-    public void setImdbRating(double imdbRating) {
-        this.imdbRating = imdbRating;
-    }
-
-    public String getImdbRatingString() {
-        return String.valueOf(imdbRating);
-    }
-
     public int getPersonalRating() {
         return personalRating;
     }
@@ -85,10 +77,6 @@ public class Movie {
         return pathToFile;
     }
 
-    public void setPathToFile(String pathToFile) {
-        this.pathToFile = pathToFile;
-    }
-
     public int getYear() {
         return year;
     }
@@ -103,7 +91,6 @@ public class Movie {
 
     public Date getLastViewDate() {
         return lastViewDate;
-
     }
 
     public void setLastViewDate(Date lastViewDate) {
@@ -116,7 +103,6 @@ public class Movie {
 
     public void setLength(String length) {
         this.length = length;
-
     }
 
     public String getImdbID() {
@@ -125,9 +111,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie:\t" +
-                "id: " + id +
-                "\t title='" + title;
+        return "Movie:\t" + "id: " + id + "\t title='" + title;
     }
 
     public String getCategories() {

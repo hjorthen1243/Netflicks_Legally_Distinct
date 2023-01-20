@@ -17,9 +17,9 @@ import java.util.concurrent.TimeUnit;
 
 public class RemoveMovieController extends BaseController implements Initializable {
     @FXML
-    private TableColumn titleColumn, yearColumn, lengthColumn, categoryColumn, ratingColumn, pRatingColumn, lastViewColumn;
+    private TableColumn titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn;
     @FXML
-    private Button btnRemoveMovie, btnRemoveAll;
+    private Button btnRemoveMovie;
     @FXML
     private TableView movieTable;
     private MovieModel movieModel;
@@ -30,7 +30,12 @@ public class RemoveMovieController extends BaseController implements Initializab
 
     @Override
     public void setup() {
-        movieModel = getModel().getMovieModel();
+        try{
+            movieModel = new MovieModel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -79,7 +84,8 @@ public class RemoveMovieController extends BaseController implements Initializab
                 updateMovieList();
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -98,7 +104,8 @@ public class RemoveMovieController extends BaseController implements Initializab
                 updateMovieList();
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -119,9 +126,9 @@ public class RemoveMovieController extends BaseController implements Initializab
 
                 //Adds movies to the tableView
                 for (Movie movie : movies) {
-                    Date moviedate = movie.getLastViewDate();
-                    long diffInMillies = Math.abs(currentDate.getTime() - moviedate.getTime());
-                    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                    Date movieDate = movie.getLastViewDate();
+                    long diffInMillis = Math.abs(currentDate.getTime() - movieDate.getTime());
+                    long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
                     long biggestDiff = 730;
                     if (diff > biggestDiff && movie.getPersonalRating() < 6) {
                         observableMovies.add(movie);
@@ -133,7 +140,8 @@ public class RemoveMovieController extends BaseController implements Initializab
             movieTable.setItems(observableMovies);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
