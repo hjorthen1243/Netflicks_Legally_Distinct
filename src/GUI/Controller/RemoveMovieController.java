@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import BE.Category;
 import BE.Movie;
 import GUI.Model.CategoryModel;
 import GUI.Model.MovieModel;
@@ -8,11 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class RemoveMovieController extends BaseController implements Initializable {
@@ -27,10 +27,15 @@ public class RemoveMovieController extends BaseController implements Initializab
     private ArrayList<Movie> movies;
     private boolean isStarting = true;
     private ArrayList<Movie> moviesToDelete;
+    private CategoryModel categoryModel;
 
     @Override
     public void setup() {
-        movieModel = getModel().getMovieModel();
+        try {
+            movieModel = new MovieModel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -127,15 +132,36 @@ public class RemoveMovieController extends BaseController implements Initializab
                         observableMovies.add(movie);
                         moviesToDelete.add(movie);
                         categoryModel.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
+                        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("Categories"));
                     }
                 }
             }
             movieTable.setItems(observableMovies);
-
+            updateCategories();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private void updateCategories() throws Exception {
+        categoryModel = new CategoryModel();
+        Map<Integer, List<Category>> categoriesAttachedToMovies = categoryModel.getObservableCategories();
+        StringBuilder c = new StringBuilder();
+        for (int i = 0; i < movieTable.getItems().size(); i++) {
+            Movie m = (Movie) movieTable.getItems().get(i);
+            int mID = m.getId();
+            if (categoriesAttachedToMovies.containsKey(mID)) {
+                //If the movies from the movieTable have a matching ID in  the categoriesAttachedToMovies list, we can get the attached categories.
+                for (int j = 0; j < categoriesAttachedToMovies.get(mID).size(); j++) {
+                    c.append(categoriesAttachedToMovies.get(mID).get(j)).append(", ");
+                }
+                c = c.replace(c.length() - 2, c.length(), ""); //Remove the last comma
+                m.setCategories(c.toString()); //Set the categories in the movie Object
+                c = new StringBuilder(); //Clear the contents of the old String builder
+            }
+        }
+    }
+
 
     /**
      * Looks at the table, to find out, if there are any new values, that are selected.
