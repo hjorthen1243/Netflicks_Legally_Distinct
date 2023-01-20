@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38d08576-0f92-422b-a0ba-0b218db11414" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/BLL/MovieSearcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BLL/MovieSearcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
