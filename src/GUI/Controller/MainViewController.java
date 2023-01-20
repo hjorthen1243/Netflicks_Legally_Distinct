@@ -1,5 +1,3 @@
-//TODO all buttons should start with btn_Name
-
 package GUI.Controller;
 
 import BE.Category;
