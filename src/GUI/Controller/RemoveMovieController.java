@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import net.sourceforge.jeuclid.elements.presentation.token.Mo;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,7 +31,12 @@ public class RemoveMovieController extends BaseController implements Initializab
 
     @Override
     public void setup() {
-        movieModel = getModel().getMovieModel();
+        try{
+            movieModel = new MovieModel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**

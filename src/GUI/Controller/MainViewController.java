@@ -55,6 +55,8 @@ public class MainViewController extends BaseController implements Initializable 
     @Override
     public void setup() {
         try {
+            movieModel = new MovieModel();
+            categoryModel = new CategoryModel();
             updateMovieList();
             categoryModel.addAllCategoriesToComboBox(categoryDropDown);
         } catch (Exception e) {
@@ -294,7 +296,6 @@ public class MainViewController extends BaseController implements Initializable 
      * If necessary it opens the "RemoveMovie" window
      */
     private void updateMovieList() {
-        movieModel = getModel().getMovieModel();
         try {
             if (programStarted) {
                 categoryModel.setValues(titleColumn, yearColumn, lengthColumn, ratingColumn, pRatingColumn, lastViewColumn, movieTable);
@@ -335,7 +336,6 @@ public class MainViewController extends BaseController implements Initializable 
      * @throws Exception
      */
     private void updateCategories() throws Exception {
-        categoryModel = new CategoryModel();
         Map<Integer, List<Category>> categoriesAttachedToMovies = categoryModel.getObservableCategories();
         StringBuilder c = new StringBuilder();
         for (int i = 0; i < movieTable.getItems().size(); i++) {
@@ -357,7 +357,6 @@ public class MainViewController extends BaseController implements Initializable 
      * Sorts though the categories, when a category is chosen
      */
     public void categorySelected() throws Exception {
-        movieModel = getModel().getMovieModel();
         Object selectedItem = categoryDropDown.getSelectionModel().getSelectedItem();
         String categoryChosen = selectedItem.toString();
         ArrayList<Category> allCategories;
