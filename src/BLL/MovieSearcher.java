@@ -201,7 +201,7 @@ public class MovieSearcher {
      */
     private boolean comparePRating(String pRateMinStr, String pRateMaxStr, Movie movie) {
         boolean pRating = false;
-        if (movie.getPersonalRating() <= Integer.parseInt(pRateMaxStr) && movie.getImdbRating() >= Integer.parseInt(pRateMinStr)) {
+        if (movie.getPersonalRating() <= Integer.parseInt(pRateMaxStr) && movie.getPersonalRating() >= Integer.parseInt(pRateMinStr)) {
             pRating = true;
         }
         return pRating;

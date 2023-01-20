@@ -117,10 +117,16 @@ public class MainViewController extends BaseController implements Initializable 
      * After window is closed, it tries to update the movieTable
      */
     public void startRemoveMovie() {
-        delController = new RemoveMovieController();
-        delController.setup();
-        categoryModel.openNewView("RemoveMovie.fxml", "Remove old movies");
-        updateMovieTableAndCategories();
+        try {
+            categoryModel = new CategoryModel();
+            delController = new RemoveMovieController();
+            delController.setup();
+            categoryModel.openNewView("RemoveMovie.fxml", "Remove old movies");
+            updateMovieTableAndCategories();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -143,7 +149,7 @@ public class MainViewController extends BaseController implements Initializable 
 
         try {
             Movie m = (Movie) movieTable.getSelectionModel().getSelectedItem();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Remove; " + m.getTitle() + " - " + m.getYearString() + "?", ButtonType.YES, ButtonType.NO);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Remove: " + m.getTitle() + " - " + m.getYearString() + "?", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
                 movieModel.deleteMovie(m);
@@ -349,7 +355,6 @@ public class MainViewController extends BaseController implements Initializable 
                 c = new StringBuilder(); //Clear the contents of the old String builder
             }
         }
-
     }
 
     /**
