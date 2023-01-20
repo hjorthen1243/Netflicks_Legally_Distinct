@@ -79,7 +79,8 @@ public class RemoveMovieController extends BaseController implements Initializab
                 updateMovieList();
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -98,7 +99,8 @@ public class RemoveMovieController extends BaseController implements Initializab
                 updateMovieList();
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -133,7 +135,8 @@ public class RemoveMovieController extends BaseController implements Initializab
             movieTable.setItems(observableMovies);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 

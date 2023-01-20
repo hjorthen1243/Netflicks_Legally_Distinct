@@ -58,7 +58,8 @@ public class AddMovieController extends BaseController implements Initializable 
             movieModel = new MovieModel();
             categoryModel = new CategoryModel();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -82,7 +83,8 @@ public class AddMovieController extends BaseController implements Initializable 
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
 
     }
@@ -215,7 +217,8 @@ public class AddMovieController extends BaseController implements Initializable 
             tableViewSearchMovie.getColumns().addAll();
             tableViewSearchMovie.setItems(movieModel.searchAddMovie(txtFieldSearch.getText()));
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -249,7 +252,8 @@ public class AddMovieController extends BaseController implements Initializable 
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -265,7 +269,8 @@ public class AddMovieController extends BaseController implements Initializable 
             categoriesInAddMovie.addAll(categoryTable.getItems());
             categoryTable.setItems(categoriesInAddMovie);
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 

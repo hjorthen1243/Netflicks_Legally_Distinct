@@ -58,7 +58,8 @@ public class MainViewController extends BaseController implements Initializable 
             updateMovieList();
             categoryModel.addAllCategoriesToComboBox(categoryDropDown);
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
 
     }
@@ -146,7 +147,8 @@ public class MainViewController extends BaseController implements Initializable 
                 movieModel.deleteMovie(m);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -169,7 +171,8 @@ public class MainViewController extends BaseController implements Initializable 
                 //Sets the Search button text to Search
                 btnSearch.setText("Search");
             } catch (Exception e) {
-                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                alert.showAndWait();
             }
         } else {
             //Checks if the searchField is empty or not
@@ -183,7 +186,8 @@ public class MainViewController extends BaseController implements Initializable 
                     updateCategories();
                     btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();
                 }
                 //Checks if imdbMin is empty or not
             } else if (!imdbMin.getText().isEmpty() && imdbMax.getText().isEmpty()) {
@@ -198,7 +202,8 @@ public class MainViewController extends BaseController implements Initializable 
                     updateCategories();
                     btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();
                 }
                 //Checks if imdbMax is empty or not
             } else if (!imdbMax.getText().isEmpty() && imdbMin.getText().isEmpty()) {
@@ -212,7 +217,8 @@ public class MainViewController extends BaseController implements Initializable 
                     updateCategories();
                     btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();
                 }
                 //Checks if imdbMax and imdbMin is empty or not
             } else if (!imdbMax.getText().isEmpty() && !imdbMin.getText().isEmpty()) {
@@ -222,7 +228,8 @@ public class MainViewController extends BaseController implements Initializable 
                     updateCategories();
                     btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();;
                 }
             }
             //Checks if pRatingMin is empty or not
@@ -237,7 +244,8 @@ public class MainViewController extends BaseController implements Initializable 
                     updateCategories();
                     btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();
                 }
 
             }
@@ -253,7 +261,8 @@ public class MainViewController extends BaseController implements Initializable 
                     updateCategories();
                     btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();;
                 }
             }
             //Checks if pRatingMax and pRatingMin is empty or not
@@ -264,7 +273,8 @@ public class MainViewController extends BaseController implements Initializable 
                     updateCategories();
                     btnSearch.setText("Clear");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                    alert.showAndWait();;
                 }
 
             }
@@ -310,7 +320,8 @@ public class MainViewController extends BaseController implements Initializable 
                 movieTable.setItems(movieModel.getObservableMovies());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();;
         }
         movieTable.setItems(movieModel.getObservableMovies());
         try {
@@ -356,7 +367,8 @@ public class MainViewController extends BaseController implements Initializable 
             try {
                 updateCategories();
             } catch (Exception e) {
-                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                alert.showAndWait();;
 
             }
         } else {
@@ -374,7 +386,8 @@ public class MainViewController extends BaseController implements Initializable 
                         pRatingMin.setText("");
                         btnSearch.setText("Search");
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+                        alert.showAndWait();;
                     }
                 }
             }
@@ -398,7 +411,8 @@ public class MainViewController extends BaseController implements Initializable 
             movieTable.setItems(movieModel.getAllMovies());
             updateCategories();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();;
         }
     }
 
@@ -440,7 +454,8 @@ public class MainViewController extends BaseController implements Initializable 
                 showMessageDialog(null, "This movie does not exist on the given filepath");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();;
         }
     }
 
@@ -458,7 +473,8 @@ public class MainViewController extends BaseController implements Initializable 
             movieTable.setItems(movieModel.getAllMovies());
             updateCategories();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();;
         }
         }
     }
@@ -492,7 +508,8 @@ public class MainViewController extends BaseController implements Initializable 
             movieTable.setItems(movieModel.getAllMovies());
             updateCategories();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();;
         }
         movie.setPersonalRating(personalRating);
     }

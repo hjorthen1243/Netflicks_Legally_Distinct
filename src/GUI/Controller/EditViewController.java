@@ -41,7 +41,8 @@ public class EditViewController extends BaseController implements Initializable 
         try {
             categoryModel = new CategoryModel();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -62,7 +63,8 @@ public class EditViewController extends BaseController implements Initializable 
             //adds all the categories to the comboBox, where the user can add a category to the specific movie
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -71,7 +73,8 @@ public class EditViewController extends BaseController implements Initializable 
             categoryModel = new CategoryModel();
             categoryModel.addAllCategoriesToComboBox(comboBoxAddCatMovie);
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -136,7 +139,8 @@ public class EditViewController extends BaseController implements Initializable 
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -165,7 +169,8 @@ public class EditViewController extends BaseController implements Initializable 
             addRemovableCategories();
             addAllCategoriesToComboBox();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -197,7 +202,8 @@ public class EditViewController extends BaseController implements Initializable 
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
     }
 
@@ -268,7 +274,8 @@ public class EditViewController extends BaseController implements Initializable 
             Category category1 = updatedCategories.get(0);
             movieModel.removeCategoryFromMovie(chosen.getId(), category1.getId());
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
+            alert.showAndWait();
         }
         Object catRemoved = comboBoxRemoveCatMovie.getSelectionModel().getSelectedItem();
         btnRemoveCatMovie.setDisable(true);
