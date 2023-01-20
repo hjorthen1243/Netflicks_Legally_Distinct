@@ -154,9 +154,7 @@ public class AddMovieController extends BaseController implements Initializable 
                 }
                 Desktop desktop = Desktop.getDesktop();
                 //checks file exists or not
-                if (file.exists()) {
-                    desktop.open(file);              //opens the specified file
-                } else {
+                if (!file.exists()) {
                     //shows a message, like the alert boxes
                     Alert alert = new Alert(Alert.AlertType.ERROR, "This movie does not exist on the given filepath");
                     alert.showAndWait();
