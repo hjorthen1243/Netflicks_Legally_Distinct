@@ -57,14 +57,6 @@ public class Movie {
         return imdbRating;
     }
 
-    public void setImdbRating(double imdbRating) {
-        this.imdbRating = imdbRating;
-    }
-
-    public String getImdbRatingString() {
-        return String.valueOf(imdbRating);
-    }
-
     public int getPersonalRating() {
         return personalRating;
     }

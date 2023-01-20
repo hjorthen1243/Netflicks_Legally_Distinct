@@ -179,14 +179,6 @@ public class MovieModel {
         moviesToBeViewed.remove(m);
     }
 
-    public Movie getSelectedMovie() {
-        return selectedMovie;
-    }
-
-    public void setSelectedMovie(Movie selectedMovie) {
-        this.selectedMovie = selectedMovie;
-    }
-
     public void updateMovie(Movie updatedMovie) throws Exception {
         movieManager.updateMovie(updatedMovie);
     }
