@@ -3,16 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="38d08576-0f92-422b-a0ba-0b218db11414" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/CategoryDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/IMovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/IMovieDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MovieDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MyDatabaseConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAL/MyOMDBConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAL/MyOMDBConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/AddMovieController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/MainViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/EditViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/EditViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Controller/RemoveMovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/RemoveMovieController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/CategoryModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Model/MovieModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +15,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -45,7 +38,10 @@
     &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
     &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
     &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/aneho/OneDrive - Erhvervsakademi Sydvest/Github/MovieRecommendationSystem-CachedImplementation&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -74,7 +70,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="0e08b885-4271-4be3-bc5b-96b3f05dba7b" name="Changes" comment="" />
+      <changelist id="38d08576-0f92-422b-a0ba-0b218db11414" name="Changes" comment="" />
       <created>1672738436512</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -100,6 +96,11 @@
       <workItem from="1673939114680" duration="249000" />
       <workItem from="1674014185508" duration="5169000" />
       <workItem from="1674112181505" duration="8143000" />
+      <workItem from="1674377475613" duration="12277000" />
+      <workItem from="1675164610480" duration="1892000" />
+      <workItem from="1675237562265" duration="2555000" />
+      <workItem from="1675283455071" duration="2903000" />
+      <workItem from="1675411010412" duration="189000" />
     </task>
     <servers />
   </component>

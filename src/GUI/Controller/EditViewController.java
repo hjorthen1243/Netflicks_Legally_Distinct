@@ -60,7 +60,6 @@ public class EditViewController extends BaseController implements Initializable 
                 MovieIsChosen();
             }
             addRemovableCategories();
-            //adds all the categories to the comboBox, where the user can add a category to the specific movie
 
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
@@ -71,6 +70,7 @@ public class EditViewController extends BaseController implements Initializable 
     private void addAllCategoriesToComboBox() {
         try {
             categoryModel = new CategoryModel();
+            //adds all the categories to the comboBox, where the user can add a category to the specific movie
             categoryModel.addAllCategoriesToComboBox(comboBoxAddCatMovie);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());
@@ -270,8 +270,10 @@ public class EditViewController extends BaseController implements Initializable 
             //Creates a list to send to DAL, to get id of the category
             List<Category> catToDelete = new ArrayList<>();
             catToDelete.add(category);
+            //Sends the one cat in the list to get the id
             List<Category> updatedCategories = categoryModel.getUpdatedCategories(catToDelete);
             Category category1 = updatedCategories.get(0);
+            //Sends the movie Id and Category id to remove the link
             movieModel.removeCategoryFromMovie(chosen.getId(), category1.getId());
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.toString());

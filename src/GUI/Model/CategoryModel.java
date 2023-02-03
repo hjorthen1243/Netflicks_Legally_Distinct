@@ -137,7 +137,6 @@ public class CategoryModel {
 
     /**
      * This method opens op a new window
-     *
      * @param fxmlName    name of the file
      * @param displayName name of the window
      */
